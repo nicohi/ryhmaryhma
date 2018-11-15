@@ -8,6 +8,7 @@ mainClassName = 'vinkkeri.main.Main'
 
 dependencies {
 	testCompile 'junit:junit:4.12'
+    compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.8.11'
 }
 
 repositories {
