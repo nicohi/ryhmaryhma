@@ -2,17 +2,31 @@ apply plugin: 'java'
 
 apply plugin: 'application'
 
+apply plugin: 'jacoco'
+
 mainClassName = 'vinkkeri.main.Main'
 
 dependencies {
+	testCompile 'junit:junit:4.12'
 }
 
 repositories {
     jcenter()
 }
 
+run {
+    standardInput = System.in
+}
+
 jar {
     manifest {
         attributes 'Main-Class': 'vinkkeri.main.Main'
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled true
     }
 }
