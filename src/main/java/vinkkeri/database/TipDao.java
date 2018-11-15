@@ -164,7 +164,7 @@ public class TipDao {
         java.util.Date uDate = new java.util.Date();
         java.sql.Date sDate = new java.sql.Date(uDate.getTime());
 
-        // These should be 
+        // Replace either these or the stmt.set... with getters from tip object.
         String date = sDate.toString();
         String type = "Kirja";
         String title = "Huonokirja";
@@ -174,6 +174,7 @@ public class TipDao {
         String url = "telegram.org";
         boolean read = false;
 
+        // Get these with getters from tip object and remove below add method calls.
         List<String> tags = new ArrayList<>();
         List<String> relC = new ArrayList<>();
         List<String> reqC = new ArrayList<>();
