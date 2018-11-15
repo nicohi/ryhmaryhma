@@ -1,17 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vinkkeri.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -24,19 +22,22 @@ public class TipDao {
     /**
      * Database Access Object for Tip table and other immediately related
      * tables.
-     * 
+     *
+     * Standard path for this project is 'jdbc:sqlite:database.db';
+     *
      * @param path : String path to database in hardrive
      */
     public TipDao(String path) {
         this.databaseAddress = path;
     }
 
+    // getTips() ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     /**
      * SQL Query into database that is given to TipDao object in constructor.
      * Returns a java.util.List of Tip objects.
-     * 
+     *
      * @return List of Tip
-     * @throws Exception 
+     * @throws Exception
      */
     public List<Object> getTips() throws Exception {
 
@@ -64,7 +65,7 @@ public class TipDao {
             List<String> tags = this.getTags(conn, id); //            tags for the object.
             List<String> reqC = this.getRequiredCourses(conn, id); // required courses for the object.
             List<String> relC = this.getRelatedCourses(conn, id); //  related courses for the object.
-            
+
             Object tip = new Object(); // This is supposed to be the tip object.
 
             tips.add(tip);
@@ -78,11 +79,11 @@ public class TipDao {
 
     /**
      * Support method for getTips()
-     * 
+     *
      * @param conn
      * @param id
      * @return List of String
-     * @throws SQLException 
+     * @throws SQLException
      */
     private List<String> getTags(Connection conn, int id) throws SQLException {
         Statement stmt_tags = conn.createStatement();
@@ -102,11 +103,11 @@ public class TipDao {
 
     /**
      * Support method for getTips()
-     * 
+     *
      * @param conn
      * @param id
      * @return List of String
-     * @throws SQLException 
+     * @throws SQLException
      */
     private List<String> getRequiredCourses(Connection conn, int id) throws SQLException {
         Statement stmt_reqC = conn.createStatement();
@@ -126,11 +127,11 @@ public class TipDao {
 
     /**
      * Support method for getTips()
-     * 
+     *
      * @param conn
      * @param id
      * @return List of String
-     * @throws SQLException 
+     * @throws SQLException
      */
     private List<String> getRelatedCourses(Connection conn, int id) throws SQLException {
         Statement stmt_relC = conn.createStatement();
@@ -144,8 +145,147 @@ public class TipDao {
         }
 
         result_relC.close();
-        
+
         return relC;
     }
 
+    // putTip() --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    /**
+     * Writes given Tip into the database.
+     *
+     * @throws SQLException
+     */
+    public void insertTip(Object tip) throws SQLException {
+
+        // The above Object should be replaced with Tip object.
+        // The below fields (except date) should be gathered with get methods
+        // From the tip object.
+        
+        java.util.Date uDate = new java.util.Date();
+        java.sql.Date sDate = new java.sql.Date(uDate.getTime());
+
+        // These should be 
+        String date = sDate.toString();
+        String type = "Kirja";
+        String title = "Huonokirja";
+        String author = "Ollimus";
+        String summary = "Todellahuonoeikannatalukea.";
+        String isbn = "";
+        String url = "telegram.org";
+        boolean read = false;
+
+        List<String> tags = new ArrayList<>();
+        List<String> relC = new ArrayList<>();
+        List<String> reqC = new ArrayList<>();
+
+        tags.add("Fantasia");
+        tags.add("Fiktio");
+
+        relC.add("TiKaPe");
+
+        reqC.add("TIRA");
+        reqC.add("OHTU");
+
+        Connection conn = DriverManager.getConnection(this.databaseAddress);
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Tip (date, type, title, author, summary, isbn, url, read) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        stmt.setString(1, date);
+        stmt.setString(2, type);
+        stmt.setString(3, title);
+        stmt.setString(4, author);
+        stmt.setString(5, summary);
+        stmt.setString(6, isbn);
+        stmt.setString(7, url);
+        stmt.setBoolean(8, read);
+
+        stmt.execute();
+
+        int id = this.getCurrentID(conn);
+
+        this.addRelCourseConnections(conn, reqC, id);
+        this.addReqCourseConnections(conn, relC, id);
+        this.addTagConnections(conn, tags, id);
+
+        conn.close();
+    }
+
+    private int getCurrentID(Connection conn) throws SQLException {
+        Statement stmt_maxID = conn.createStatement();
+        ResultSet result = stmt_maxID.executeQuery("SELECT MAX(id) FROM Tip");
+        int id = result.getInt("MAX(id)");
+        result.close();
+        stmt_maxID.close();
+        return id;
+    }
+
+    private void addRelCourseConnections(Connection conn, List<String> courses, int tipID) throws SQLException {
+        Map<String, Integer> courseID = this.getCourseIdTable(conn);
+
+        for (String course : courses) {
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO RelCourse VALUES (?, ?)");
+            stmt.setInt(1, tipID);
+            stmt.setInt(2, courseID.get(course));
+            stmt.execute();
+            stmt.close();
+        }
+    }
+
+    private void addReqCourseConnections(Connection conn, List<String> courses, int tipID) throws SQLException {
+        Map<String, Integer> courseID = this.getCourseIdTable(conn);
+
+        for (String course : courses) {
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO ReqCourse VALUES (?, ?)");
+            stmt.setInt(1, tipID);
+            stmt.setInt(2, courseID.get(course));
+            stmt.execute();
+            stmt.close();
+        }
+    }
+
+    private void addTagConnections(Connection conn, List<String> tags, int tipID) throws SQLException {
+        Map<String, Integer> courseID = this.getTagIdTable(conn);
+
+        for (String course : tags) {
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO TipTag VALUES (?, ?)");
+            stmt.setInt(1, tipID);
+            stmt.setInt(2, courseID.get(course));
+            stmt.execute();
+            stmt.close();
+        }
+    }
+
+    private Map<String, Integer> getCourseIdTable(Connection conn) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet result = stmt.executeQuery("SELECT * FROM Course");
+
+        Map<String, Integer> idTable = new HashMap<>();
+
+        while (result.next()) {
+            String name = result.getString("name");
+            int id = result.getInt("id");
+            idTable.put(name, id);
+        }
+
+        result.close();
+        stmt.close();
+
+        return idTable;
+    }
+
+    private Map<String, Integer> getTagIdTable(Connection conn) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet result = stmt.executeQuery("SELECT * FROM Tag");
+
+        Map<String, Integer> idTable = new HashMap<>();
+
+        while (result.next()) {
+            String name = result.getString("name");
+            int id = result.getInt("id");
+            idTable.put(name, id);
+        }
+
+        result.close();
+        stmt.close();
+
+        return idTable;
+    }
 }
