@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import vinkkeri.objects.Tip;
 
 /**
  *
@@ -39,15 +40,13 @@ public class TipDao {
      * @return List of Tip
      * @throws Exception
      */
-    public List<Object> getTips() throws Exception {
+    public List<Tip> getTips() throws Exception {
 
-        // Replace Object from List<Object> in return type with Tip or something
-        // When it becomes available. Same with tips list below.
         Connection conn = DriverManager.getConnection(this.databaseAddress);
         Statement stmt = conn.createStatement();
         ResultSet result = stmt.executeQuery("SELECT * FROM Tip ORDER BY date DESC");
 
-        List<Object> tips = new ArrayList<>();
+        List<Tip> tips = new ArrayList<>();
 
         while (result.next()) {
 
@@ -66,7 +65,7 @@ public class TipDao {
             List<String> reqC = this.getRequiredCourses(conn, id); // required courses for the object.
             List<String> relC = this.getRelatedCourses(conn, id); //  related courses for the object.
 
-            Object tip = new Object(); // This is supposed to be the tip object.
+            Tip tip = new Tip(id, date, type, title, author, summary, isbn, url, read);
 
             tips.add(tip);
         }
@@ -155,37 +154,25 @@ public class TipDao {
      *
      * @throws SQLException
      */
-    public void insertTip(Object tip) throws SQLException {
+    public void insertTip(Tip tip) throws SQLException {
 
-        // The above Object should be replaced with Tip object.
-        // The below fields (except date) should be gathered with get methods
-        // From the tip object.
-        
         java.util.Date uDate = new java.util.Date();
         java.sql.Date sDate = new java.sql.Date(uDate.getTime());
 
         // Replace either these or the stmt.set... with getters from tip object.
         String date = sDate.toString();
-        String type = "Kirja";
-        String title = "Huonokirja";
-        String author = "Ollimus";
-        String summary = "Todellahuonoeikannatalukea.";
-        String isbn = "";
-        String url = "telegram.org";
+        String type = tip.getType();
+        String title = tip.getTitle();
+        String author = tip.getAuthor();
+        String summary = tip.getSummary();
+        String isbn = tip.getIsbn();
+        String url = tip.getUrl();
         boolean read = false;
 
         // Get these with getters from tip object and remove below add method calls.
-        List<String> tags = new ArrayList<>();
-        List<String> relC = new ArrayList<>();
-        List<String> reqC = new ArrayList<>();
-
-        tags.add("Fantasia");
-        tags.add("Fiktio");
-
-        relC.add("TiKaPe");
-
-        reqC.add("TIRA");
-        reqC.add("OHTU");
+        List<String> tags = tip.getTags();
+        List<String> relC = tip.getRelC();
+        List<String> reqC = tip.getReqC();
 
         Connection conn = DriverManager.getConnection(this.databaseAddress);
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO Tip (date, type, title, author, summary, isbn, url, read) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
