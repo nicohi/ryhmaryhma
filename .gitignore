@@ -3,4 +3,4 @@
 gradle.properties
 /.nb-gradle/
 /nbproject/
-/.nb-gradle-properties/
+.nb-gradle-properties
