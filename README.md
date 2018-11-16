@@ -1,4 +1,5 @@
 # Vinkkeri
+Ohjelma lukuvinkkien tallentamiseen ja järjestämiseen.
 
 [![Build Status](https://travis-ci.com/nicohi/ryhmaryhma.svg?branch=master)](https://travis-ci.com/nicohi/ryhmaryhma)
 
