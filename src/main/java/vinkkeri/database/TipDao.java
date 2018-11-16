@@ -66,6 +66,9 @@ public class TipDao {
             List<String> relC = this.getRelatedCourses(conn, id); //  related courses for the object.
 
             Tip tip = new Tip(id, date, type, title, author, summary, isbn, url, read);
+            tip.setTags(tags);
+            tip.setRelC(relC);
+            tip.setReqC(reqC);
 
             tips.add(tip);
         }
@@ -158,18 +161,9 @@ public class TipDao {
 
         java.util.Date uDate = new java.util.Date();
         java.sql.Date sDate = new java.sql.Date(uDate.getTime());
-
-        // Replace either these or the stmt.set... with getters from tip object.
         String date = sDate.toString();
-        String type = tip.getType();
-        String title = tip.getTitle();
-        String author = tip.getAuthor();
-        String summary = tip.getSummary();
-        String isbn = tip.getIsbn();
-        String url = tip.getUrl();
+        
         boolean read = false;
-
-        // Get these with getters from tip object and remove below add method calls.
         List<String> tags = tip.getTags();
         List<String> relC = tip.getRelC();
         List<String> reqC = tip.getReqC();
@@ -177,12 +171,12 @@ public class TipDao {
         Connection conn = DriverManager.getConnection(this.databaseAddress);
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO Tip (date, type, title, author, summary, isbn, url, read) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         stmt.setString(1, date);
-        stmt.setString(2, type);
-        stmt.setString(3, title);
-        stmt.setString(4, author);
-        stmt.setString(5, summary);
-        stmt.setString(6, isbn);
-        stmt.setString(7, url);
+        stmt.setString(2, tip.getType());
+        stmt.setString(3, tip.getTitle());
+        stmt.setString(4, tip.getAuthor());
+        stmt.setString(5, tip.getSummary());
+        stmt.setString(6, tip.getIsbn());
+        stmt.setString(7, tip.getUrl());
         stmt.setBoolean(8, read);
 
         stmt.execute();

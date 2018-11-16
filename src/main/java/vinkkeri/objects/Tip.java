@@ -77,12 +77,24 @@ public class Tip {
     public List<String> getTags() {
         return tags;
     }
+    
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
 
     public List<String> getRelC() {
         return relC;
     }
+    
+    public void setRelC(List<String> relC) {
+        this.relC = relC;
+    }
 
     public List<String> getReqC() {
         return reqC;
+    }
+    
+    public void setReqC(List<String> reqC) {
+        this.reqC = reqC;
     }
 }
