@@ -5,6 +5,8 @@ package vinkkeri.objects;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -22,7 +24,7 @@ public class TipTest {
         this.tip = new Tip(3, "2018-11-15", "Book", "Introduction to Algorithms", "CLRS", "algos", "9780262033848", "http://mitpress.mit.edu", true);
     }
 
-    // Tests below test the get methods of the Tip class, excluding the methods that return lists (no add methods for lists yet)
+    // Tests below test the get methods of the Tip class
     @Test
     public void getIdTest1() {
         assertEquals(3, this.tip.getId());
@@ -68,18 +70,59 @@ public class TipTest {
         assertTrue(this.tip.isRead());
     }
 
+    // Tests below test the methods that involve lists
     @Test
     public void getTagsTest1() {
+        assertEquals(0, this.tip.getTags().size());
+    }
 
+    @Test
+    public void settingTagsWorks1() {
+        List<String> tags = new ArrayList<>();
+        tags.add("keycourse");
+        tags.add("nicetoknow");
+        tags.add("blaablaa");
+        this.tip.setTags(tags);
+
+        assertTrue(this.tip.getTags().contains("nicetoknow"));
+        assertTrue(this.tip.getTags().contains("blaablaa"));
+        assertTrue(this.tip.getTags().contains("keycourse"));
     }
 
     @Test
     public void getRelCTest1() {
+        assertEquals(0, this.tip.getRelC().size());
+    }
 
+    @Test
+    public void settingRelatedCoursesWorks1() {
+        List<String> relCourses = new ArrayList<>();
+        relCourses.add("Tietokantojen perusteet");
+        relCourses.add("Tietokantasovellus");
+        relCourses.add("Tietokannan suunnittelu");
+        this.tip.setRelC(relCourses);
+
+        assertTrue(this.tip.getRelC().contains("Tietokantasovellus"));
+        assertTrue(this.tip.getRelC().contains("Tietokannan suunnittelu"));
+        assertTrue(this.tip.getRelC().contains("Tietokantojen perusteet"));
     }
 
     @Test
     public void getReqCTest1() {
+        assertEquals(0, this.tip.getReqC().size());
+    }
 
+    @Test
+    public void settingRequiredCoursesWorks1() {
+        List<String> required = new ArrayList<>();
+        required.add("Introduction to Artificial Intelligence");
+        required.add("Introduction to Machine Learning");
+        required.add("Computational Statistics");
+        this.tip.setReqC(required);
+
+        assertTrue(this.tip.getReqC().contains("Computational Statistics"));
+        assertTrue(this.tip.getReqC().contains("Introduction to Artificial Intelligence"));
+        assertTrue(this.tip.getReqC().contains("Introduction to Machine Learning"));
+        assertFalse(this.tip.getReqC().contains("Randomized Algorithms"));
     }
 }

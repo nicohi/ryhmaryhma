@@ -22,7 +22,6 @@ public class TipDaoTest {
     @Before
     public void setUp() throws IOException {
         this.tipDao = new TipDao("jdbc:sqlite:database.db");
-        String date = new java.sql.Date(new java.util.Date().getTime()).toString();
     }
 
     @Test
