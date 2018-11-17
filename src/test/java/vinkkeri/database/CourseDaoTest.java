@@ -1,9 +1,9 @@
 package vinkkeri.database;
 
-import org.junit.After;
-import org.junit.AfterClass;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -12,29 +12,34 @@ import static org.junit.Assert.*;
  * @author jpssilve
  */
 public class CourseDaoTest {
-    
-    public CourseDaoTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
+
+    private CourseDao courseDao;
+
     @Before
     public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
+        this.courseDao = new CourseDao("jdbc:sqlite:database.db");
     }
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    @Test
+    public void gettingCoursesWorks1() throws SQLException {
+        List<String> courses = this.courseDao.getCourses();
+
+        assertTrue(courses.contains("TIRA"));
+        assertTrue(courses.contains("OHTU"));
+        assertTrue(courses.contains("TiKaPe"));
+    }
+
+    @Test
+    public void addingCoursesWorks1() throws SQLException {
+        List<String> courses = new ArrayList<>();
+        courses.add("LaMa");
+        courses.add("TiTo");
+        courses.add("TilPe");
+        this.courseDao.addCourses(courses);
+
+        List<String> found = this.courseDao.getCourses();
+        assertTrue(found.contains("TilPe"));
+        assertTrue(found.contains("TiTo"));
+        assertTrue(found.contains("LaMa"));
+    }
 }

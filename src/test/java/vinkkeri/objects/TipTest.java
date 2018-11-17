@@ -72,11 +72,6 @@ public class TipTest {
 
     // Tests below test the methods that involve lists
     @Test
-    public void getTagsTest1() {
-        assertEquals(0, this.tip.getTags().size());
-    }
-
-    @Test
     public void settingTagsWorks1() {
         List<String> tags = new ArrayList<>();
         tags.add("keycourse");
@@ -90,11 +85,6 @@ public class TipTest {
     }
 
     @Test
-    public void getRelCTest1() {
-        assertEquals(0, this.tip.getRelC().size());
-    }
-
-    @Test
     public void settingRelatedCoursesWorks1() {
         List<String> relCourses = new ArrayList<>();
         relCourses.add("Tietokantojen perusteet");
@@ -105,11 +95,6 @@ public class TipTest {
         assertTrue(this.tip.getRelC().contains("Tietokantasovellus"));
         assertTrue(this.tip.getRelC().contains("Tietokannan suunnittelu"));
         assertTrue(this.tip.getRelC().contains("Tietokantojen perusteet"));
-    }
-
-    @Test
-    public void getReqCTest1() {
-        assertEquals(0, this.tip.getReqC().size());
     }
 
     @Test

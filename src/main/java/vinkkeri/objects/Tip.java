@@ -105,7 +105,7 @@ public class Tip {
     }
 
     /**
-     * All the related courses, which are related to the tip's subject matter.
+     * All the courses, which are related to the tip's subject matter.
      *
      * @return The related courses
      */
@@ -138,7 +138,7 @@ public class Tip {
      * Allows the setting of required previous courses, which is useful if the
      * Tip type is a course.
      *
-     * @param reqC A lsit of required courses
+     * @param reqC A list of required courses
      */
     public void setReqC(List<String> reqC) {
         this.reqC = reqC;

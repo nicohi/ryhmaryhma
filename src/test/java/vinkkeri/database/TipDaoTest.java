@@ -27,8 +27,9 @@ public class TipDaoTest {
     @Test
     public void gettingTipsWorks1() throws SQLException, Exception {
         List<String> tipTitles = new ArrayList<>();
-        for (int i = 0; i < this.tipDao.getTips().size(); i++) {
-            tipTitles.add(this.tipDao.getTips().get(i).getTitle());
+        List<Tip> tips = this.tipDao.getTips();
+        for (int i = 0; i < tips.size(); i++) {
+            tipTitles.add(tips.get(i).getTitle());
         }
 
         assertTrue(tipTitles.contains("Jukka Palmun Tuho"));
@@ -36,9 +37,16 @@ public class TipDaoTest {
         assertTrue(tipTitles.contains("Jukka Palmun Seikkailut"));
     }
 
-    // No Insertion tests yet since no deletion method, and hence database gets cluttered with the same entry everytime the test is run
-    @After
-    public void tearDown() {
-    }
+    @Test
+    public void insertingTipsWorks() throws SQLException, Exception {
+        this.tipDao.insertTip(new Tip(3, "2018-11-15", "Book", "Introduction to Algorithms", "CLRS", "algos", "9780262033848", "http://mitpress.mit.edu", true));
 
+        List<String> tipTitles = new ArrayList<>();
+        List<Tip> tips = this.tipDao.getTips();
+        for (int i = 0; i < tips.size(); i++) {
+            tipTitles.add(tips.get(i).getTitle());
+        }
+
+        assertTrue(tipTitles.contains("Introduction to Algorithms"));
+    }
 }
