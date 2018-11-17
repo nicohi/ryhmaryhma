@@ -38,15 +38,31 @@ public class TipDaoTest {
     }
 
     @Test
-    public void insertingTipsWorks() throws SQLException, Exception {
-        this.tipDao.insertTip(new Tip(3, "2018-11-15", "Book", "Introduction to Algorithms", "CLRS", "algos", "9780262033848", "http://mitpress.mit.edu", true));
+    public void TipInsertAndDeleteWorks() throws SQLException, Exception {
+        this.tipDao.insertTip(new Tip(3, "2018-11-15", "Book", "Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project", "CLRS", "algos", "9780262033848", "http://mitpress.mit.edu", true));
 
         List<String> tipTitles = new ArrayList<>();
         List<Tip> tips = this.tipDao.getTips();
+        
         for (int i = 0; i < tips.size(); i++) {
             tipTitles.add(tips.get(i).getTitle());
         }
 
-        assertTrue(tipTitles.contains("Introduction to Algorithms"));
+        assertTrue(tipTitles.contains("Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project"));
+        
+        this.tipDao.remove(this.tipDao.getNewestID());
+
+        tipTitles.clear();
+        tips = this.tipDao.getTips();
+        
+        for (int i = 0; i < tips.size(); i++) {
+            tipTitles.add(tips.get(i).getTitle());
+        }
+        
+        for (int i = 0; i < tips.size(); i++) {
+            tipTitles.add(tips.get(i).getTitle());
+        }
+
+        assertTrue(!tipTitles.contains("Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project"));
     }
 }

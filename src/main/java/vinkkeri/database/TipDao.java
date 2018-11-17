@@ -151,7 +151,7 @@ public class TipDao {
         return relC;
     }
 
-    // putTip() --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // insertTip() --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     /**
      * Writes given Tip into the database.
      *
@@ -162,7 +162,7 @@ public class TipDao {
         java.util.Date uDate = new java.util.Date();
         java.sql.Date sDate = new java.sql.Date(uDate.getTime());
         String date = sDate.toString();
-        
+
         boolean read = false;
         List<String> tags = tip.getTags();
         List<String> relC = tip.getRelC();
@@ -181,7 +181,7 @@ public class TipDao {
 
         stmt.execute();
 
-        int id = this.getCurrentID(conn);
+        int id = this.getNewestID();
 
         this.addRelCourseConnections(conn, reqC, id);
         this.addReqCourseConnections(conn, relC, id);
@@ -190,7 +190,22 @@ public class TipDao {
         conn.close();
     }
 
-    private int getCurrentID(Connection conn) throws SQLException {
+    public void remove(int id) throws SQLException {
+        Connection conn = DriverManager.getConnection(this.databaseAddress);
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM Tip WHERE id = ?");
+        stmt.setInt(1, id);
+        stmt.execute();
+        stmt.close();
+        
+        this.removeRelCourseConnections(conn, id);
+        this.removeReqCourseConnections(conn, id);
+        this.removeTagConnections(conn, id);
+        
+        conn.close();
+    }
+
+    public int getNewestID() throws SQLException {
+        Connection conn = DriverManager.getConnection(this.databaseAddress);
         Statement stmt_maxID = conn.createStatement();
         ResultSet result = stmt_maxID.executeQuery("SELECT MAX(id) FROM Tip");
         int id = result.getInt("MAX(id)");
@@ -211,6 +226,13 @@ public class TipDao {
         }
     }
 
+    private void removeRelCourseConnections(Connection conn, int tipID) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM RelCourse WHERE tip = ?");
+        stmt.setInt(1, tipID);
+        stmt.execute();
+        stmt.close();
+    }
+
     private void addReqCourseConnections(Connection conn, List<String> courses, int tipID) throws SQLException {
         Map<String, Integer> courseID = this.getCourseIdTable(conn);
 
@@ -223,6 +245,13 @@ public class TipDao {
         }
     }
 
+    private void removeReqCourseConnections(Connection conn, int tipID) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM ReqCourse WHERE tip = ?");
+        stmt.setInt(1, tipID);
+        stmt.execute();
+        stmt.close();
+    }
+
     private void addTagConnections(Connection conn, List<String> tags, int tipID) throws SQLException {
         Map<String, Integer> courseID = this.getTagIdTable(conn);
 
@@ -233,6 +262,13 @@ public class TipDao {
             stmt.execute();
             stmt.close();
         }
+    }
+
+    private void removeTagConnections(Connection conn, int tipID) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM TipTag WHERE tip = ?");
+        stmt.setInt(1, tipID);
+        stmt.execute();
+        stmt.close();
     }
 
     private Map<String, Integer> getCourseIdTable(Connection conn) throws SQLException {
