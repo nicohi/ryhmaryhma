@@ -1,61 +1,94 @@
 package vinkkeri.ui;
 
-import vinkkeri.objects.Tip;
+import vinkkeri.ui.commands.Command;
+import vinkkeri.ui.commands.TextUICommands;
 
-import java.util.List;
 import java.util.Scanner;
+import java.util.Map;
+import java.util.TreeMap;
 
+//TODO extract interface from this class 
 public class Textui {
 
-    private Scanner scanner;
+    private IO io;
     private Controller controller;
+	private static boolean running;
 
-    public Textui(Controller controller) {
-        this.scanner = new Scanner(System.in);
+	/*
+	 * This map associates words to commands.
+	 * To add a new command, add a new class implementing the interface Command to TextUICommands.
+	 * Then put a new instance of that class into this Map.
+	 * The key determines what the user must type to access that command.
+	 */
+    private static Map<String, Command> commands;
+    static
+    {
+        commands = new TreeMap<String, Command>();
+        commands.put("help", new TextUICommands.Help());
+        commands.put("list", new TextUICommands.ListTips());
+        commands.put("new", new TextUICommands.NewTip());
+        commands.put("quit", new TextUICommands.Quit());
+    }
+
+	/**
+	 * 
+	 * @param controller
+	 */
+	public Textui(Controller controller, IO io) {
+        this.io = io;
         this.controller = controller;
     }
 
-    public void run() {
-        while (true) {
-            System.out.println("Input command: [new, list, quit]");
-            String command = scanner.nextLine();
-            if (command.equals("quit")) {
-                break;
-            }
-            if (command.equals("new")) {
-                newBookTip();
-            }
-            if (command.equals("list")) {
-                printTips();
-            };
+	/**
+	 * Starts the ui loop.
+	 * Commands are read from io
+	 */
+	public void run() {
+		this.running = true;
+		io.printLine("Welcome to vinkkeri.\n Enter \"help\" to view help.\n");
+        while (running) {
+			io.print("> ");
+			//Read command from user. Split it by whitespace
+			String[] command = this.io.readLine().split(" ");
+			if (command.length > 0) {
+				io.printLine("");
+				//Run the command specified by the user.
+				//If that command is not found in Map 'commands' then run command Unknown(). 
+				commands.getOrDefault(command[0], new TextUICommands.Unknown()).run(this, command);
+				io.printLine("");
+			} 
         }
     }
 
+	/**
+	 * End the loop started by run().
+	 */
+	public void quit() {
+		this.running = false;
+	}
 
-    public void newBookTip() {
-        System.out.println();
-        System.out.println("Title:");
-        String title = scanner.nextLine();
-        System.out.println("Author:");
-        String author = scanner.nextLine();
-        System.out.println("Comment:");
-        String summary = scanner.nextLine();
-        System.out.println("ISBN: (Can be empty)");
-        String isbn = scanner.nextLine();
-        String type = "book";
-        String url = "";
-        boolean read = false;
-        Tip tip = new Tip(type, title, author, summary, isbn, url, read);
-        controller.newTip(tip);
-    }
+	/**
+	 *
+	 * @return 
+	 */
+	public IO getIo() {
+		return io;
+	}
 
-    public void printTips() {
-        List<Tip> tips = controller.getTips();
-        for (Tip tip : tips) {
-            System.out.println(tip);
-            System.out.println("");
-        }
-    }
+	/**
+	 *
+	 * @return
+	 */
+	public Controller getController() {
+		return controller;
+	}
 
+	/**
+	 *
+	 * @return
+	 */
+	public static Map<String, Command> getCommands() {
+		return commands;
+	}
 
 }
