@@ -50,6 +50,20 @@ public class Tip {
         this.reqC = new ArrayList<>();
     }
 
+    /**
+     * Constructor for Tips not from the database
+     * @param type
+     * @param title
+     * @param author
+     * @param summary
+     * @param isbn
+     * @param url
+     * @param read
+     */
+    public Tip(String type, String title, String author, String summary, String isbn, String url, boolean read) {
+        this(-1, "null", type, title, author, summary, isbn, url, read);
+    }
+
     public int getId() {
         return id;
     }
@@ -72,6 +86,14 @@ public class Tip {
 
     public String getSummary() {
         return summary;
+    }
+
+    @Override
+    public String toString() {
+        return "Title: " + title + "\n"
+                + "Author: " + author + "\n"
+                + "Summary: " + summary + "\n"
+                + "ISBN: " + isbn;
     }
 
     public String getIsbn() {

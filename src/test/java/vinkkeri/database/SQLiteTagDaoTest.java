@@ -11,18 +11,18 @@ import static org.junit.Assert.*;
  *
  * @author jpssilve
  */
-public class TagDaoTest {
+public class SQLiteTagDaoTest {
 
-    private TagDao tagDao;
+    private SQLiteTagDao SQLiteTagDao;
 
     @Before
     public void setUp() {
-        this.tagDao = new TagDao("jdbc:sqlite:database.db");
+        this.SQLiteTagDao = new SQLiteTagDao("jdbc:sqlite:database.db");
     }
 
     @Test
     public void gettingTagsWorks1() throws SQLException {
-        List<String> tags = this.tagDao.getTags();
+        List<String> tags = this.SQLiteTagDao.getTags();
 
         assertTrue(tags.contains("Fiktio"));
         assertTrue(tags.contains("Fantasia"));
@@ -33,9 +33,9 @@ public class TagDaoTest {
     public void addingTagsWorks1() throws SQLException {
         List<String> tags = new ArrayList<>();
         tags.add("Theoretical computer science");
-        this.tagDao.addTags(tags);
+        this.SQLiteTagDao.addTags(tags);
 
-        assertTrue(this.tagDao.getTags().contains("Theoretical computer science"));
+        assertTrue(this.SQLiteTagDao.getTags().contains("Theoretical computer science"));
     }
 
     @Test
@@ -45,9 +45,9 @@ public class TagDaoTest {
         tags.add("video");
         tags.add("lecture");
         tags.add("seminar");
-        this.tagDao.addTags(tags);
+        this.SQLiteTagDao.addTags(tags);
 
-        List<String> foundTags = this.tagDao.getTags();
+        List<String> foundTags = this.SQLiteTagDao.getTags();
         assertTrue(foundTags.contains("seminar"));
         assertTrue(foundTags.contains("video"));
         assertTrue(foundTags.contains("blog"));

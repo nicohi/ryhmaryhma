@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.After;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -15,19 +15,19 @@ import vinkkeri.objects.Tip;
  *
  * @author jpssilve
  */
-public class TipDaoTest {
+public class SQLiteTipDaoTest {
 
-    TipDao tipDao;
+    SQLiteTipDao SQLiteTipDao;
 
     @Before
     public void setUp() throws IOException {
-        this.tipDao = new TipDao("jdbc:sqlite:database.db");
+        this.SQLiteTipDao = new SQLiteTipDao("jdbc:sqlite:database.db");
     }
 
     @Test
     public void gettingTipsWorks1() throws SQLException, Exception {
         List<String> tipTitles = new ArrayList<>();
-        List<Tip> tips = this.tipDao.getTips();
+        List<Tip> tips = this.SQLiteTipDao.getTips();
         for (int i = 0; i < tips.size(); i++) {
             tipTitles.add(tips.get(i).getTitle());
         }
@@ -39,10 +39,10 @@ public class TipDaoTest {
 
     @Test
     public void TipInsertAndDeleteWorks() throws SQLException, Exception {
-        this.tipDao.insertTip(new Tip(3, "2018-11-15", "Book", "Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project", "CLRS", "algos", "9780262033848", "http://mitpress.mit.edu", true));
+        this.SQLiteTipDao.insertTip(new Tip(3, "2018-11-15", "Book", "Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project", "CLRS", "algos", "9780262033848", "http://mitpress.mit.edu", true));
 
         List<String> tipTitles = new ArrayList<>();
-        List<Tip> tips = this.tipDao.getTips();
+        List<Tip> tips = this.SQLiteTipDao.getTips();
         
         for (int i = 0; i < tips.size(); i++) {
             tipTitles.add(tips.get(i).getTitle());
@@ -50,10 +50,10 @@ public class TipDaoTest {
 
         assertTrue(tipTitles.contains("Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project"));
         
-        this.tipDao.remove(this.tipDao.getNewestID());
+        this.SQLiteTipDao.remove(this.SQLiteTipDao.getNewestID());
 
         tipTitles.clear();
-        tips = this.tipDao.getTips();
+        tips = this.SQLiteTipDao.getTips();
         
         for (int i = 0; i < tips.size(); i++) {
             tipTitles.add(tips.get(i).getTitle());

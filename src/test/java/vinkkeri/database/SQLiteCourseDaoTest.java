@@ -11,18 +11,18 @@ import static org.junit.Assert.*;
  *
  * @author jpssilve
  */
-public class CourseDaoTest {
+public class SQLiteCourseDaoTest {
 
-    private CourseDao courseDao;
+    private SQLiteCourseDao SQLiteCourseDao;
 
     @Before
     public void setUp() {
-        this.courseDao = new CourseDao("jdbc:sqlite:database.db");
+        this.SQLiteCourseDao = new SQLiteCourseDao("jdbc:sqlite:database.db");
     }
 
     @Test
     public void gettingCoursesWorks1() throws SQLException {
-        List<String> courses = this.courseDao.getCourses();
+        List<String> courses = this.SQLiteCourseDao.getCourses();
 
         assertTrue(courses.contains("TIRA"));
         assertTrue(courses.contains("OHTU"));
@@ -35,9 +35,9 @@ public class CourseDaoTest {
         courses.add("LaMa");
         courses.add("TiTo");
         courses.add("TilPe");
-        this.courseDao.addCourses(courses);
+        this.SQLiteCourseDao.addCourses(courses);
 
-        List<String> found = this.courseDao.getCourses();
+        List<String> found = this.SQLiteCourseDao.getCourses();
         assertTrue(found.contains("TilPe"));
         assertTrue(found.contains("TiTo"));
         assertTrue(found.contains("LaMa"));
