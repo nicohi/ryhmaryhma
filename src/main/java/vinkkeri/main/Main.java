@@ -10,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
         Controller controller = new Controller();
-		IO io = new ConsoleIO(new Scanner(System.in), System.out);
+	IO io = new ConsoleIO(new Scanner(System.in), System.out);
         Textui t = new Textui(controller, io);
         t.run();
     }
