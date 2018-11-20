@@ -13,4 +13,6 @@ public interface TipDao {
     void remove(int id) throws SQLException;
 
     int getNewestID() throws SQLException;
+    
+    void markReadValue(String name, boolean read) throws SQLException;
 }

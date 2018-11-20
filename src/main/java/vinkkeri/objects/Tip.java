@@ -90,10 +90,57 @@ public class Tip {
 
     @Override
     public String toString() {
+        
+        String tempISBN = "";
+        if(!this.isbn.equals("")) {
+            tempISBN = "ISBN: " + this.isbn + "\n";
+        }
+        
+        String tempURL = "";
+        if(!this.url.equals("")) {
+            tempURL = "Link: " + this.url + "\n";
+        }
+        
+        String tagStr = "";
+        String rlcStr = "";
+        String rqcStr = "";
+        
+        for(String tag : this.tags) {
+            tagStr += tag + " ";
+        }
+        
+        if(!tagStr.equals("")) {
+            tagStr = "Tags: " + tagStr + "\n";
+        }
+        
+        
+        for(String course : this.relC) {
+            rlcStr += course + " ";
+        }
+        
+        if(!rlcStr.equals("")) {
+            rlcStr = "Related Courses: " + rlcStr + "\n";
+        }
+        
+        
+        for(String course : this.reqC) {
+            rqcStr += course + " ";
+        }
+        
+        if(!rqcStr.equals("")) {
+            rqcStr = "Required Courses: " + rqcStr + "\n";
+        }
+        
         return "Title: " + title + "\n"
+                + "Added: " + date + "\n"
                 + "Author: " + author + "\n"
                 + "Summary: " + summary + "\n"
-                + "ISBN: " + isbn;
+                + tempISBN
+                + tempURL
+                + "Read: " + read + "\n"
+                + tagStr
+                + rqcStr
+                + rlcStr;
     }
 
     public String getIsbn() {

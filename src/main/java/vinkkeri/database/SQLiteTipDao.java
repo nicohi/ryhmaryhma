@@ -34,8 +34,8 @@ public class SQLiteTipDao implements TipDao {
 
     // getTips() ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     /**
-     * SQL Query into database that is given to SQLiteTipDao object in constructor.
-     * Returns a java.util.List of Tip objects.
+     * SQL Query into database that is given to SQLiteTipDao object in
+     * constructor. Returns a java.util.List of Tip objects.
      *
      * @return List of Tip
      * @throws Exception
@@ -152,6 +152,18 @@ public class SQLiteTipDao implements TipDao {
         return relC;
     }
 
+    // Mark as Read -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    @Override
+    public void markReadValue(String name, boolean read) throws SQLException {
+        Connection conn = DriverManager.getConnection(this.databaseAddress);
+        PreparedStatement stmt = conn.prepareStatement("UPDATE Tip SET READ = ? WHERE name = ?;");
+        stmt.setBoolean(1, read);
+        stmt.setString(2, name);
+        stmt.execute();
+        stmt.close();
+        conn.close();
+    }
+
     // insertTip() --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     /**
      * Writes given Tip into the database.
@@ -199,11 +211,11 @@ public class SQLiteTipDao implements TipDao {
         stmt.setInt(1, id);
         stmt.execute();
         stmt.close();
-        
+
         this.removeRelCourseConnections(conn, id);
         this.removeReqCourseConnections(conn, id);
         this.removeTagConnections(conn, id);
-        
+
         conn.close();
     }
 
