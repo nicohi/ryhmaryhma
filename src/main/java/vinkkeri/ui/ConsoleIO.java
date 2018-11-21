@@ -6,8 +6,8 @@ import java.util.Scanner;
 public class ConsoleIO implements IO {
 
     private Scanner input;
-	private PrintStream output;
-    
+    private PrintStream output;
+
     public ConsoleIO() {
         this.input = new Scanner(System.in);
         this.output = System.out;
@@ -25,12 +25,12 @@ public class ConsoleIO implements IO {
 
     @Override
     public void printLine(String s) {
-		this.output.println(s);
+        this.output.println(s);
     }
 
-	@Override
-	public void print(String s) {
-		this.output.print(s);
-	}
+    @Override
+    public void print(String s) {
+        this.output.print(s);
+    }
 
 }

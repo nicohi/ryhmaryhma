@@ -3,7 +3,6 @@ package vinkkeri.ui;
 import vinkkeri.ui.commands.Command;
 import vinkkeri.ui.commands.TextUICommands;
 
-import java.util.Scanner;
 import java.util.Map;
 import java.util.TreeMap;
 

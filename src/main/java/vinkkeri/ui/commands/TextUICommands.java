@@ -1,7 +1,5 @@
 package vinkkeri.ui.commands;
 
-import java.util.ArrayList;
-import java.util.List;
 import vinkkeri.objects.Tip;
 import vinkkeri.ui.IO;
 import vinkkeri.ui.Textui;

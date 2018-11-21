@@ -8,13 +8,12 @@ package vinkkeri.ui;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  *
  * @author Olli K. Kärki
  */
-public class StubIO implements IO{
+public class StubIO implements IO {
 
     private List<String> lines;
     private int i;
@@ -22,12 +21,23 @@ public class StubIO implements IO{
     private ArrayList<String> prints;
     private PrintStream output;
 
+    public StubIO() {
+        this.output = System.out;
+        i = 0;
+        li = 0;
+        prints = new ArrayList<>();
+    }
+
     public StubIO(List<String> values) {
         this.output = System.out;
         this.lines = values;
         i = 0;
         li = 0;
         prints = new ArrayList<>();
+    }
+
+    public void setLines(List<String> lines) {
+        this.lines = lines;
     }
 
     @Override
@@ -51,5 +61,8 @@ public class StubIO implements IO{
         prints.add(s);
         this.output.print(s);
     }
-    
+
+    public ArrayList<String> getPrints() {
+        return prints;
+    }
 }

@@ -1,6 +1,5 @@
 package vinkkeri.ui.commands;
 
-import java.util.List;
 import vinkkeri.ui.Textui;
 
 /**

@@ -26,6 +26,8 @@ public class Stepdefs {
     Controller controller = new Controller();
     List<String> lines = new ArrayList<>();
     TipDao td = new SQLiteTipDao("jdbc:sqlite:database.db");
+    StubIO io = new StubIO();
+    Textui ui = new Textui(controller, io);
 
     @Given("^new tip is selected$")
     public void new_tip_is_selected() throws Throwable {
@@ -53,13 +55,9 @@ public class Stepdefs {
         lines.add(isbn);
     }
 
-    @Then("^new tip with title \"([^\"]*)\" is in stored in the program$")
+    @Then("^new tip with title \"([^\"]*)\" is stored in the program$")
     public void false_is_true(String title) throws Throwable {
-        lines.add("quit");
-        IO io = new StubIO(lines);
-        Textui ui = new Textui(controller, io);
-        ui.run();
-
+        setLinesAndRun();
         boolean exists = false;
 
         for (Tip tip : td.getTips()) {
@@ -76,4 +74,25 @@ public class Stepdefs {
         assertTrue(exists);
     }
 
+    @Given("^user interface is initialized$")
+    public void user_interface_is_initialized() throws Throwable {
+        lines.clear();
+    }
+
+    @When("^command \"([^\"]*)\" is entered$")
+    public void command_is_entered(String command) throws Throwable {
+        lines.add(command);
+    }
+
+    @Then("^system will respond with \"([^\"]*)\"$")
+    public void system_will_respond_with(String expectedOutput) throws Throwable {
+        setLinesAndRun();
+        assertTrue(io.getPrints().contains(expectedOutput));
+    }
+
+    private void setLinesAndRun() {
+        lines.add("quit");
+        io.setLines(lines);
+        ui.run();
+    }
 }
