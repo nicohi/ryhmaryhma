@@ -90,6 +90,12 @@ public class Stepdefs {
         assertTrue(io.getPrints().contains(expectedOutput));
     }
 
+    @Then("^system will output a line containing \"([^\"]*)\"$")
+    public void system_will_output_a_line_containing(String expectedOutput) throws Throwable {
+        setLinesAndRun();
+        assertTrue(io.getPrints().toString().contains(expectedOutput));
+    }
+
     private void setLinesAndRun() {
         lines.add("quit");
         io.setLines(lines);
