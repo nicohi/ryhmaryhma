@@ -23,6 +23,19 @@ public class TipTest {
     public void setUp() {
         this.tip = new Tip(3, "2018-11-15", "Book", "Introduction to Algorithms", "CLRS", "algos", "9780262033848", "http://mitpress.mit.edu", true);
     }
+    
+    @Test
+    public void toStringTest() {
+        String tostring = tip.toString();
+        String expected = "Title: " + "Introduction to Algorithms" + "\n"
+                + "Added: " + "2018-11-15" + "\n"
+                + "Author: " + "CLRS" + "\n"
+                + "Summary: " + "algos" + "\n"
+                + "ISBN: " + "9780262033848" + "\n"
+                + "Link: " + "http://mitpress.mit.edu" + "\n"
+                + "Read: " + true + "\n";
+        assertTrue(tostring.equals(expected));
+    }
 
     // Tests below test the get methods of the Tip class
     @Test

@@ -65,4 +65,44 @@ public class SQLiteTipDaoTest {
 
         assertTrue(!tipTitles.contains("Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project"));
     }
+    
+    @Test
+    public void markingReadWorks() throws SQLException, Exception {
+        this.SQLiteTipDao.insertTip(new Tip(3, "2018-11-15", "Book", "Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project", "CLRS", "algos", "9780262033848", "http://mitpress.mit.edu", false));
+
+        List<Tip> tips = this.SQLiteTipDao.getTips();
+        
+        boolean corRead = false;
+        
+        for(Tip tip : tips) {
+            if(tip.getTitle().equals("Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project")){
+                if(tip.isRead() == false) {
+                    corRead = true;
+                    break;
+                }
+            }
+        }
+        
+        assertTrue(corRead);
+        
+        this.SQLiteTipDao.markReadValue("Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project", true);
+        
+        tips.clear();
+        tips = this.SQLiteTipDao.getTips();
+        
+        corRead = false;
+        
+        for(Tip tip : tips) {
+            if(tip.getTitle().equals("Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project")){
+                if(tip.isRead() == true) {
+                    corRead = true;
+                    break;
+                }
+            }
+        }
+        
+        assertTrue(corRead);
+        
+        this.SQLiteTipDao.remove(this.SQLiteTipDao.getNewestID());
+    }
 }
