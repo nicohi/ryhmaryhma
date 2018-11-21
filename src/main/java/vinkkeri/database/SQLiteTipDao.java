@@ -156,7 +156,7 @@ public class SQLiteTipDao implements TipDao {
     @Override
     public void markReadValue(String name, boolean read) throws SQLException {
         Connection conn = DriverManager.getConnection(this.databaseAddress);
-        PreparedStatement stmt = conn.prepareStatement("UPDATE Tip SET READ = ? WHERE name = ?;");
+        PreparedStatement stmt = conn.prepareStatement("UPDATE Tip SET READ = ? WHERE title = ?;");
         stmt.setBoolean(1, read);
         stmt.setString(2, name);
         stmt.execute();
@@ -298,7 +298,7 @@ public class SQLiteTipDao implements TipDao {
             int id = result.getInt("id");
             idTable.put(name, id);
         }
-
+        
         result.close();
         stmt.close();
 

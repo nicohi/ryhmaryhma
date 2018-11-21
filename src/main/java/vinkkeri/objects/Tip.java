@@ -150,6 +150,10 @@ public class Tip {
     public boolean isRead() {
         return read;
     }
+    
+    public void setRead(boolean read) {
+        this.read = read;
+    }
 
     public String getUrl() {
         return url;
