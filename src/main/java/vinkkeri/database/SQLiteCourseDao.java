@@ -1,4 +1,3 @@
-
 package vinkkeri.database;
 
 import java.sql.Connection;
@@ -6,9 +5,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -33,19 +33,21 @@ public class SQLiteCourseDao implements CourseDao {
      * Retrieves all courses from database given in the constructor.
      *
      * @return
-     * @throws SQLException
      */
     @Override
-    public List<String> getCourses() throws SQLException {
+    public List<String> getCourses() {
         List<String> courses = new ArrayList<>();
 
-        Connection conn = DriverManager.getConnection(this.databaseAddress);
-        Statement stmt = conn.createStatement();
-        ResultSet result = stmt.executeQuery("SELECT * FROM Course");
+        try (Connection conn = DriverManager.getConnection(this.databaseAddress);
+                ResultSet result = conn.createStatement().executeQuery("SELECT * FROM Course")) {
 
-        while (result.next()) {
-            String course = result.getString("name");
-            courses.add(course);
+            while (result.next()) {
+                String course = result.getString("name");
+                courses.add(course);
+            }
+        } catch (SQLException ex) {
+            // Add desired action here
+            Logger.getLogger(SQLiteCourseDao.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return courses;
@@ -56,10 +58,9 @@ public class SQLiteCourseDao implements CourseDao {
      * duplicates.
      *
      * @param courses
-     * @throws SQLException
      */
     @Override
-    public void addCourses(List<String> courses) throws SQLException {
+    public void addCourses(List<String> courses) {
         List<String> oldCourses = this.getCourses();
         for (String c : courses) {
             if (!oldCourses.contains(c)) {
@@ -68,13 +69,16 @@ public class SQLiteCourseDao implements CourseDao {
         }
     }
 
-    private void addCourse(String course) throws SQLException {
-        Connection conn = DriverManager.getConnection(this.databaseAddress);
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Course (name) VALUES (?)");
-        stmt.setString(1, course);
-        stmt.execute();
-        stmt.close();
-        conn.close();
+    private void addCourse(String course) {
+        try (Connection conn = DriverManager.getConnection(this.databaseAddress);
+                PreparedStatement stmt = conn.prepareStatement("INSERT INTO Course (name) VALUES (?)")) {
+
+            stmt.setString(1, course);
+            stmt.execute();
+        } catch (SQLException ex) {
+            // Add desired action here
+            Logger.getLogger(SQLiteCourseDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

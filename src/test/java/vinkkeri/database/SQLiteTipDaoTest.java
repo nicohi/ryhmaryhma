@@ -1,11 +1,9 @@
 package vinkkeri.database;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +23,7 @@ public class SQLiteTipDaoTest {
     }
 
     @Test
-    public void gettingTipsWorks1() throws SQLException, Exception {
+    public void gettingTipsWorks1() {
         List<String> tipTitles = new ArrayList<>();
         List<Tip> tips = this.SQLiteTipDao.getTips();
         for (int i = 0; i < tips.size(); i++) {
@@ -38,71 +36,71 @@ public class SQLiteTipDaoTest {
     }
 
     @Test
-    public void TipInsertAndDeleteWorks() throws SQLException, Exception {
+    public void TipInsertAndDeleteWorks() {
         this.SQLiteTipDao.insertTip(new Tip(3, "2018-11-15", "Book", "Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project", "CLRS", "algos", "9780262033848", "http://mitpress.mit.edu", true));
 
         List<String> tipTitles = new ArrayList<>();
         List<Tip> tips = this.SQLiteTipDao.getTips();
-        
+
         for (int i = 0; i < tips.size(); i++) {
             tipTitles.add(tips.get(i).getTitle());
         }
 
         assertTrue(tipTitles.contains("Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project"));
-        
+
         this.SQLiteTipDao.remove(this.SQLiteTipDao.getNewestID());
 
         tipTitles.clear();
         tips = this.SQLiteTipDao.getTips();
-        
+
         for (int i = 0; i < tips.size(); i++) {
             tipTitles.add(tips.get(i).getTitle());
         }
-        
+
         for (int i = 0; i < tips.size(); i++) {
             tipTitles.add(tips.get(i).getTitle());
         }
 
         assertTrue(!tipTitles.contains("Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project"));
     }
-    
+
     @Test
-    public void markingReadWorks() throws SQLException, Exception {
+    public void markingReadWorks() {
         this.SQLiteTipDao.insertTip(new Tip(3, "2018-11-15", "Book", "Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project", "CLRS", "algos", "9780262033848", "http://mitpress.mit.edu", false));
 
         List<Tip> tips = this.SQLiteTipDao.getTips();
-        
+
         boolean corRead = false;
-        
-        for(Tip tip : tips) {
-            if(tip.getTitle().equals("Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project")){
-                if(tip.isRead() == false) {
+
+        for (Tip tip : tips) {
+            if (tip.getTitle().equals("Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project")) {
+                if (tip.isRead() == false) {
                     corRead = true;
                     break;
                 }
             }
         }
-        
+
         assertTrue(corRead);
-        
+
         this.SQLiteTipDao.markReadValue("Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project", true);
-        
+
         tips.clear();
         tips = this.SQLiteTipDao.getTips();
-        
+
         corRead = false;
-        
-        for(Tip tip : tips) {
-            if(tip.getTitle().equals("Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project")){
-                if(tip.isRead() == true) {
+
+        for (Tip tip : tips) {
+            if (tip.getTitle().equals("Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project")) {
+                if (tip.isRead() == true) {
                     corRead = true;
                     break;
                 }
             }
         }
-        
+
         assertTrue(corRead);
-        
+
         this.SQLiteTipDao.remove(this.SQLiteTipDao.getNewestID());
     }
 }

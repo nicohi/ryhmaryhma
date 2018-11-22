@@ -2,17 +2,16 @@ package vinkkeri.database;
 
 import vinkkeri.objects.Tip;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface TipDao {
-    List<Tip> getTips() throws Exception;
+    List<Tip> getTips();
 
-    void insertTip(Tip tip) throws SQLException;
+    void insertTip(Tip tip);
 
-    void remove(int id) throws SQLException;
+    void remove(int id);
 
-    int getNewestID() throws SQLException;
+    int getNewestID();
     
-    void markReadValue(String name, boolean read) throws SQLException;
+    void markReadValue(String name, boolean read);
 }

@@ -1,6 +1,5 @@
 package vinkkeri.database;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Before;
@@ -21,7 +20,7 @@ public class SQLiteTagDaoTest {
     }
 
     @Test
-    public void gettingTagsWorks1() throws SQLException {
+    public void gettingTagsWorks1() {
         List<String> tags = this.SQLiteTagDao.getTags();
 
         assertTrue(tags.contains("Fiktio"));
@@ -30,7 +29,7 @@ public class SQLiteTagDaoTest {
     }
 
     @Test
-    public void addingTagsWorks1() throws SQLException {
+    public void addingTagsWorks1() {
         List<String> tags = new ArrayList<>();
         tags.add("Theoretical computer science");
         this.SQLiteTagDao.addTags(tags);
@@ -39,7 +38,7 @@ public class SQLiteTagDaoTest {
     }
 
     @Test
-    public void addingTagsWorks2() throws SQLException {
+    public void addingTagsWorks2() {
         List<String> tags = new ArrayList<>();
         tags.add("blog");
         tags.add("video");

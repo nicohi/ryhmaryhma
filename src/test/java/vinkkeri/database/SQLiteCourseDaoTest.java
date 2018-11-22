@@ -1,6 +1,5 @@
 package vinkkeri.database;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Before;
@@ -21,7 +20,7 @@ public class SQLiteCourseDaoTest {
     }
 
     @Test
-    public void gettingCoursesWorks1() throws SQLException {
+    public void gettingCoursesWorks1() {
         List<String> courses = this.SQLiteCourseDao.getCourses();
 
         assertTrue(courses.contains("TIRA"));
@@ -30,7 +29,7 @@ public class SQLiteCourseDaoTest {
     }
 
     @Test
-    public void addingCoursesWorks1() throws SQLException {
+    public void addingCoursesWorks1() {
         List<String> courses = new ArrayList<>();
         courses.add("LaMa");
         courses.add("TiTo");
