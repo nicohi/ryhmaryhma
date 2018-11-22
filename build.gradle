@@ -43,7 +43,7 @@ jar {
 
 test {
     testLogging.showStandardStreams = true
-    systemProperties System.getProperties()
+//    systemProperties System.getProperties()
 }
 
 jacocoTestReport {
