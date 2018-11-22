@@ -1,6 +1,5 @@
 package vinkkeri.database;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +17,7 @@ public class SQLiteTipDaoTest {
     SQLiteTipDao SQLiteTipDao;
 
     @Before
-    public void setUp() throws IOException {
+    public void setUp() {
         this.SQLiteTipDao = new SQLiteTipDao("jdbc:sqlite:database.db");
     }
 

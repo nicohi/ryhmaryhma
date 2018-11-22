@@ -1,7 +1,8 @@
-package vinkkeri.ui;
+package vinkkeri.ui.tui;
 
 import java.io.PrintStream;
 import java.util.Scanner;
+import vinkkeri.ui.IO;
 
 public class ConsoleIO implements IO {
 

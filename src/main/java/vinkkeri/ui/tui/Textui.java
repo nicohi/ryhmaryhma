@@ -1,10 +1,11 @@
-package vinkkeri.ui;
+package vinkkeri.ui.tui;
 
 import vinkkeri.ui.commands.Command;
 import vinkkeri.ui.commands.TextUICommands;
 
 import java.util.Map;
 import java.util.TreeMap;
+import vinkkeri.ui.IO;
 
 //TODO extract interface from this class 
 public class Textui {

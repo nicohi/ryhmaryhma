@@ -2,7 +2,7 @@ package vinkkeri.ui.commands;
 
 import vinkkeri.objects.Tip;
 import vinkkeri.ui.IO;
-import vinkkeri.ui.Textui;
+import vinkkeri.ui.tui.Textui;
 
 public class TextUICommands {
 

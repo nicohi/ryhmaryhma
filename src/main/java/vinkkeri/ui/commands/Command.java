@@ -1,6 +1,6 @@
 package vinkkeri.ui.commands;
 
-import vinkkeri.ui.Textui;
+import vinkkeri.ui.tui.Textui;
 
 /**
  * Interface for commands.

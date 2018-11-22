@@ -1,4 +1,4 @@
-package vinkkeri.ui;
+package vinkkeri.ui.tui;
 
 import vinkkeri.database.SQLiteTipDao;
 import vinkkeri.database.TipDao;

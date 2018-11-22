@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vinkkeri.ui;
+package vinkkeri.ui.tui;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
+import vinkkeri.ui.IO;
 
 /**
  *

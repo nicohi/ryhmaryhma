@@ -3,23 +3,15 @@ package vinkkeri;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 import vinkkeri.database.SQLiteTipDao;
 import vinkkeri.database.TipDao;
 import vinkkeri.objects.Tip;
-import vinkkeri.ui.ConsoleIO;
-import vinkkeri.ui.Controller;
-import vinkkeri.ui.IO;
-import vinkkeri.ui.StubIO;
-import vinkkeri.ui.Textui;
+import vinkkeri.ui.tui.Controller;
+import vinkkeri.ui.tui.StubIO;
+import vinkkeri.ui.tui.Textui;
 
 public class Stepdefs {
 
@@ -30,33 +22,33 @@ public class Stepdefs {
     Textui ui = new Textui(controller, io);
 
     @Given("^new tip is selected$")
-    public void new_tip_is_selected() throws Throwable {
+    public void new_tip_is_selected() {
         lines.add("new");
 
     }
 
     @When("^title \"([^\"]*)\" is entered$")
-    public void title_is_entered(String title) throws Throwable {
+    public void title_is_entered(String title) {
         lines.add(title);
     }
 
     @When("^author \"([^\"]*)\" is entered$")
-    public void author_is_entered(String author) throws Throwable {
+    public void author_is_entered(String author) {
         lines.add(author);
     }
 
     @When("^comment \"([^\"]*)\" is entered$")
-    public void comment_is_entered(String comment) throws Throwable {
+    public void comment_is_entered(String comment) {
         lines.add(comment);
     }
 
     @When("^isbn \"([^\"]*)\" is entered$")
-    public void isbn_is_entered(String isbn) throws Throwable {
+    public void isbn_is_entered(String isbn) {
         lines.add(isbn);
     }
 
     @Then("^new tip with title \"([^\"]*)\" is stored in the program$")
-    public void false_is_true(String title) throws Throwable {
+    public void false_is_true(String title) {
         setLinesAndRun();
         boolean exists = false;
 
@@ -75,23 +67,23 @@ public class Stepdefs {
     }
 
     @Given("^user interface is initialized$")
-    public void user_interface_is_initialized() throws Throwable {
+    public void user_interface_is_initialized() {
         lines.clear();
     }
 
     @When("^command \"([^\"]*)\" is entered$")
-    public void command_is_entered(String command) throws Throwable {
+    public void command_is_entered(String command) {
         lines.add(command);
     }
 
     @Then("^system will respond with \"([^\"]*)\"$")
-    public void system_will_respond_with(String expectedOutput) throws Throwable {
+    public void system_will_respond_with(String expectedOutput) {
         setLinesAndRun();
         assertTrue(io.getPrints().contains(expectedOutput));
     }
 
     @Then("^system will output a line containing \"([^\"]*)\"$")
-    public void system_will_output_a_line_containing(String expectedOutput) throws Throwable {
+    public void system_will_output_a_line_containing(String expectedOutput) {
         setLinesAndRun();
         assertTrue(io.getPrints().toString().contains(expectedOutput));
     }

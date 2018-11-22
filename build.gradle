@@ -16,10 +16,16 @@ project.ext {
     cucumberVersion = "1.2.5"
 }
 
+jacoco {
+    toolVersion = "0.8.1"
+}
+
 dependencies {
     compile 'com.google.guava:guava:20.0'
     testCompile 'info.cukes:cucumber-java:' + cucumberVersion
     testCompile 'info.cukes:cucumber-junit:' + cucumberVersion
+	testCompile(group: "org.testfx", name: "testfx-core", version: "4.0.13-alpha")
+	testCompile(group: "org.testfx", name: "testfx-junit", version: "4.0.13-alpha")
     testCompile 'junit:junit:4.12'
     compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.8.11'
 
@@ -45,6 +51,15 @@ jacocoTestReport {
         xml.enabled true
         html.enabled true
     }
+}
+
+sourceSets {
+    main {
+		resources {
+			srcDirs = ["src/main/java"]
+			includes = ["**/*.fxml"]
+		}
+	}
 }
 
 mainClassName = 'vinkkeri.main.Main'
