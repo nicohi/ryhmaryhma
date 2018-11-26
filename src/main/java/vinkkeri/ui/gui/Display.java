@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import vinkkeri.ui.gui.components.ListView;
 
 /**
  *
@@ -30,11 +31,17 @@ public class Display {
         
         initializeScene("fxml/test.fxml", "listing");
         initializeScene("fxml/AddTipView.fxml", "add");
+		ListView lv = new ListView();
+		addSceneNonFXML(new Scene(lv.create(), WIDTH, HEIGHT), "listview");
         
         stage.setTitle("Vinkkeri");
-        stage.setScene(Display.scenes.get("add"));
+        stage.setScene(Display.scenes.get("listview"));
         stage.show();
     }
+
+	private void addSceneNonFXML(Scene s, String name) {
+		scenes.put(name, s);
+	}
     
     private void initializeScene(String path, String name) {
         URL location = getClass().getResource(path);

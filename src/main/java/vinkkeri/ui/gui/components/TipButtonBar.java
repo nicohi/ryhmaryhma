@@ -11,9 +11,8 @@ import javafx.scene.control.ToolBar;
 
 public class TipButtonBar extends ToolBar {
 	
-	
-	public TipButtonBar(List<LabelTextInputControl> textItems, ArrayList<RadioButton> rButtons, TextField txtDate, DatePicker datePicker, ArrayList<RadioButton> rButtons2) {
-		super();
+	public TipButtonBar(ListView lv) {
+		
         // Luodaan valikon napit
         Button btnDelete = new Button("Delete");
         btnDelete.setOnAction((e) -> {
@@ -37,24 +36,25 @@ public class TipButtonBar extends ToolBar {
 
         Button btnClear = new Button("Clear");
         btnClear.setOnAction((ActionEvent c) -> {
-            for (LabelTextInputControl lt : textItems) {
+            for (LabelTextInputControl lt : lv.textItems) {
                 lt.clearField();
             }
-            txtDate.clear();
-            datePicker.setValue(null);
+            lv.txtDate.clear();
+            lv.datePicker.setValue(null);
 
-            for (RadioButton rb : rButtons) {
+            for (RadioButton rb : lv.rButtons) {
                 rb.setSelected(false);
             }
 
-            for (RadioButton rb : rButtons2) {
+            for (RadioButton rb : lv.rButtons2) {
                 rb.setSelected(false);
             }
 
             System.out.println("painettu clear");
         });
 
-        this.getChildren().addAll(btnClear, btnFindTip, btnNewTip, btnSave, btnDelete);
+		//add buttons to toolbar
+        getItems().addAll(btnClear, btnFindTip, btnNewTip, btnSave, btnDelete);
 	}
 
 }
