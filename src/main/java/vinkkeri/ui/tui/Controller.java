@@ -43,6 +43,16 @@ public class Controller {
             e.printStackTrace();
         }
     }
+
+    public void removeTip(Tip tip) {
+        try {
+			tipDao.remove(tip.getId());
+            tips = tipDao.getTips();
+        } catch (Exception e) {
+            System.out.println("SQL error");
+            e.printStackTrace();
+        }
+    }
     
     public List<Tip> getTips() {
         return tips;
