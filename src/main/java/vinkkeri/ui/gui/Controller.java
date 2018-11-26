@@ -1,4 +1,4 @@
-package vinkkeri.ui.tui;
+package vinkkeri.ui.gui;
 
 import vinkkeri.database.SQLiteTipDao;
 import vinkkeri.database.TipDao;
@@ -12,6 +12,8 @@ import vinkkeri.database.SQLiteCourseDao;
 import vinkkeri.database.SQLiteTagDao;
 import vinkkeri.database.TagDao;
 
+//tämä on copypastattu tui.controller
+//Controller:ista voisi tehdä rajapinnan tai abstraktin luokkan
 public class Controller {
     
     private List<Tip> tips;
@@ -32,42 +34,15 @@ public class Controller {
     }
     
     public void newTip(Tip tip) {
-        try {
-            courseDao.addCourses(tip.getRelC());
-            courseDao.addCourses(tip.getReqC());
-            tagDao.addTags(tip.getTags());
-            tipDao.insertTip(tip);
-            tips = tipDao.getTips();
-        } catch (Exception e) {
-            System.out.println("SQL error");
-            e.printStackTrace();
-        }
     }
 
     public void removeTip(Tip tip) {
-        try {
-			tipDao.remove(tip.getId());
-            tips = tipDao.getTips();
-        } catch (Exception e) {
-            System.out.println("SQL error");
-            e.printStackTrace();
-        }
     }
     
     public List<Tip> getTips() {
-        return tips;
+		return null;
     }
     
     public void markRead(boolean value, String name) {
-        try {
-            tipDao.markReadValue(name, value);
-            for (Tip tip : tips) {
-                if (tip.getTitle().equals(name)) {
-                    tip.setRead(value);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
