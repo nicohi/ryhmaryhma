@@ -2,23 +2,11 @@ package vinkkeri.ui.gui;
 
 import vinkkeri.ui.gui.components.LabelTextInputControl;
 import java.util.ArrayList;
-import java.util.Optional;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -29,11 +17,10 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.ToolBar;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import vinkkeri.ui.gui.components.TipButtonBar;
 
 /**
  *
@@ -43,6 +30,7 @@ public class GGui extends Application {
 
     public final Separator separator = new Separator();
     public TableView tipsList = new TableView();
+	public Controller controller = new Controller();
 
     @Override
     public void start(Stage window) throws Exception {
@@ -99,48 +87,7 @@ public class GGui extends Application {
         TextField txtDate = new TextField("Date");
         DatePicker datePicker = new DatePicker();
 
-        // Luodaan valikon napit
-        Button btnDelete = new Button("Delete");
-        btnDelete.setOnAction((e) -> {
-            System.out.println("painettu delete");
-        });
-
-        Button btnFindTip = new Button("Find Tip");
-        btnFindTip.setOnAction((p) -> {
-            System.out.println("painettu Find Tip");
-        });
-
-        Button btnSave = new Button("Save");
-        btnSave.setOnAction((e) -> {
-            System.out.println("painettu tallennusta");
-        });
-
-        Button btnNewTip = new Button("New Tip");
-        btnNewTip.setOnAction((n) -> {
-            System.out.println("painettu uusi vinkki");
-        });
-
-        Button btnClear = new Button("Clear");
-        btnClear.setOnAction((ActionEvent c) -> {
-            for (LabelTextInputControl lt : textItems) {
-                lt.clearField();
-            }
-            txtDate.clear();
-            datePicker.setValue(null);
-
-            for (RadioButton rb : rButtons) {
-                rb.setSelected(false);
-            }
-
-            for (RadioButton rb : rButtons2) {
-                rb.setSelected(false);
-            }
-
-            System.out.println("painettu clear");
-        });
-
-        //luodaan toobar ja lisätään napit sinne
-        ToolBar toolbar = new ToolBar(btnClear, btnFindTip, btnNewTip, btnSave, btnDelete);
+		TipButtonBar toolbar = new TipButtonBar(textItems, rButtons, txtDate, datePicker, rButtons2);
 
         /*---- luodaan layout ----*/
         //lisätään vasemman palkin komponentit:
