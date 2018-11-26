@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import vinkkeri.objects.Tip;
 
 /**
- *
  * @author Olli K. Kärki
  */
 public class SQLiteTipDao implements TipDao {
@@ -24,7 +24,7 @@ public class SQLiteTipDao implements TipDao {
     /**
      * Database Access Object for Tip table and other immediately related
      * tables.
-     *
+     * <p>
      * Standard path for this project is 'jdbc:sqlite:database.db';
      *
      * @param path : String path to database in hardrive
@@ -34,6 +34,7 @@ public class SQLiteTipDao implements TipDao {
     }
 
     // getTips() ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
     /**
      * SQL Query into database that is given to SQLiteTipDao object in
      * constructor. Returns a java.util.List of Tip objects.
@@ -45,7 +46,7 @@ public class SQLiteTipDao implements TipDao {
 
         List<Tip> tips = new ArrayList<>();
         try (Connection conn = DriverManager.getConnection(this.databaseAddress);
-                ResultSet result = conn.createStatement().executeQuery("SELECT * FROM Tip ORDER BY date DESC")) {
+             ResultSet result = conn.createStatement().executeQuery("SELECT * FROM Tip ORDER BY date DESC")) {
 
             while (result.next()) {
                 // Use these to create tip object
@@ -87,7 +88,8 @@ public class SQLiteTipDao implements TipDao {
      * @return List of String
      */
     private List<String> getTags(Connection conn, int id) {
-        List<String> tags = new ArrayList<>();;
+        List<String> tags = new ArrayList<>();
+        ;
         try (ResultSet result_tags = conn.createStatement().
                 executeQuery("SELECT * FROM TipTag LEFT JOIN Tag ON TipTag.tag = Tag.id WHERE TipTag.tip = " + id)) {
 
@@ -135,7 +137,8 @@ public class SQLiteTipDao implements TipDao {
      * @return List of String
      */
     private List<String> getRelatedCourses(Connection conn, int id) {
-        List<String> relC = new ArrayList<>();;
+        List<String> relC = new ArrayList<>();
+        ;
         try (ResultSet result_relC = conn.createStatement().executeQuery("SELECT * FROM RelCourse LEFT JOIN Course ON RelCourse.course = Course.id WHERE RelCourse.tip = " + id)) {
 
             while (result_relC.next()) {
@@ -154,7 +157,7 @@ public class SQLiteTipDao implements TipDao {
     @Override
     public void markReadValue(String name, boolean read) {
         try (Connection conn = DriverManager.getConnection(this.databaseAddress);
-                PreparedStatement stmt = conn.prepareStatement("UPDATE Tip SET READ = ? WHERE title = ?;")) {
+             PreparedStatement stmt = conn.prepareStatement("UPDATE Tip SET READ = ? WHERE title = ?;")) {
 
             stmt.setBoolean(1, read);
             stmt.setString(2, name);
@@ -166,8 +169,10 @@ public class SQLiteTipDao implements TipDao {
     }
 
     // insertTip() --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
     /**
      * Writes given Tip into the database.
+     * Use TagDao addTags() before calling this!
      *
      * @param tip
      */
@@ -230,7 +235,7 @@ public class SQLiteTipDao implements TipDao {
     public int getNewestID() {
         int idErrorIndicator = -1;
         try (Connection conn = DriverManager.getConnection(this.databaseAddress);
-                ResultSet result = conn.createStatement().executeQuery("SELECT MAX(id) FROM Tip")) {
+             ResultSet result = conn.createStatement().executeQuery("SELECT MAX(id) FROM Tip")) {
 
             return result.getInt("MAX(id)");
         } catch (SQLException ex) {
@@ -294,12 +299,13 @@ public class SQLiteTipDao implements TipDao {
 
     private void addTagConnections(Connection conn, List<String> tags, int tipID) {
         try {
-            Map<String, Integer> courseID = this.getTagIdTable(conn);
+            Map<String, Integer> tagIdTable = this.getTagIdTable(conn);
+            System.out.println("tag hashmap " + tagIdTable);
 
-            for (String course : tags) {
+            for (String tag : tags) {
                 try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO TipTag VALUES (?, ?)")) {
                     stmt.setInt(1, tipID);
-                    stmt.setInt(2, courseID.get(course));
+                    stmt.setInt(2, tagIdTable.get(tag));
                     stmt.execute();
                 }
             }
