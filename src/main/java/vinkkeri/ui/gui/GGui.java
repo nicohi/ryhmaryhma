@@ -6,6 +6,7 @@
 package vinkkeri.ui.gui;
 
 import java.util.Optional;
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -38,7 +39,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
- *
  * @author tixkontt
  */
 public class GGui extends Application {
@@ -77,7 +77,7 @@ public class GGui extends Application {
         tipslistArea.setSpacing(5);
         tipslistArea.setPadding(new Insets(10, 0, 0, 10));
         tipslistArea.getChildren().addAll(lblHeader, tipsList);
-//vasemman palkin komponentit
+        //vasemman palkin komponentit
         VBox menu = new VBox();
         menu.setMaxHeight(600.00);
         menu.setPadding(new Insets(20, 20, 20, 20));
@@ -115,7 +115,7 @@ public class GGui extends Application {
         TextField txtDate = new TextField("Date");
         DatePicker datePicker = new DatePicker();
 
-        
+
         //lisää komponentteja
         Label lblTitle = new Label("Title");
         TextField txtTitle = new TextField("Title");
@@ -138,7 +138,7 @@ public class GGui extends Application {
             System.out.println("painettu delete");
         });
 
-        Button btnFindTip= new Button("Find Tip");
+        Button btnFindTip = new Button("Find Tip");
         btnFindTip.setOnAction((p) -> {
             System.out.println("painettu Find Tip");
         });
@@ -176,7 +176,7 @@ public class GGui extends Application {
         });
 
         //luodaan toobar ja lisätään napit sinne
-        ToolBar toolbar = new ToolBar(btnClear, btnFindTip, btnNewTip,btnSave, btnDelete);
+        ToolBar toolbar = new ToolBar(btnClear, btnFindTip, btnNewTip, btnSave, btnDelete);
 
         /*---- luodaan layout ----*/
         //lisätään vasemman palkin komponentit:

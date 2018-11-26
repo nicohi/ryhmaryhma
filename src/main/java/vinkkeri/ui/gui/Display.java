@@ -34,9 +34,10 @@ public class Display {
         scenes = new HashMap<>();
         
         initializeScene("fxml/test.fxml", "listing");
+        initializeScene("fxml/AddTipView.fxml", "add");
         
         stage.setTitle("Vinkkeri");
-        stage.setScene(Display.scenes.get("listing"));
+        stage.setScene(Display.scenes.get("add"));
         stage.show();
     }
     
