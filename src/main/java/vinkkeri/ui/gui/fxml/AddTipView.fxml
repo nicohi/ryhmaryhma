@@ -10,18 +10,18 @@
    <children>
       <Label fx:id="titleLabel" layoutX="14.0" layoutY="14.0" text="Title" />
       <TextField fx:id="titleField" layoutX="14.0" layoutY="37.0" prefHeight="26.0" prefWidth="214.0" />
-      <Button fx:id="addButton" layoutX="290.0" layoutY="288.0" mnemonicParsing="false" text="Add" />
       <Label fx:id="authorLabel" layoutX="14.0" layoutY="74.0" text="Author" />
       <TextField fx:id="authorField" layoutX="14.0" layoutY="96.0" prefHeight="26.0" prefWidth="214.0" />
-      <Label fx:id="urlLabel" layoutX="14.0" layoutY="136.0" text="Url //TODO" />
-      <TextField fx:id="urlField" layoutX="14.0" layoutY="161.0" prefHeight="26.0" prefWidth="214.0" text="todo" />
+      <Label fx:id="urlLabel" layoutX="14.0" layoutY="136.0" text="Url" />
+      <TextField fx:id="urlField" layoutX="14.0" layoutY="161.0" prefHeight="26.0" prefWidth="214.0" />
       <Label fx:id="isbnLabel" layoutX="14.0" layoutY="197.0" text="ISBN" />
       <TextField fx:id="isbnField" layoutX="14.0" layoutY="223.0" prefHeight="26.0" prefWidth="214.0" />
       <Label fx:id="commentLabel" layoutX="290.0" layoutY="14.0" text="Comment" />
       <TextArea fx:id="commentArea" layoutX="290.0" layoutY="36.0" prefHeight="210.0" prefWidth="296.0" />
-      <Label fx:id="tagsLabel" layoutX="13.0" layoutY="266.0" text="Tags" />
+      <Label fx:id="tagsLabel" layoutX="13.0" layoutY="266.0" text="Tags (separated by spaces)" />
       <TextField fx:id="tagField" layoutX="14.0" layoutY="288.0" prefHeight="26.0" prefWidth="214.0" />
-      <Button fx:id="backButton" layoutX="536.0" layoutY="288.0" mnemonicParsing="false" text="Back" />
+      <Button fx:id="addButton" layoutX="290.0" layoutY="288.0" mnemonicParsing="false" text="Add" />
       <Button fx:id="clearButton" layoutX="398.0" layoutY="288.0" mnemonicParsing="false" text="Clear" />
+      <Button fx:id="backButton" layoutX="536.0" layoutY="288.0" mnemonicParsing="false" text="Back" />
    </children>
 </AnchorPane>

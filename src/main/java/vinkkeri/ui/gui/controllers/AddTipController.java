@@ -2,16 +2,26 @@ package vinkkeri.ui.gui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputControl;
+import javafx.scene.control.*;
+import javafx.scene.paint.Color;
+import vinkkeri.database.TagDao;
+import vinkkeri.database.TipDao;
+import vinkkeri.objects.Tip;
+import vinkkeri.ui.gui.Display;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class AddTipController implements Initializable {
+
+    // for changing scenes
+    private Display display;
+
+    // database dependencies
+    private TipDao tipDao;
+    private TagDao tagDao;
 
     // buttons
     @FXML
@@ -21,7 +31,11 @@ public class AddTipController implements Initializable {
     @FXML
     private Button clearButton;
 
-    // input fields
+    // labels, used for errors for now
+    @FXML
+    private Label titleLabel;
+
+    // input fields, remember to add new ones to the inputs list.
     ArrayList<TextInputControl> inputs;
 
     @FXML
@@ -48,44 +62,109 @@ public class AddTipController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.inputs = new ArrayList<>();
-        fillInputs();
-        addButton();
+        fillInputList();
         clearButton();
+        addButton();
+        backButton();
+    }
+
+    public void setDisplay(Display display) {
+        this.display = display;
+    }
+
+    public void setTipDao(TipDao tipDao) {
+        this.tipDao = tipDao;
+    }
+
+    public void setTagDao(TagDao tagDao) {
+        this.tagDao = tagDao;
     }
 
     /**
      * Create an iterable list of inputfields.
      */
-    private void fillInputs() {
+    private void fillInputList() {
         this.inputs.add(titleField);
         this.inputs.add(authorField);
         this.inputs.add(isbnField);
         this.inputs.add(tagField);
         this.inputs.add(commentArea);
+        this.inputs.add(urlField);
     }
 
-
+    /**
+     * Handles adding a new tip
+     */
     public void addButton() {
         addButton.setOnAction(event -> {
-            //validate fields
-
-
+            //validate fields, just checking for empty now
+            if (validate()) {
+                titleLabel.setTextFill(Color.BLACK);
+                Tip tip = createTip();
+                tagDao.addTags(tip.getTags());
+                tipDao.insertTip(tip);
+                System.out.println(tipDao.getTips());
+                clearFields();
+            } else {
+                titleLabel.setTextFill(Color.RED);
+            }
         });
     }
 
+    /**
+     * Oma luokka tälle jos speksataan enemmän
+     *
+     * @return true if fields are ok
+     */
+    private boolean validate() {
+        return !titleField.getText().trim().isEmpty();
+    }
+
+    /**
+     * Clears all fields in inputs
+     */
     private void clearFields() {
         for (TextInputControl tic : inputs) {
             tic.clear();
         }
     }
 
+    /**
+     * Sets the eventhandler for clearbutton
+     */
     private void clearButton() {
         this.clearButton.setOnAction(event -> {
             clearFields();
         });
     }
 
-    private void createTip() {
 
+    /**
+     * fixme this to the real listview name!
+     */
+    private void backButton() {
+        this.backButton.setOnAction(event -> {
+            this.display.setScene("listing");
+        });
+    }
+
+    /**
+     * Creates a tip object from the inputfields
+     *
+     * @return
+     */
+    private Tip createTip() {
+        String title = titleField.getText();
+        String author = authorField.getText();
+        String isbn = isbnField.getText();
+        String comment = commentArea.getText();
+        String url = urlField.getText();
+        Tip tip = new Tip("book", title, author, comment, isbn, url, false);
+        if (!tagField.getText().isEmpty()) {
+            ArrayList<String> tags = new ArrayList<>();
+            tags.addAll(Arrays.asList(tagField.getText().split(" ")));
+            tip.setTags(tags);
+        }
+        return tip;
     }
 }
