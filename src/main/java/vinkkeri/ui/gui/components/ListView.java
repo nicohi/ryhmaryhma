@@ -63,10 +63,12 @@ public class ListView {
 
 		TipListBox tipslistArea = new TipListBox(this);
 
-		TipButtonBar toolbar = new TipButtonBar(this);
 
-        layout.setLeft(menu);
-        layout.setTop(toolbar);
+		// unused components
+        //layout.setLeft(menu);
+		//TipButtonBar toolbar = new TipButtonBar(this);
+        //layout.setTop(toolbar);
+
         layout.setCenter(tipslistArea);
 
         return layout;
