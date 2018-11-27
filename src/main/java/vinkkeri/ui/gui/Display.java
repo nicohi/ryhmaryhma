@@ -26,7 +26,7 @@ public class Display {
     private static Stage stage;
     private static HashMap<String, Scene> scenes;
     private static HashMap<String, FXMLLoader> loaders;
-    private static ListView lv;
+    private static ListView listview;
     private static TipDao tipDao;
     private static TagDao tagDao;
     
@@ -43,13 +43,13 @@ public class Display {
 
         // add view
         initializeScene("fxml/AddTipView.fxml", "add");
-        lv = new ListView();
-        addSceneNonFXML(new Scene(lv.create(), WIDTH, HEIGHT), "listview");
+        listview = new ListView(this);
+        addSceneNonFXML(new Scene(listview.create(), WIDTH, HEIGHT), "listview");
         setAddViewDependencies();
         
         stage.setTitle("Vinkkeri");
         stage.setScene(Display.scenes.get("listview"));
-        lv.populateTipList(tipDao.getTips());
+        listview.populateTipList(tipDao.getTips());
         stage.show();
     }
     
@@ -63,6 +63,10 @@ public class Display {
         c.setTagDao(tagDao);
         c.setDisplay(this);
     }
+
+	public static TipDao getTipDao() {
+		return tipDao;
+	}
     
     private void initializeScene(String path, String name) {
         URL location = getClass().getResource(path);
@@ -79,7 +83,7 @@ public class Display {
     public static void setScene(String scene) {
         stage.setScene(scenes.get(scene));
         if(scene.equals("listview")) {
-            lv.populateTipList(tipDao.getTips());
+            listview.populateTipList(tipDao.getTips());
         }
     }
 }

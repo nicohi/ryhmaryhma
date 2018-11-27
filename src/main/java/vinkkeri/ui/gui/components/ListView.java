@@ -24,6 +24,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import vinkkeri.objects.Tip;
 import vinkkeri.ui.gui.Controller;
+import vinkkeri.ui.gui.Display;
 import vinkkeri.ui.gui.components.TipButtonBar;
 
 /**
@@ -34,12 +35,17 @@ public class ListView {
 
     public final Separator separator = new Separator();
     public TableView tipsList = new TableView();
-    public Controller controller = new Controller();
     public TextField txtDate = new TextField("Date");
     public DatePicker datePicker = new DatePicker();
     public List<LabelTextInputControl> textItems = new ArrayList<>();
     public ArrayList<RadioButton> rButtons2 = new ArrayList<>();
     public ArrayList<RadioButton> rButtons = new ArrayList<>();
+	public Display display;
+
+	public ListView(Display d) {
+		this.display = d;
+	}
+
 
     public Parent create() {
         separator.setMaxWidth(100.0);

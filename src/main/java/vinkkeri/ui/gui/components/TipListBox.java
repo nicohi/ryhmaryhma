@@ -69,17 +69,29 @@ public class TipListBox extends VBox {
         //initTableColumns(columns, new String[]{"id", "Type", "Title", "Author", "URL", "ISBN", "Tags", "Comments", "Read", "Date", "Related Courses", "Required Courses"});
         lv.tipsList.getColumns().addAll(columns);
 
-        Button button = new Button("Add Tip");
-        button.setOnAction(new EventHandler<ActionEvent>() {
+        Button addTipButton = new Button("Add Tip");
+        addTipButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 Display.setScene("add");
             }
         });
 
+        Button removeTipButton = new Button("Delete Tip");
+        removeTipButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+				lv.tipsList.getSelectionModel().getSelectedItems().stream()
+						.forEach(tip -> {
+							lv.display.getTipDao().remove(((Tip) tip).getId());
+							lv.tipsList.getItems().remove(tip);
+						});
+            }
+        });
+
         setSpacing(5);
         setPadding(new Insets(10, 10, 10, 10));
-        getChildren().addAll(lblHeader, lv.tipsList, button);
+        getChildren().addAll(lblHeader, lv.tipsList, addTipButton, removeTipButton);
 
         table = lv.tipsList;
     }
