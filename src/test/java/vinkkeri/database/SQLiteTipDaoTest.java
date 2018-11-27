@@ -181,4 +181,35 @@ public class SQLiteTipDaoTest {
             fail("Not added");
         }
     }
+
+    @Test
+    public void insertAddsRequiredCourses() {
+        ArrayList<String> required = new ArrayList<>();
+        required.add("TiKaPe");
+        required.add("OHTU");
+
+        Tip readingTip = new Tip("Link", "Testing more -- CS courses", "", "kapistely", "", "https://www.cs.helsinki.fi/courses/", false);
+        readingTip.setReqC(required);
+
+        this.courseDao.addCourses(required);
+        this.SQLiteTipDao.insertTip(readingTip);
+        List<Tip> tips = this.SQLiteTipDao.getTips();
+
+        boolean notFound = true;
+        for (Tip tip : tips) {
+            if (tip.getTitle().equals("Testing more -- CS courses")) {
+                this.toBeDeletedTestTipsIds.add(tip.getId());
+                notFound = false;
+                assertTrue(tip.getReqC().contains("TiKaPe"));
+                assertTrue(tip.getReqC().contains("OHTU"));
+                break;
+            }
+        }
+
+        this.SQLiteTipDao.remove(this.SQLiteTipDao.getNewestID());
+
+        if (notFound) {
+            fail("Not added");
+        }
+    }
 }

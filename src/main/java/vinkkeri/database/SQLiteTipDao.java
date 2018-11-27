@@ -203,8 +203,8 @@ public class SQLiteTipDao implements TipDao {
                 return;
             }
 
-            this.addRelCourseConnections(conn, related, id);
-            this.addReqCourseConnections(conn, required, id);
+            this.addRelatedCourseConnections(conn, related, id);
+            this.addRequiredCourseConnections(conn, required, id);
             this.addTagConnections(conn, tags, id);
         } catch (SQLException ex) {
             // Add desired action here
@@ -218,8 +218,8 @@ public class SQLiteTipDao implements TipDao {
             stmt.setInt(1, id);
             stmt.execute();
 
-            this.removeRelCourseConnections(conn, id);
-            this.removeReqCourseConnections(conn, id);
+            this.removeRelatedCourseConnections(conn, id);
+            this.removeRequiredCourseConnections(conn, id);
             this.removeTagConnections(conn, id);
         } catch (SQLException ex) {
             // Add desired action here
@@ -240,7 +240,7 @@ public class SQLiteTipDao implements TipDao {
         }
     }
 
-    private void addRelCourseConnections(Connection conn, List<String> courses, int tipID) {
+    private void addRelatedCourseConnections(Connection conn, List<String> courses, int tipID) {
         try {
             Map<String, Integer> courseID = this.getCourseIdTable(conn);
             for (String course : courses) {
@@ -256,7 +256,7 @@ public class SQLiteTipDao implements TipDao {
         }
     }
 
-    private void removeRelCourseConnections(Connection conn, int tipID) {
+    private void removeRelatedCourseConnections(Connection conn, int tipID) {
         try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM RelCourse WHERE tip = ?")) {
             stmt.setInt(1, tipID);
             stmt.execute();
@@ -266,7 +266,7 @@ public class SQLiteTipDao implements TipDao {
         }
     }
 
-    private void addReqCourseConnections(Connection conn, List<String> courses, int tipID) {
+    private void addRequiredCourseConnections(Connection conn, List<String> courses, int tipID) {
         try {
             Map<String, Integer> courseID = this.getCourseIdTable(conn);
 
@@ -283,7 +283,7 @@ public class SQLiteTipDao implements TipDao {
         }
     }
 
-    private void removeReqCourseConnections(Connection conn, int tipID) {
+    private void removeRequiredCourseConnections(Connection conn, int tipID) {
         try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM ReqCourse WHERE tip = ?")) {
             stmt.setInt(1, tipID);
             stmt.execute();

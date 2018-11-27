@@ -184,7 +184,7 @@ public class Tip {
      * @return The related courses
      */
     public List<String> getRelC() {
-        return relC;
+        return this.relC;
     }
 
     /**
@@ -205,7 +205,7 @@ public class Tip {
      * @return A list of required courses
      */
     public List<String> getReqC() {
-        return reqC;
+        return this.reqC;
     }
 
     /**
