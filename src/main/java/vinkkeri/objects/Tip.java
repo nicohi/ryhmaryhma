@@ -21,8 +21,8 @@ public class Tip {
     private SimpleStringProperty read;
 
     private List<String> tags;
-    private List<String> relC;
-    private List<String> reqC;
+    private List<String> relatedCourses;
+    private List<String> requiredCourses;
 
     /**
      *
@@ -47,8 +47,8 @@ public class Tip {
         this.url = new SimpleStringProperty(url);
         this.read = new SimpleStringProperty(read+"");
         this.tags = new ArrayList<>();
-        this.relC = new ArrayList<>();
-        this.reqC = new ArrayList<>();
+        this.relatedCourses = new ArrayList<>();
+        this.requiredCourses = new ArrayList<>();
     }
 
     /**
@@ -115,7 +115,7 @@ public class Tip {
         }
         
         
-        for(String course : this.relC) {
+        for(String course : this.relatedCourses) {
             rlcStr += course + " ";
         }
         
@@ -124,7 +124,7 @@ public class Tip {
         }
         
         
-        for(String course : this.reqC) {
+        for(String course : this.requiredCourses) {
             rqcStr += course + " ";
         }
         
@@ -183,8 +183,8 @@ public class Tip {
      *
      * @return The related courses
      */
-    public List<String> getRelC() {
-        return this.relC;
+    public List<String> getRelatedCourses() {
+        return this.relatedCourses;
     }
 
     /**
@@ -193,8 +193,8 @@ public class Tip {
      *
      * @param relC A list of related courses
      */
-    public void setRelC(List<String> relC) {
-        this.relC = relC;
+    public void setRelC(List<String> relatedCourses) {
+        this.relatedCourses = relatedCourses;
     }
 
     /**
@@ -204,8 +204,8 @@ public class Tip {
      *
      * @return A list of required courses
      */
-    public List<String> getReqC() {
-        return this.reqC;
+    public List<String> getRequiredCourses() {
+        return this.relatedCourses;
     }
 
     /**
@@ -214,7 +214,7 @@ public class Tip {
      *
      * @param reqC A list of required courses
      */
-    public void setReqC(List<String> reqC) {
-        this.reqC = reqC;
+    public void setReqC(List<String> requiredCourses) {
+        this.requiredCourses = requiredCourses;
     }
 }

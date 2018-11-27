@@ -169,8 +169,8 @@ public class SQLiteTipDaoTest {
             if (tip.getTitle().equals("Testing -- CS courses")) {
                 this.toBeDeletedTestTipsIds.add(tip.getId());
                 notFound = false;
-                assertTrue(tip.getRelC().contains("TIRA"));
-                assertTrue(tip.getRelC().contains("OHTU"));
+                assertTrue(tip.getRelatedCourses().contains("TIRA"));
+                assertTrue(tip.getRelatedCourses().contains("OHTU"));
                 break;
             }
         }
@@ -200,8 +200,8 @@ public class SQLiteTipDaoTest {
             if (tip.getTitle().equals("Testing more -- CS courses")) {
                 this.toBeDeletedTestTipsIds.add(tip.getId());
                 notFound = false;
-                assertTrue(tip.getReqC().contains("TiKaPe"));
-                assertTrue(tip.getReqC().contains("OHTU"));
+                assertTrue(tip.getRequiredCourses().contains("TiKaPe"));
+                assertTrue(tip.getRequiredCourses().contains("OHTU"));
                 break;
             }
         }

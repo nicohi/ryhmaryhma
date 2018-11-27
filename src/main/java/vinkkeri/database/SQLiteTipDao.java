@@ -181,8 +181,8 @@ public class SQLiteTipDao implements TipDao {
 
         boolean read = false;
         List<String> tags = tip.getTags();
-        List<String> related = tip.getRelC();
-        List<String> required = tip.getReqC();
+        List<String> related = tip.getRelatedCourses();
+        List<String> required = tip.getRequiredCourses();
 
         try (Connection conn = DriverManager.getConnection(this.databaseAddress)) {
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO Tip (date, type, title, author, summary, isbn, url, read) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");

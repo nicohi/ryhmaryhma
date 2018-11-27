@@ -33,8 +33,8 @@ public class Controller {
     
     public void newTip(Tip tip) {
         try {
-            courseDao.addCourses(tip.getRelC());
-            courseDao.addCourses(tip.getReqC());
+            courseDao.addCourses(tip.getRelatedCourses());
+            courseDao.addCourses(tip.getRequiredCourses());
             tagDao.addTags(tip.getTags());
             tipDao.insertTip(tip);
             tips = tipDao.getTips();
