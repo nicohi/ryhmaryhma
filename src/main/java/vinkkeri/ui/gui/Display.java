@@ -27,13 +27,11 @@ public class Display {
     private static HashMap<String, Scene> scenes;
     private static HashMap<String, FXMLLoader> loaders;
     private static ListView listview;
-    private static TipDao tipDao;
-    private static TagDao tagDao;
+    private static Controller controller;
     
     public Display(Stage stage) {
         Display.stage = stage;
-        this.tipDao = new SQLiteTipDao("jdbc:sqlite:database.db");
-        this.tagDao = new SQLiteTagDao("jdbc:sqlite:database.db");
+        this.controller = new Controller();
         initialize();
     }
     
@@ -49,7 +47,7 @@ public class Display {
         
         stage.setTitle("Vinkkeri");
         stage.setScene(Display.scenes.get("listview"));
-        listview.populateTipList(tipDao.getTips());
+        listview.populateTipList(controller.getTips());
         stage.show();
     }
     
@@ -59,13 +57,12 @@ public class Display {
     
     private void setAddViewDependencies() {
         AddTipController c = loaders.get("add").getController();
-        c.setTipDao(tipDao);
-        c.setTagDao(tagDao);
+        c.setController(controller);
         c.setDisplay(this);
     }
 
-	public static TipDao getTipDao() {
-		return tipDao;
+	public static Controller getController() {
+		return controller;
 	}
     
     private void initializeScene(String path, String name) {
@@ -83,7 +80,7 @@ public class Display {
     public static void setScene(String scene) {
         stage.setScene(scenes.get(scene));
         if(scene.equals("listview")) {
-            listview.populateTipList(tipDao.getTips());
+            listview.populateTipList(controller.getTips());
         }
     }
 }

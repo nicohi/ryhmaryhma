@@ -83,7 +83,7 @@ public class TipListBox extends VBox {
             public void handle(ActionEvent event) {
 				lv.tipsList.getSelectionModel().getSelectedItems().stream()
 						.forEach(tip -> {
-							lv.display.getTipDao().remove(((Tip) tip).getId());
+							lv.display.getController().removeTip((Tip) tip);
 							lv.tipsList.getItems().remove(tip);
 						});
             }

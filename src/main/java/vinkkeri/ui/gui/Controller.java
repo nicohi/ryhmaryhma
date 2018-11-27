@@ -33,16 +33,23 @@ public class Controller {
         }
     }
 
-    public void newTip(Tip tip) {
-    }
-
     public void removeTip(Tip tip) {
+		tipDao.remove(tip.getId());
     }
 
     public List<Tip> getTips() {
-        return null;
+		return tipDao.getTips();
     }
 
     public void markRead(boolean value, String name) {
+		tipDao.markReadValue(name, value);
     }
+
+	public void addTags(List<String> tags) {
+		tagDao.addTags(tags);
+	}
+
+	public void insertTip(Tip tip) {
+		tipDao.insertTip(tip);
+	}
 }

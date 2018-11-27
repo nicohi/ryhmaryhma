@@ -13,6 +13,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
+import vinkkeri.ui.gui.Controller;
 
 public class AddTipController implements Initializable {
 
@@ -20,8 +21,7 @@ public class AddTipController implements Initializable {
     private Display display;
 
     // database dependencies
-    private TipDao tipDao;
-    private TagDao tagDao;
+    private Controller controller;
 
     // buttons
     @FXML
@@ -71,12 +71,8 @@ public class AddTipController implements Initializable {
         this.display = display;
     }
 
-    public void setTipDao(TipDao tipDao) {
-        this.tipDao = tipDao;
-    }
-
-    public void setTagDao(TagDao tagDao) {
-        this.tagDao = tagDao;
+    public void setController(Controller c) {
+        this.controller = c;
     }
 
     /**
@@ -100,8 +96,8 @@ public class AddTipController implements Initializable {
             if (validate()) {
                 titleLabel.setTextFill(Color.BLACK);
                 Tip tip = createTip();
-                tagDao.addTags(tip.getTags());
-                tipDao.insertTip(tip);
+                controller.addTags(tip.getTags());
+                controller.insertTip(tip);
                 clearFields();
             } else {
                 titleLabel.setTextFill(Color.RED);
