@@ -34,7 +34,6 @@ public class SQLiteTipDao implements TipDao {
     }
 
     // getTips() ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
     /**
      * SQL Query into database that is given to SQLiteTipDao object in
      * constructor. Returns a java.util.List of Tip objects.
@@ -46,7 +45,7 @@ public class SQLiteTipDao implements TipDao {
 
         List<Tip> tips = new ArrayList<>();
         try (Connection conn = DriverManager.getConnection(this.databaseAddress);
-             ResultSet result = conn.createStatement().executeQuery("SELECT * FROM Tip ORDER BY date DESC")) {
+                ResultSet result = conn.createStatement().executeQuery("SELECT * FROM Tip ORDER BY date DESC")) {
 
             while (result.next()) {
                 // Use these to create tip object
@@ -155,7 +154,7 @@ public class SQLiteTipDao implements TipDao {
     @Override
     public void markReadValue(String name, boolean read) {
         try (Connection conn = DriverManager.getConnection(this.databaseAddress);
-             PreparedStatement stmt = conn.prepareStatement("UPDATE Tip SET READ = ? WHERE title = ?;")) {
+                PreparedStatement stmt = conn.prepareStatement("UPDATE Tip SET READ = ? WHERE title = ?;")) {
 
             stmt.setBoolean(1, read);
             stmt.setString(2, name);
@@ -167,10 +166,9 @@ public class SQLiteTipDao implements TipDao {
     }
 
     // insertTip() --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
     /**
-     * Writes given Tip into the database.
-     * Use TagDao addTags() before calling this!
+     * Writes given Tip into the database. Use TagDao addTags() before calling
+     * this!
      *
      * @param tip
      */
@@ -183,8 +181,8 @@ public class SQLiteTipDao implements TipDao {
 
         boolean read = false;
         List<String> tags = tip.getTags();
-        List<String> relC = tip.getRelC();
-        List<String> reqC = tip.getReqC();
+        List<String> related = tip.getRelC();
+        List<String> required = tip.getReqC();
 
         try (Connection conn = DriverManager.getConnection(this.databaseAddress)) {
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO Tip (date, type, title, author, summary, isbn, url, read) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
@@ -205,8 +203,8 @@ public class SQLiteTipDao implements TipDao {
                 return;
             }
 
-            this.addRelCourseConnections(conn, reqC, id);
-            this.addReqCourseConnections(conn, relC, id);
+            this.addRelCourseConnections(conn, related, id);
+            this.addReqCourseConnections(conn, required, id);
             this.addTagConnections(conn, tags, id);
         } catch (SQLException ex) {
             // Add desired action here
@@ -233,7 +231,7 @@ public class SQLiteTipDao implements TipDao {
     public int getNewestID() {
         int idErrorIndicator = -1;
         try (Connection conn = DriverManager.getConnection(this.databaseAddress);
-             ResultSet result = conn.createStatement().executeQuery("SELECT MAX(id) FROM Tip")) {
+                ResultSet result = conn.createStatement().executeQuery("SELECT MAX(id) FROM Tip")) {
 
             return result.getInt("MAX(id)");
         } catch (SQLException ex) {
