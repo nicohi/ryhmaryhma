@@ -4,6 +4,7 @@ import vinkkeri.ui.gui.components.LabelTextInputControl;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -21,6 +22,7 @@ import javafx.scene.control.TextInputControl;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import vinkkeri.objects.Tip;
 import vinkkeri.ui.gui.Controller;
 import vinkkeri.ui.gui.components.TipButtonBar;
 
@@ -80,6 +82,10 @@ public class ListView {
             //Tehdään radiobuttoneista ryhmä
             rb.setToggleGroup(toggle);
         }
+    }
+
+    public void populateTipList(List<Tip> tips) {
+        tipsList.setItems(FXCollections.observableArrayList(tips));
     }
 
 }

@@ -298,7 +298,6 @@ public class SQLiteTipDao implements TipDao {
     private void addTagConnections(Connection conn, List<String> tags, int tipID) {
         try {
             Map<String, Integer> tagIdTable = this.getTagIdTable(conn);
-            System.out.println("tag hashmap " + tagIdTable);
 
             for (String tag : tags) {
                 try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO TipTag VALUES (?, ?)")) {

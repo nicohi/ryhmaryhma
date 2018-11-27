@@ -2,6 +2,7 @@ package vinkkeri.objects;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.beans.property.SimpleStringProperty;
 
 /**
  *
@@ -9,15 +10,15 @@ import java.util.List;
  */
 public class Tip {
 
-    private int id;
-    private String date;
-    private String type;
-    private String title;
-    private String author;
-    private String summary;
-    private String isbn;
-    private String url;
-    private boolean read;
+    private SimpleStringProperty id;
+    private SimpleStringProperty date;
+    private SimpleStringProperty type;
+    private SimpleStringProperty title;
+    private SimpleStringProperty author;
+    private SimpleStringProperty summary;
+    private SimpleStringProperty isbn;
+    private SimpleStringProperty url;
+    private SimpleStringProperty read;
 
     private List<String> tags;
     private List<String> relC;
@@ -36,15 +37,15 @@ public class Tip {
      * @param read Has the tip content been read or not
      */
     public Tip(int id, String date, String type, String title, String author, String summary, String isbn, String url, boolean read) {
-        this.id = id;
-        this.date = date;
-        this.type = type;
-        this.title = title;
-        this.author = author;
-        this.summary = summary;
-        this.isbn = isbn;
-        this.url = url;
-        this.read = read;
+        this.id = new SimpleStringProperty(id+"");
+        this.date = new SimpleStringProperty(date);
+        this.type = new SimpleStringProperty(type);
+        this.title = new SimpleStringProperty(title);
+        this.author = new SimpleStringProperty(author);
+        this.summary = new SimpleStringProperty(summary);
+        this.isbn = new SimpleStringProperty(isbn);
+        this.url = new SimpleStringProperty(url);
+        this.read = new SimpleStringProperty(read+"");
         this.tags = new ArrayList<>();
         this.relC = new ArrayList<>();
         this.reqC = new ArrayList<>();
@@ -65,27 +66,27 @@ public class Tip {
     }
 
     public int getId() {
-        return id;
+        return Integer.parseInt(id.get());
     }
 
     public String getDate() {
-        return date;
+        return date.get();
     }
 
     public String getType() {
-        return type;
+        return type.get();
     }
 
     public String getTitle() {
-        return title;
+        return title.get();
     }
 
     public String getAuthor() {
-        return author;
+        return author.get();
     }
 
     public String getSummary() {
-        return summary;
+        return summary.get();
     }
 
     @Override
@@ -93,12 +94,12 @@ public class Tip {
         
         String tempISBN = "";
         if(!this.isbn.equals("")) {
-            tempISBN = "ISBN: " + this.isbn + "\n";
+            tempISBN = "ISBN: " + this.isbn.get() + "\n";
         }
         
         String tempURL = "";
         if(!this.url.equals("")) {
-            tempURL = "Link: " + this.url + "\n";
+            tempURL = "Link: " + this.url.get() + "\n";
         }
         
         String tagStr = "";
@@ -131,32 +132,32 @@ public class Tip {
             rqcStr = "Required Courses: " + rqcStr + "\n";
         }
         
-        return "Title: " + title + "\n"
-                + "Added: " + date + "\n"
-                + "Author: " + author + "\n"
-                + "Summary: " + summary + "\n"
+        return "Title: " + title.get() + "\n"
+                + "Added: " + date.get() + "\n"
+                + "Author: " + author.get() + "\n"
+                + "Summary: " + summary.get() + "\n"
                 + tempISBN
                 + tempURL
-                + "Read: " + read + "\n"
+                + "Read: " + read.get() + "\n"
                 + tagStr
                 + rqcStr
                 + rlcStr;
     }
 
     public String getIsbn() {
-        return isbn;
+        return isbn.get();
     }
 
     public boolean isRead() {
-        return read;
+        return Boolean.parseBoolean(read.get());
     }
     
     public void setRead(boolean read) {
-        this.read = read;
+        this.read = new SimpleStringProperty(read+"");
     }
 
     public String getUrl() {
-        return url;
+        return url.get();
     }
 
     /**

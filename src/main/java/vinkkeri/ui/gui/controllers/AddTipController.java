@@ -51,10 +51,9 @@ public class AddTipController implements Initializable {
     @FXML
     private TextArea commentArea;
 
-
     /**
-     * init function that is called when the view is created.
-     * Calls helper methods that create eventhandlers for ui elements.
+     * init function that is called when the view is created. Calls helper
+     * methods that create eventhandlers for ui elements.
      *
      * @param url
      * @param resourceBundle
@@ -103,7 +102,6 @@ public class AddTipController implements Initializable {
                 Tip tip = createTip();
                 tagDao.addTags(tip.getTags());
                 tipDao.insertTip(tip);
-                System.out.println(tipDao.getTips());
                 clearFields();
             } else {
                 titleLabel.setTextFill(Color.RED);
@@ -138,7 +136,6 @@ public class AddTipController implements Initializable {
         });
     }
 
-
     /**
      * fixme this to the real listview name!
      */
@@ -162,7 +159,7 @@ public class AddTipController implements Initializable {
         Tip tip = new Tip("book", title, author, comment, isbn, url, false);
         if (!tagField.getText().isEmpty()) {
             ArrayList<String> tags = new ArrayList<>();
-            tags.addAll(Arrays.asList(tagField.getText().split(" ")));
+            tags.addAll(Arrays.asList(tagField.getText().split(",")));
             tip.setTags(tags);
         }
         return tip;
