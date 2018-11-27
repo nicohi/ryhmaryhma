@@ -15,12 +15,12 @@ import vinkkeri.database.TagDao;
 //tämä on copypastattu tui.controller
 //Controller:ista voisi tehdä rajapinnan tai abstraktin luokkan
 public class Controller {
-    
+
     private List<Tip> tips;
     private TipDao tipDao;
     private CourseDao courseDao;
     private TagDao tagDao;
-    
+
     public Controller() {
         this.tipDao = new SQLiteTipDao("jdbc:sqlite:database.db");
         this.courseDao = new SQLiteCourseDao("jdbc:sqlite:database.db");
@@ -32,17 +32,17 @@ public class Controller {
             this.tips = new ArrayList<>();
         }
     }
-    
+
     public void newTip(Tip tip) {
     }
 
     public void removeTip(Tip tip) {
     }
-    
+
     public List<Tip> getTips() {
-		return null;
+        return null;
     }
-    
+
     public void markRead(boolean value, String name) {
     }
 }

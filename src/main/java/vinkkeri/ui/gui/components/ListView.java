@@ -32,10 +32,10 @@ public class ListView {
 
     public final Separator separator = new Separator();
     public TableView tipsList = new TableView();
-	public Controller controller = new Controller();
+    public Controller controller = new Controller();
     public TextField txtDate = new TextField("Date");
     public DatePicker datePicker = new DatePicker();
-	public List<LabelTextInputControl> textItems = new ArrayList<>();
+    public List<LabelTextInputControl> textItems = new ArrayList<>();
     public ArrayList<RadioButton> rButtons2 = new ArrayList<>();
     public ArrayList<RadioButton> rButtons = new ArrayList<>();
 
@@ -54,27 +54,23 @@ public class ListView {
         final ToggleGroup grReadOrNot = new ToggleGroup();
         initRadioButtons(rButtons2, new String[]{"Not Read", "Read"}, grReadOrNot);
 
-		//vasen
+        //vasen
         TipEditor menu = new TipEditor(this);
         //vasemman palkin komponentit
         menu.setMaxHeight(600.00);
         menu.setPadding(new Insets(20, 20, 20, 20));
         menu.setSpacing(10);
 
-		TipListBox tipslistArea = new TipListBox(this);
+        TipListBox tipslistArea = new TipListBox(this);
 
-
-		// unused components
+        // unused components
         //layout.setLeft(menu);
-		//TipButtonBar toolbar = new TipButtonBar(this);
+        //TipButtonBar toolbar = new TipButtonBar(this);
         //layout.setTop(toolbar);
-
         layout.setCenter(tipslistArea);
 
         return layout;
     }
-
-
 
     // Initialize radiobuttons that belong to the same group
     private void initRadioButtons(ArrayList<RadioButton> rbs, String[] names, ToggleGroup toggle) {

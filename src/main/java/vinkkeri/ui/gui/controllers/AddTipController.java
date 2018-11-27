@@ -144,7 +144,7 @@ public class AddTipController implements Initializable {
      */
     private void backButton() {
         this.backButton.setOnAction(event -> {
-            this.display.setScene("listing");
+            this.display.setScene("listview");
         });
     }
 

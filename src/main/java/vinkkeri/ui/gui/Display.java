@@ -39,23 +39,21 @@ public class Display {
     private void initialize() {
         scenes = new HashMap<>();
         loaders = new HashMap<>();
-
-        initializeScene("fxml/test.fxml", "listing");
+        
         // add view
         initializeScene("fxml/AddTipView.fxml", "add");
-		ListView lv = new ListView();
-		addSceneNonFXML(new Scene(lv.create(), WIDTH, HEIGHT), "listview");
+        ListView lv = new ListView();
+        addSceneNonFXML(new Scene(lv.create(), WIDTH, HEIGHT), "listview");
         setAddViewDependencies();
-        
+
         stage.setTitle("Vinkkeri");
         stage.setScene(Display.scenes.get("listview"));
         stage.show();
     }
 
-	private void addSceneNonFXML(Scene s, String name) {
-		scenes.put(name, s);
-	}
-    
+    private void addSceneNonFXML(Scene s, String name) {
+        scenes.put(name, s);
+    }
 
     private void setAddViewDependencies() {
         AddTipController c = loaders.get("add").getController();
