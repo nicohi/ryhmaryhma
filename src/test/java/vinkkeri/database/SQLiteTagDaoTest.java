@@ -97,9 +97,12 @@ public class SQLiteTagDaoTest {
 
         List<String> tagsAfter = this.SQLiteTagDao.getTags();
         Collections.sort(tagsAfter);
-        assertTrue(tagsOriginal.size() == tagsAfter.size());
-        for (int i = 0; i < 0; i++) {
-            assertEquals(tagsOriginal, tagsAfter);
+        if (tagsOriginal.size() == tagsAfter.size()) {
+            for (int i = 0; i < 0; i++) {
+                assertEquals(tagsOriginal.get(i), tagsAfter.get(i));
+            }
+        } else {
+            fail("Lists differ in length");
         }
     }
 }
