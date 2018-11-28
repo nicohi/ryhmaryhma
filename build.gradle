@@ -19,10 +19,6 @@ project.ext {
 
 jacoco {
     toolVersion = "0.8.1"
-    reports {
-        xml.enabled true
-        html.enabled true
-    }
 }
 
 dependencies {
