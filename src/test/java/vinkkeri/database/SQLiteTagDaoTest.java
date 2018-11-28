@@ -1,7 +1,9 @@
 package vinkkeri.database;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -17,6 +19,16 @@ public class SQLiteTagDaoTest {
     @Before
     public void setUp() {
         this.SQLiteTagDao = new SQLiteTagDao("jdbc:sqlite:database.db");
+    }
+
+    // Make sure test tags are removed by trying again
+    @After
+    public void tearDown() {
+        List<String> tags = new ArrayList<>();
+        tags.add("testing--code");
+        tags.add("testing--software");
+        tags.add("testing--hardware");
+        this.SQLiteTagDao.removeTags(tags);
     }
 
     @Test
@@ -51,5 +63,43 @@ public class SQLiteTagDaoTest {
         assertTrue(foundTags.contains("video"));
         assertTrue(foundTags.contains("blog"));
         assertTrue(foundTags.contains("lecture"));
+    }
+
+    @Test
+    public void removingExistingTagsWorks1() {
+        List<String> tags = new ArrayList<>();
+        tags.add("testing--code");
+        tags.add("testing--software");
+        tags.add("testing--hardware");
+        this.SQLiteTagDao.addTags(tags);
+        List<String> tagsWithAdded = this.SQLiteTagDao.getTags();
+        assertTrue(tagsWithAdded.contains("testing--code"));
+        assertTrue(tagsWithAdded.contains("testing--software"));
+        assertTrue(tagsWithAdded.contains("testing--hardware"));
+
+        this.SQLiteTagDao.removeTags(tags);
+        List<String> tagsAfterRemoval = this.SQLiteTagDao.getTags();
+        assertTrue(!tagsAfterRemoval.contains("testing--code"));
+        assertTrue(!tagsAfterRemoval.contains("testing--software"));
+        assertTrue(!tagsAfterRemoval.contains("testing--hardware"));
+    }
+
+    @Test
+    public void removingNonExistingTagsDoesNothing() {
+        List<String> tagsOriginal = this.SQLiteTagDao.getTags();
+        Collections.sort(tagsOriginal);
+
+        List<String> nonExistingtagsToBeRemoved = new ArrayList<>();
+        nonExistingtagsToBeRemoved.add("testing--does not exist 1");
+        nonExistingtagsToBeRemoved.add("testing--does not exist 2");
+        nonExistingtagsToBeRemoved.add("testing--does not exist 3");
+        this.SQLiteTagDao.removeTags(nonExistingtagsToBeRemoved);
+
+        List<String> tagsAfter = this.SQLiteTagDao.getTags();
+        Collections.sort(tagsAfter);
+        assertTrue(tagsOriginal.size() == tagsAfter.size());
+        for (int i = 0; i < 0; i++) {
+            assertEquals(tagsOriginal, tagsAfter);
+        }
     }
 }
