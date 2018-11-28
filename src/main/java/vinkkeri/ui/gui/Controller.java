@@ -4,7 +4,6 @@ import vinkkeri.database.SQLiteTipDao;
 import vinkkeri.database.TipDao;
 import vinkkeri.objects.Tip;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import vinkkeri.database.CourseDao;
@@ -16,20 +15,20 @@ import vinkkeri.database.TagDao;
 //Controller:ista voisi tehdä rajapinnan tai abstraktin luokkan
 public class Controller {
 
-    private List<Tip> tips;
+    //private List<Tip> tips;
     private TipDao tipDao;
-    private CourseDao courseDao;
+    //private CourseDao courseDao;
     private TagDao tagDao;
 
     public Controller() {
         this.tipDao = new SQLiteTipDao("jdbc:sqlite:database.db");
-        this.courseDao = new SQLiteCourseDao("jdbc:sqlite:database.db");
+        //this.courseDao = new SQLiteCourseDao("jdbc:sqlite:database.db");
         this.tagDao = new SQLiteTagDao("jdbc:sqlite:database.db");
         try {
-            this.tips = tipDao.getTips();
+            //this.tips = tipDao.getTips();
         } catch (Exception e) {
             e.printStackTrace();
-            this.tips = new ArrayList<>();
+            //this.tips = new ArrayList<>();
         }
     }
 
@@ -52,7 +51,7 @@ public class Controller {
     public void insertTip(Tip tip) {
         tipDao.insertTip(tip);
     }
-    
+
     public void removeTags(List<String> tags) {
         tagDao.removeTags(tags);
     }

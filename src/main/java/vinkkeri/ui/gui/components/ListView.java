@@ -3,27 +3,18 @@ package vinkkeri.ui.gui.components;
 import vinkkeri.ui.gui.components.LabelTextInputControl;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Separator;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputControl;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import vinkkeri.objects.Tip;
-import vinkkeri.ui.gui.Controller;
 import vinkkeri.ui.gui.Display;
 
 /**
@@ -39,7 +30,7 @@ public class ListView {
     public List<LabelTextInputControl> textItems = new ArrayList<>();
     public ArrayList<RadioButton> rButtons2 = new ArrayList<>();
     public ArrayList<RadioButton> rButtons = new ArrayList<>();
-    
+
     public Display display;
 
     public ListView(Display d) {

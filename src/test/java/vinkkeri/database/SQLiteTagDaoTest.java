@@ -79,9 +79,9 @@ public class SQLiteTagDaoTest {
 
         this.SQLiteTagDao.removeTags(tags);
         List<String> tagsAfterRemoval = this.SQLiteTagDao.getTags();
-        assertTrue(!tagsAfterRemoval.contains("testing--code"));
-        assertTrue(!tagsAfterRemoval.contains("testing--software"));
-        assertTrue(!tagsAfterRemoval.contains("testing--hardware"));
+        assertFalse(tagsAfterRemoval.contains("testing--code"));
+        assertFalse(tagsAfterRemoval.contains("testing--software"));
+        assertFalse(tagsAfterRemoval.contains("testing--hardware"));
     }
 
     @Test

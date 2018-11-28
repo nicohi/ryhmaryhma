@@ -10,10 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import vinkkeri.ui.gui.components.ListView;
-import vinkkeri.database.SQLiteTagDao;
-import vinkkeri.database.SQLiteTipDao;
-import vinkkeri.database.TagDao;
-import vinkkeri.database.TipDao;
 import vinkkeri.ui.gui.controllers.AddTipController;
 
 /**

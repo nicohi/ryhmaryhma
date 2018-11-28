@@ -63,63 +63,63 @@ public class Stepdefs extends ApplicationTest {
 
     // Given When and then -----------------------------------------------------
     @Given("^add tip is clicked$")
-    public void given_add_tip_is_clicked() {
+    public void givenaddtipisclicked() {
         clickOn("#addTip");
     }
 
     @Given("^listing view is visible$")
-    public void listing_view_visible() {
+    public void listingviewvisible() {
 
     }
 
     @When("^add tip button is clicked$")
-    public void given_add_tip_button_is_clicked() {
+    public void givenaddtipbuttonisclicked() {
         clickOn("#addTip");
     }
 
     @When("title text area is clicked$")
-    public void title_text_area_is_clicked() {
+    public void titletextareaisclicked() {
         clickOn("#titleField");
     }
 
     @When("url text area is clicked$")
-    public void url_text_area_is_clicked() {
+    public void urltextareaisclicked() {
         clickOn("#urlField");
     }
 
     @When("tag text area is clicked$")
-    public void tag_text_area_is_clicked() {
+    public void tagtextareaisclicked() {
         
         clickOn("#tagField");
     }
 
     @When("^text \"([^\"]*)\" is entered$")
-    public void text_is_entered(String text) {
+    public void textisentered(String text) {
         type(text.toUpperCase());
     }
 
     @When("^add button is clicked$")
-    public void add_button_is_clicked() {
+    public void addbuttonisclicked() {
         clickOn("#addButton");
     }
 
     @When("^back button is clicked$")
-    public void back_button_is_clicked() {
+    public void backbuttonisclicked() {
         clickOn("#backButton");
     }
 
     @When("^text \"([^\"]*)\" is clicked$")
-    public void text_button_is_clicked(String text) {
+    public void textbuttonisclicked(String text) {
         clickOn(text);
     }
 
     @When("^delete is clicked$")
-    public void delete_is_clicked() {
+    public void deleteisclicked() {
         clickOn("#deleteTip");
     }
 
     @Then("^new tip with title \"([^\"]*)\" and url \"([^\"]*)\" and tags \"([^\"]*)\" is stored in the program$")
-    public void new_tip_with_title_is_stored(String title, String url, String tags) {
+    public void newtipwithtitleisstored(String title, String url, String tags) {
         List<Tip> tips = tipDao.getTips();
         boolean exists = false;
         Tip safety = null;
@@ -142,14 +142,14 @@ public class Stepdefs extends ApplicationTest {
     }
 
     @Then("add view is visible")
-    public void add_view_is_visible() {
+    public void addviewisvisible() {
         find("#titleField");
         assertTrue(true);
         clickOn("#backButton");
     }
 
     @Then("^a tip with title \"([^\"]*)\" is not stored in the program$")
-    public void tip_with_title_is_not_stored(String title) {
+    public void tipwithtitleisnotstored(String title) {
         verifyThat(title, NodeMatchers.isNull());
     }
 

@@ -3,18 +3,15 @@ package vinkkeri.ui.gui.components;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Node;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.Separator;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.layout.VBox;
 
-public class TipEditor extends VBox{
+public class TipEditor extends VBox {
 
-	public TipEditor(ListView lv) {
+    public TipEditor(ListView lv) {
 
         //Luodaan päätason komponentit
         initMenuItems(lv.textItems, new TextField(), "ID", "Id");
@@ -28,7 +25,7 @@ public class TipEditor extends VBox{
         ArrayList<Node> nodes = new ArrayList<>();
         nodes.add(lv.textItems.get(0).getLabel());
         nodes.add(lv.textItems.get(0).getField());
-		
+
         nodes.addAll(lv.rButtons);
         nodes.add(lv.separator);
 
@@ -47,7 +44,7 @@ public class TipEditor extends VBox{
         getChildren().addAll(lv.rButtons2);
         getChildren().add(lv.datePicker);
 
-	}
+    }
 
     // Initialize all Label-TextField pairs
     private void initMenuItems(List<LabelTextInputControl> items, TextInputControl text, String labelName, String promptText) {

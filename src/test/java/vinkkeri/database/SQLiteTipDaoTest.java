@@ -3,6 +3,7 @@ package vinkkeri.database;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
+import static org.junit.Assert.assertFalse;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -51,7 +52,7 @@ public class SQLiteTipDaoTest {
     }
 
     @Test
-    public void TipInsertAndDeleteWorks() {
+    public void tipInsertAndDeleteWorks() {
         this.SQLiteTipDao.insertTip(new Tip(3, "2018-11-15", "Book", "Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project", "CLRS", "algos", "9780262033848", "http://mitpress.mit.edu", true));
 
         List<String> tipTitles = new ArrayList<>();
@@ -76,7 +77,7 @@ public class SQLiteTipDaoTest {
             tipTitles.add(tips.get(i).getTitle());
         }
 
-        assertTrue(!tipTitles.contains("Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project"));
+        assertFalse(tipTitles.contains("Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project"));
     }
 
     @Test

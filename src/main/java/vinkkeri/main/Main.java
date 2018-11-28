@@ -1,6 +1,5 @@
 package vinkkeri.main;
 
-
 import javafx.application.Application;
 import javafx.stage.Stage;
 import vinkkeri.ui.gui.Display;

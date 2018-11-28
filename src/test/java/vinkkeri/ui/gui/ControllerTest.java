@@ -39,10 +39,10 @@ public class ControllerTest {
     @Test
     public void getTipsWorks() {
         List<Tip> tipsController = controller.getTips();
-        assertTrue("Controller returns empty list, can't complete test", !tipsController.isEmpty());
+        assertFalse("Controller returns empty list, can't complete test", tipsController.isEmpty());
         
         List<Tip> tipsDao = tipDao.getTips();
-        assertTrue("TipDao returns empty list, can't complete test", !tipsDao.isEmpty());
+        assertFalse("TipDao returns empty list, can't complete test", tipsDao.isEmpty());
         
         boolean missMatch = true;
         
@@ -97,7 +97,7 @@ public class ControllerTest {
             }
         }
         
-        assertTrue("Tip was not added correctly, check out controller.insertTip()", !exists);
+        assertFalse("Tip was not added correctly, check out controller.insertTip()", exists);
         
     }
     

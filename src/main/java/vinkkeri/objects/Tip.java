@@ -2,7 +2,6 @@ package vinkkeri.objects;
 
 import java.util.ArrayList;
 import java.util.List;
-import javafx.beans.property.SimpleStringProperty;
 
 /**
  *
@@ -53,6 +52,7 @@ public class Tip {
 
     /**
      * Constructor for Tips not from the database
+     *
      * @param type
      * @param title
      * @param author
@@ -96,7 +96,7 @@ public class Tip {
     public boolean isRead() {
         return read;
     }
-    
+
     public void setRead(boolean read) {
         this.read = read;
     }
@@ -162,32 +162,32 @@ public class Tip {
     public void setRequiredCourses(List<String> requiredCourses) {
         this.requiredCourses = requiredCourses;
     }
-    
+
     @Override
     public boolean equals(Object o) {
-        if(!(o instanceof Tip)) {
+        if (!(o instanceof Tip)) {
             return false;
         }
         Tip compared = (Tip) o;
-        if(compared.getId() != this.getId()) {
+        if (compared.getId() != this.getId()) {
             return false;
         }
-        if(!compared.getTitle().equals(this.getTitle())) {
+        if (!compared.getTitle().equals(this.getTitle())) {
             return false;
         }
-        if(compared.isRead() != this.isRead()) {
+        if (compared.isRead() != this.isRead()) {
             return false;
         }
         return true;
     }
-    
+
     @Override
     public String toString() {
         return "Title: " + this.getTitle();
     }
-    
+
     @Override
     public int hashCode() {
-        return (this.getId()+""+this.getTitle()).hashCode();
+        return (this.getId() + "" + this.getTitle()).hashCode();
     }
 }

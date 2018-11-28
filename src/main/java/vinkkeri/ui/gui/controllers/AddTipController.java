@@ -4,8 +4,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
-import vinkkeri.database.TagDao;
-import vinkkeri.database.TipDao;
 import vinkkeri.objects.Tip;
 import vinkkeri.ui.gui.Display;
 

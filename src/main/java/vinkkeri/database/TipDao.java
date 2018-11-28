@@ -5,6 +5,7 @@ import vinkkeri.objects.Tip;
 import java.util.List;
 
 public interface TipDao {
+
     List<Tip> getTips();
 
     void insertTip(Tip tip);
@@ -12,6 +13,6 @@ public interface TipDao {
     void remove(int id);
 
     int getNewestID();
-    
+
     void markReadValue(int id, boolean read);
 }
