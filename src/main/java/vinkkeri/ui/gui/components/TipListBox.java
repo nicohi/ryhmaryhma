@@ -81,11 +81,12 @@ public class TipListBox extends VBox {
         removeTipButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-				lv.tipsList.getSelectionModel().getSelectedItems().stream()
-						.forEach(tip -> {
-							lv.display.getController().removeTip((Tip) tip);
-							lv.tipsList.getItems().remove(tip);
-						});
+                lv.tipsList.getSelectionModel().getSelectedItems().stream()
+                        .forEach(tip -> {
+                            lv.display.getController().removeTip((Tip) tip);
+                            lv.tipsList.getItems().remove(tip);
+                            lv.display.getController().removeTags(((Tip) tip).getTags());
+                        });
             }
         });
 

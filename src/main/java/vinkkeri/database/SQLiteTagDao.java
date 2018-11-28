@@ -6,7 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -78,5 +80,62 @@ public class SQLiteTagDao implements TagDao {
             // Add desired action here
             Logger.getLogger(SQLiteTagDao.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public void removeTags(List<String> tags) {
+        try (Connection conn = DriverManager.getConnection(this.databaseAddress)) {
+            List<String> existingTags = getTagsList(conn);
+            for (String tag : tags) {
+                if (!existingTags.contains(tag)) {
+                    removeTag(conn, tag);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SQLiteTagDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void removeTag(Connection conn, String name) {
+        try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM Tag WHERE name = (?)")) {
+            stmt.setString(1, name);
+            stmt.execute();
+            stmt.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(SQLiteTagDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private List<String> getTagsList(Connection conn) {
+        List<Integer> tags = new ArrayList<>();
+        try (ResultSet result = conn.createStatement().executeQuery("SELECT * FROM TipTag")) {
+            while (result.next()) {
+                Integer id = result.getInt("tag");
+                if (!tags.contains(id)) {
+                    tags.add(id);
+                }
+            }
+        } catch (SQLException ex) {
+            // Add desired action here
+            Logger.getLogger(SQLiteTipDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return getTagNames(conn, tags);
+    }
+
+    private List<String> getTagNames(Connection conn, List<Integer> idList) {
+        List<String> tags = new ArrayList<>();
+        try (ResultSet result = conn.createStatement().executeQuery("SELECT * FROM Tag")) {
+            while (result.next()) {
+                String name = result.getString("name");
+                Integer id = result.getInt("id");
+                if (idList.contains(id)) {
+                    tags.add(name);
+                }
+            }
+        } catch (SQLException ex) {
+            // Add desired action here
+            Logger.getLogger(SQLiteTipDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return tags;
     }
 }

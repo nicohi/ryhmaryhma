@@ -34,22 +34,26 @@ public class Controller {
     }
 
     public void removeTip(Tip tip) {
-		tipDao.remove(tip.getId());
+        tipDao.remove(tip.getId());
     }
 
     public List<Tip> getTips() {
-		return tipDao.getTips();
+        return tipDao.getTips();
     }
 
     public void markRead(boolean value, String name) {
-		tipDao.markReadValue(name, value);
+        tipDao.markReadValue(name, value);
     }
 
-	public void addTags(List<String> tags) {
-		tagDao.addTags(tags);
-	}
+    public void addTags(List<String> tags) {
+        tagDao.addTags(tags);
+    }
 
-	public void insertTip(Tip tip) {
-		tipDao.insertTip(tip);
-	}
+    public void insertTip(Tip tip) {
+        tipDao.insertTip(tip);
+    }
+    
+    public void removeTags(List<String> tags) {
+        tagDao.removeTags(tags);
+    }
 }
