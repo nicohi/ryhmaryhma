@@ -28,6 +28,7 @@ dependencies {
 	testCompile(group: "org.testfx", name: "testfx-core", version: "4.0.13-alpha")
 	testCompile(group: "org.testfx", name: "testfx-junit", version: "4.0.13-alpha")
     testCompile 'junit:junit:4.12'
+	testCompile group: 'org.testfx', name: 'openjfx-monocle', version: '1.8.0_20'
     compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.8.11'
 
 }

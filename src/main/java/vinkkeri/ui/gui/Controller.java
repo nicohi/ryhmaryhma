@@ -41,8 +41,8 @@ public class Controller {
         return tipDao.getTips();
     }
 
-    public void markRead(boolean value, String name) {
-        tipDao.markReadValue(name, value);
+    public void markRead(boolean value, int id) {
+        tipDao.markReadValue(id, value);
     }
 
     public void addTags(List<String> tags) {

@@ -10,15 +10,15 @@ import javafx.beans.property.SimpleStringProperty;
  */
 public class Tip {
 
-    private SimpleStringProperty id;
-    private SimpleStringProperty date;
-    private SimpleStringProperty type;
-    private SimpleStringProperty title;
-    private SimpleStringProperty author;
-    private SimpleStringProperty summary;
-    private SimpleStringProperty isbn;
-    private SimpleStringProperty url;
-    private SimpleStringProperty read;
+    private int id;
+    private String date;
+    private String type;
+    private String title;
+    private String author;
+    private String summary;
+    private String isbn;
+    private String url;
+    private boolean read;
 
     private List<String> tags;
     private List<String> relatedCourses;
@@ -37,15 +37,15 @@ public class Tip {
      * @param read Has the tip content been read or not
      */
     public Tip(int id, String date, String type, String title, String author, String summary, String isbn, String url, boolean read) {
-        this.id = new SimpleStringProperty(id+"");
-        this.date = new SimpleStringProperty(date);
-        this.type = new SimpleStringProperty(type);
-        this.title = new SimpleStringProperty(title);
-        this.author = new SimpleStringProperty(author);
-        this.summary = new SimpleStringProperty(summary);
-        this.isbn = new SimpleStringProperty(isbn);
-        this.url = new SimpleStringProperty(url);
-        this.read = new SimpleStringProperty(read+"");
+        this.id = id;
+        this.date = date;
+        this.type = type;
+        this.title = title;
+        this.author = author;
+        this.summary = summary;
+        this.isbn = isbn;
+        this.url = url;
+        this.read = read;
         this.tags = new ArrayList<>();
         this.relatedCourses = new ArrayList<>();
         this.requiredCourses = new ArrayList<>();
@@ -66,27 +66,27 @@ public class Tip {
     }
 
     public int getId() {
-        return Integer.parseInt(id.get());
+        return id;
     }
 
     public String getDate() {
-        return date.get();
+        return date;
     }
 
     public String getType() {
-        return type.get();
+        return type;
     }
 
     public String getTitle() {
-        return title.get();
+        return title;
     }
 
     public String getAuthor() {
-        return author.get();
+        return author;
     }
 
     public String getSummary() {
-        return summary.get();
+        return summary;
     }
 
     @Override
@@ -94,12 +94,12 @@ public class Tip {
         
         String tempISBN = "";
         if(!this.isbn.equals("")) {
-            tempISBN = "ISBN: " + this.isbn.get() + "\n";
+            tempISBN = "ISBN: " + this.isbn + "\n";
         }
         
         String tempURL = "";
         if(!this.url.equals("")) {
-            tempURL = "Link: " + this.url.get() + "\n";
+            tempURL = "Link: " + this.url + "\n";
         }
         
         String tagStr = "";
@@ -132,32 +132,32 @@ public class Tip {
             rqcStr = "Required Courses: " + rqcStr + "\n";
         }
         
-        return "Title: " + title.get() + "\n"
-                + "Added: " + date.get() + "\n"
-                + "Author: " + author.get() + "\n"
-                + "Summary: " + summary.get() + "\n"
+        return "Title: " + title + "\n"
+                + "Added: " + date + "\n"
+                + "Author: " + author + "\n"
+                + "Summary: " + summary + "\n"
                 + tempISBN
                 + tempURL
-                + "Read: " + read.get() + "\n"
+                + "Read: " + read + "\n"
                 + tagStr
                 + rqcStr
                 + rlcStr;
     }
 
     public String getIsbn() {
-        return isbn.get();
+        return isbn;
     }
 
     public boolean isRead() {
-        return Boolean.parseBoolean(read.get());
+        return read;
     }
     
     public void setRead(boolean read) {
-        this.read = new SimpleStringProperty(read+"");
+        this.read = read;
     }
 
     public String getUrl() {
-        return url.get();
+        return url;
     }
 
     /**
@@ -216,5 +216,28 @@ public class Tip {
      */
     public void setRequiredCourses(List<String> requiredCourses) {
         this.requiredCourses = requiredCourses;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if(!(o instanceof Tip)) {
+            return false;
+        }
+        Tip compared = (Tip) o;
+        if(compared.getId() != this.getId()) {
+            return false;
+        }
+        if(!compared.getTitle().equals(this.getTitle())) {
+            return false;
+        }
+        if(compared.isRead() != this.isRead()) {
+            return false;
+        }
+        return true;
+    }
+    
+    @Override
+    public int hashCode() {
+        return this.toString().hashCode();
     }
 }

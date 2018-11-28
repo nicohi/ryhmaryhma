@@ -40,12 +40,13 @@ public class ListView {
     public List<LabelTextInputControl> textItems = new ArrayList<>();
     public ArrayList<RadioButton> rButtons2 = new ArrayList<>();
     public ArrayList<RadioButton> rButtons = new ArrayList<>();
-	public Display display;
+    
+    public Display display;
 
-	public ListView(Display d) {
-		this.display = d;
-	}
-
+    public ListView(Display d) {
+        this.display = d;
+        this.tipsList.setId("tipsList"); // For testing purposes
+    }
 
     public Parent create() {
         separator.setMaxWidth(100.0);

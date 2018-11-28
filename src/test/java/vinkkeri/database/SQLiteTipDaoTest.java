@@ -99,7 +99,7 @@ public class SQLiteTipDaoTest {
 
         assertTrue(corRead);
 
-        this.SQLiteTipDao.markReadValue("Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project", true);
+        this.SQLiteTipDao.markReadValue(this.SQLiteTipDao.getNewestID(), true);
 
         tips.clear();
         tips = this.SQLiteTipDao.getTips();
