@@ -26,20 +26,23 @@ public class AppTest extends ApplicationTest {
     public void setUp() throws Exception {
         ApplicationTest.launch(Main.class);
     }
-    
+
     @Override
     public void start(Stage stage) {
         stage.show();
     }
-    
+
     public <T extends Node> T find(final String query) {
         return (T) lookup(query).queryAll().iterator().next();
     }
-    
+
     public void type(String str) {
-        
+        String split[] = str.split("");
+        for (String s : split) {
+            super.type(KeyCode.getKeyCode(s));
+        }
     }
-    
+
     @After
     public void afterTest() throws TimeoutException {
         FxToolkit.hideStage();

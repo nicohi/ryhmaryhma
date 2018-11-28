@@ -7,23 +7,34 @@ package vinkkeri.ui.gui;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import org.junit.Before;
 import org.junit.Test;
 import static org.testfx.api.FxAssert.verifyThat;
 import org.testfx.api.FxRobotException;
 import vinkkeri.AppTest;
+import vinkkeri.database.SQLiteTipDao;
+import vinkkeri.objects.Tip;
 
 /**
  *
  * @author Olli K. Kärki
  */
 public class DisplayTest extends AppTest {
-    
+
+    SQLiteTipDao tipDao;
+
+    @Before
+    public void init() {
+        this.tipDao = new SQLiteTipDao("jdbc:sqlite:database.db");
+    }
+
     @Test(expected = FxRobotException.class)
     public void clickOnBogusElement() {
         clickOn("#naamakalakukko");
     }
-    
+
     @Test
     public void changeViewToAddAndBack() {
         clickOn("Add Tip");
@@ -37,7 +48,7 @@ public class DisplayTest extends AppTest {
             return text.equals("Add Tip");
         });
     }
-    
+
     @Test
     public void clearWorks() {
         clickOn("Add Tip");
@@ -50,6 +61,39 @@ public class DisplayTest extends AppTest {
             String text = textField.getText();
             return text.equals("") || text == null;
         });
+        type("TESTTITLE");
+        verifyThat("#titleField", (TextField textField) -> {
+            String text = textField.getText();
+            return text.equals("testtitle");
+        });
+        clickOn("Clear");
+        verifyThat("#titleField", (TextField textField) -> {
+            String text = textField.getText();
+            return text.equals("") || text == null;
+        });
     }
-    
+
+    @Test
+    public void createTipAndDeleteWorks() {
+        clickOn("Add Tip");
+        verifyThat("#titleLabel", (Label label) -> {
+            String text = label.getText();
+            return text.equals("Title");
+        });
+        clickOn("#titleField");
+        verifyThat("#titleField", (TextField textField) -> {
+            String text = textField.getText();
+            return text.equals("") || text == null;
+        });
+        type("TESTTITLEFORTESTPURPOSETHATONLYEXISTSFORTESTPURPOSE");
+        clickOn("Add");
+        clickOn("Back");
+        find("TESTTITLEFORTESTPURPOSETHATONLYEXISTSFORTESTPURPOSE".toLowerCase());
+        clickOn("TESTTITLEFORTESTPURPOSETHATONLYEXISTSFORTESTPURPOSE".toLowerCase());
+        int safetyId = tipDao.getNewestID();
+        clickOn("Delete Tip");
+
+        tipDao.remove(safetyId);
+    }
+
 }

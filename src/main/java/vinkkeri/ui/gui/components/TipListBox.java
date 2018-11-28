@@ -3,6 +3,7 @@ package vinkkeri.ui.gui.components;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -77,6 +78,21 @@ public class TipListBox extends VBox {
             }
         });
 
+        Button flipReadButton = new Button("Flip Read");
+        flipReadButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                lv.tipsList.getSelectionModel().getSelectedItems().stream()
+                        .forEach(tip -> {
+                            Tip t = (Tip) tip;
+                            t.setRead(!t.isRead());
+                            lv.display.getController().markRead(t.isRead(), t.getId());
+                            lv.tipsList.getItems().clear();
+                            Display.refresh();
+                        });
+            }
+        });
+
         Button removeTipButton = new Button("Delete Tip");
         removeTipButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -92,7 +108,7 @@ public class TipListBox extends VBox {
 
         setSpacing(5);
         setPadding(new Insets(10, 10, 10, 10));
-        getChildren().addAll(lblHeader, lv.tipsList, addTipButton, removeTipButton);
+        getChildren().addAll(lblHeader, lv.tipsList, addTipButton, flipReadButton, removeTipButton);
 
         table = lv.tipsList;
     }
