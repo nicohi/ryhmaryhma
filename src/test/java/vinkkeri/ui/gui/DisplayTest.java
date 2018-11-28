@@ -36,22 +36,8 @@ public class DisplayTest extends AppTest {
     }
 
     @Test
-    public void changeViewToAddAndBack() {
-        clickOn("Add Tip");
-        verifyThat("#titleLabel", (Label label) -> {
-            String text = label.getText();
-            return text.equals("Title");
-        });
-        clickOn("Back");
-        verifyThat("Add Tip", (Button button) -> {
-            String text = button.getText();
-            return text.equals("Add Tip");
-        });
-    }
-
-    @Test
     public void clearWorks() {
-        clickOn("Add Tip");
+        clickOn("#addTip");
         verifyThat("#titleLabel", (Label label) -> {
             String text = label.getText();
             return text.equals("Title");
@@ -66,16 +52,21 @@ public class DisplayTest extends AppTest {
             String text = textField.getText();
             return text.equals("testtitle");
         });
-        clickOn("Clear");
+        clickOn("#clearButton");
         verifyThat("#titleField", (TextField textField) -> {
             String text = textField.getText();
             return text.equals("") || text == null;
+        });
+        clickOn("#backButton");
+        verifyThat("Add Tip", (Button button) -> {
+            String text = button.getText();
+            return text.equals("Add Tip");
         });
     }
 
     @Test
     public void createTipAndDeleteWorks() {
-        clickOn("Add Tip");
+        clickOn("#addTip");
         verifyThat("#titleLabel", (Label label) -> {
             String text = label.getText();
             return text.equals("Title");
@@ -86,8 +77,8 @@ public class DisplayTest extends AppTest {
             return text.equals("") || text == null;
         });
         type("TESTTITLEFORTESTPURPOSETHATONLYEXISTSFORTESTPURPOSE");
-        clickOn("Add");
-        clickOn("Back");
+        clickOn("#addButton");
+        clickOn("#backButton");
         find("TESTTITLEFORTESTPURPOSETHATONLYEXISTSFORTESTPURPOSE".toLowerCase());
         clickOn("TESTTITLEFORTESTPURPOSETHATONLYEXISTSFORTESTPURPOSE".toLowerCase());
         int safetyId = tipDao.getNewestID();

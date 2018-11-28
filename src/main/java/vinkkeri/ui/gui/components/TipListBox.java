@@ -71,6 +71,7 @@ public class TipListBox extends VBox {
         lv.tipsList.getColumns().addAll(columns);
 
         Button addTipButton = new Button("Add Tip");
+        addTipButton.setId("addTip");
         addTipButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
