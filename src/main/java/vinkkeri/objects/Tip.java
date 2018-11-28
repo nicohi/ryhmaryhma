@@ -89,61 +89,6 @@ public class Tip {
         return summary;
     }
 
-    @Override
-    public String toString() {
-        
-        String tempISBN = "";
-        if(!this.isbn.equals("")) {
-            tempISBN = "ISBN: " + this.isbn + "\n";
-        }
-        
-        String tempURL = "";
-        if(!this.url.equals("")) {
-            tempURL = "Link: " + this.url + "\n";
-        }
-        
-        String tagStr = "";
-        String rlcStr = "";
-        String rqcStr = "";
-        
-        for(String tag : this.tags) {
-            tagStr += tag + " ";
-        }
-        
-        if(!tagStr.equals("")) {
-            tagStr = "Tags: " + tagStr + "\n";
-        }
-        
-        
-        for(String course : this.relatedCourses) {
-            rlcStr += course + " ";
-        }
-        
-        if(!rlcStr.equals("")) {
-            rlcStr = "Related Courses: " + rlcStr + "\n";
-        }
-        
-        
-        for(String course : this.requiredCourses) {
-            rqcStr += course + " ";
-        }
-        
-        if(!rqcStr.equals("")) {
-            rqcStr = "Required Courses: " + rqcStr + "\n";
-        }
-        
-        return "Title: " + title + "\n"
-                + "Added: " + date + "\n"
-                + "Author: " + author + "\n"
-                + "Summary: " + summary + "\n"
-                + tempISBN
-                + tempURL
-                + "Read: " + read + "\n"
-                + tagStr
-                + rqcStr
-                + rlcStr;
-    }
-
     public String getIsbn() {
         return isbn;
     }
@@ -237,7 +182,12 @@ public class Tip {
     }
     
     @Override
+    public String toString() {
+        return "Title: " + this.getTitle();
+    }
+    
+    @Override
     public int hashCode() {
-        return this.toString().hashCode();
+        return (this.getId()+""+this.getTitle()).hashCode();
     }
 }
