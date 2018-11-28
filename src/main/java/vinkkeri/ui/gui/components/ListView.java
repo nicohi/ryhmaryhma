@@ -25,7 +25,6 @@ import javafx.scene.layout.VBox;
 import vinkkeri.objects.Tip;
 import vinkkeri.ui.gui.Controller;
 import vinkkeri.ui.gui.Display;
-import vinkkeri.ui.gui.components.TipButtonBar;
 
 /**
  *
