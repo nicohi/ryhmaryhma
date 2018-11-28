@@ -158,7 +158,7 @@ public class SQLiteTipDaoTest {
         related.add("OHTU");
 
         Tip readingTip = new Tip("Link", "Testing -- CS courses", "", "kapistely", "", "https://www.cs.helsinki.fi/courses/", false);
-        readingTip.setRelC(related);
+        readingTip.setRelatedCourses(related);
 
         this.courseDao.addCourses(related);
         this.SQLiteTipDao.insertTip(readingTip);
@@ -189,7 +189,7 @@ public class SQLiteTipDaoTest {
         required.add("OHTU");
 
         Tip readingTip = new Tip("Link", "Testing more -- CS courses", "", "kapistely", "", "https://www.cs.helsinki.fi/courses/", false);
-        readingTip.setReqC(required);
+        readingTip.setRequiredCourses(required);
 
         this.courseDao.addCourses(required);
         this.SQLiteTipDao.insertTip(readingTip);

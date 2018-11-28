@@ -193,7 +193,7 @@ public class Tip {
      *
      * @param relC A list of related courses
      */
-    public void setRelC(List<String> relatedCourses) {
+    public void setRelatedCourses(List<String> relatedCourses) {
         this.relatedCourses = relatedCourses;
     }
 
@@ -205,7 +205,7 @@ public class Tip {
      * @return A list of required courses
      */
     public List<String> getRequiredCourses() {
-        return this.relatedCourses;
+        return this.requiredCourses;
     }
 
     /**
@@ -214,7 +214,7 @@ public class Tip {
      *
      * @param reqC A list of required courses
      */
-    public void setReqC(List<String> requiredCourses) {
+    public void setRequiredCourses(List<String> requiredCourses) {
         this.requiredCourses = requiredCourses;
     }
 }

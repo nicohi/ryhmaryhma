@@ -65,8 +65,8 @@ public class SQLiteTipDao implements TipDao {
 
                 Tip tip = new Tip(id, date, type, title, author, summary, isbn, url, read);
                 tip.setTags(tags);
-                tip.setRelC(relC);
-                tip.setReqC(reqC);
+                tip.setRelatedCourses(relC);
+                tip.setRequiredCourses(reqC);
 
                 tips.add(tip);
             }

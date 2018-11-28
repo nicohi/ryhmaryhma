@@ -108,7 +108,7 @@ public class TipTest {
         relCourses.add("Tietokantojen perusteet");
         relCourses.add("Tietokantasovellus");
         relCourses.add("Tietokannan suunnittelu");
-        this.tip.setRelC(relCourses);
+        this.tip.setRelatedCourses(relCourses);
 
         assertTrue(this.tip.getRelatedCourses().contains("Tietokantasovellus"));
         assertTrue(this.tip.getRelatedCourses().contains("Tietokannan suunnittelu"));
@@ -121,7 +121,7 @@ public class TipTest {
         required.add("Introduction to Artificial Intelligence");
         required.add("Introduction to Machine Learning");
         required.add("Computational Statistics");
-        this.tip.setReqC(required);
+        this.tip.setRequiredCourses(required);
 
         assertTrue(this.tip.getRequiredCourses().contains("Computational Statistics"));
         assertTrue(this.tip.getRequiredCourses().contains("Introduction to Artificial Intelligence"));
