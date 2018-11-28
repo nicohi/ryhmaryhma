@@ -80,6 +80,7 @@ public class TipListBox extends VBox {
         });
 
         Button flipReadButton = new Button("Flip Read");
+        flipReadButton.setId("flipRead");
         flipReadButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -95,6 +96,7 @@ public class TipListBox extends VBox {
         });
 
         Button removeTipButton = new Button("Delete Tip");
+        removeTipButton.setId("deleteTip");
         removeTipButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
