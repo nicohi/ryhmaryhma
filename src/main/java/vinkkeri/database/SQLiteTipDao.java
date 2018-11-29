@@ -35,7 +35,6 @@ public class SQLiteTipDao implements TipDao {
     }
 
     // getTips() ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
     /**
      * SQL Query into database that is given to SQLiteTipDao object in
      * constructor. Returns a java.util.List of Tip objects.
@@ -47,7 +46,7 @@ public class SQLiteTipDao implements TipDao {
 
         List<Tip> tips = new ArrayList<>();
         try (Connection conn = DriverManager.getConnection(this.databaseAddress);
-             ResultSet result = conn.createStatement().executeQuery("SELECT * FROM Tip ORDER BY date DESC")) {
+                ResultSet result = conn.createStatement().executeQuery("SELECT * FROM Tip ORDER BY date DESC")) {
 
             while (result.next()) {
                 // Use these to create tip object
@@ -59,7 +58,7 @@ public class SQLiteTipDao implements TipDao {
                 String summary = result.getString("summary");
                 String isbn = result.getString("isbn");
                 String url = result.getString("url");
-                boolean read = result.getBoolean("read");
+                String read = result.getString("read");
 
                 List<String> tags = this.getTags(conn, id); //            tags for the object.
                 List<String> reqC = this.getRequiredCourses(conn, id); // required courses for the object.
@@ -154,11 +153,11 @@ public class SQLiteTipDao implements TipDao {
 
     // Mark as Read -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     @Override
-    public void markReadValue(int id, boolean read) {
+    public void markReadValue(int id, String read) {
         try (Connection conn = DriverManager.getConnection(this.databaseAddress);
-             PreparedStatement stmt = conn.prepareStatement("UPDATE Tip SET READ = ? WHERE id = ?;")) {
+                PreparedStatement stmt = conn.prepareStatement("UPDATE Tip SET READ = ? WHERE id = ?;")) {
 
-            stmt.setBoolean(1, read);
+            stmt.setString(1, read);
             stmt.setInt(2, id);
             stmt.execute();
         } catch (SQLException ex) {
@@ -168,7 +167,6 @@ public class SQLiteTipDao implements TipDao {
     }
 
     // insertTip() --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
     /**
      * Writes given Tip into the database. Use TagDao addTags() before calling
      * this!
@@ -181,8 +179,7 @@ public class SQLiteTipDao implements TipDao {
         java.util.Date uDate = new java.util.Date();
         java.sql.Date sDate = new java.sql.Date(uDate.getTime());
         String date = sDate.toString();
-
-        boolean read = false;
+        
         List<String> tags = tip.getTags();
         List<String> related = tip.getRelatedCourses();
         List<String> required = tip.getRequiredCourses();
@@ -196,7 +193,7 @@ public class SQLiteTipDao implements TipDao {
             stmt.setString(5, tip.getSummary());
             stmt.setString(6, tip.getIsbn());
             stmt.setString(7, tip.getUrl());
-            stmt.setBoolean(8, read);
+            stmt.setString(8, tip.isRead());
 
             stmt.execute();
 
@@ -234,7 +231,7 @@ public class SQLiteTipDao implements TipDao {
     public int getNewestID() {
         int idErrorIndicator = -1;
         try (Connection conn = DriverManager.getConnection(this.databaseAddress);
-             ResultSet result = conn.createStatement().executeQuery("SELECT MAX(id) FROM Tip")) {
+                ResultSet result = conn.createStatement().executeQuery("SELECT MAX(id) FROM Tip")) {
 
             return result.getInt("MAX(id)");
         } catch (SQLException ex) {

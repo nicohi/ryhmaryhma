@@ -1,6 +1,7 @@
 package vinkkeri.ui.gui.components;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -9,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import vinkkeri.objects.Tip;
@@ -24,45 +26,25 @@ public class TipListBox extends VBox {
         Label lblHeader = new Label("Tip list");
         ArrayList<TableColumn> columns = new ArrayList<>();
 
-        TableColumn id = new TableColumn("id");
-        id.setCellValueFactory(new PropertyValueFactory<Tip, String>("id"));
-        columns.add(id);
-
-        TableColumn type = new TableColumn("type");
-        type.setCellValueFactory(new PropertyValueFactory<Tip, String>("type"));
-        columns.add(type);
-
         TableColumn title = new TableColumn("Title");
         title.setCellValueFactory(new PropertyValueFactory<Tip, String>("title"));
+        title.prefWidthProperty().bind(lv.tipsList.widthProperty().multiply(0.22));
         columns.add(title);
 
         TableColumn author = new TableColumn("Author");
         author.setCellValueFactory(new PropertyValueFactory<Tip, String>("author"));
+        author.prefWidthProperty().bind(lv.tipsList.widthProperty().multiply(0.15));
         columns.add(author);
-
-        TableColumn url = new TableColumn("URL");
-        url.setCellValueFactory(new PropertyValueFactory<Tip, String>("url"));
-        columns.add(url);
-
-        TableColumn isbn = new TableColumn("ISBN");
-        isbn.setCellValueFactory(new PropertyValueFactory<Tip, String>("isbn"));
-        columns.add(isbn);
 
         TableColumn tags = new TableColumn("Tags");
         tags.setCellValueFactory(new PropertyValueFactory<Tip, String>("tags"));
+        tags.prefWidthProperty().bind(lv.tipsList.widthProperty().multiply(0.53));
         columns.add(tags);
-
-        TableColumn comments = new TableColumn("Comments");
-        comments.setCellValueFactory(new PropertyValueFactory<Tip, String>("summary"));
-        columns.add(comments);
 
         TableColumn read = new TableColumn("Read");
         read.setCellValueFactory(new PropertyValueFactory<Tip, String>("read"));
+        read.prefWidthProperty().bind(lv.tipsList.widthProperty().multiply(0.10));
         columns.add(read);
-
-        TableColumn date = new TableColumn("Date");
-        date.setCellValueFactory(new PropertyValueFactory<Tip, String>("date"));
-        columns.add(date);
 
         lv.tipsList.getColumns().addAll(columns);
 
@@ -83,7 +65,16 @@ public class TipListBox extends VBox {
                 lv.tipsList.getSelectionModel().getSelectedItems().stream()
                         .forEach(tip -> {
                             Tip t = (Tip) tip;
-                            t.setRead(!t.isRead());
+                            String read = t.isRead();
+                            if (read.equals("false") || read.equals("") || read == null) {
+                                String time = Calendar.getInstance().getTime().toString();
+                                String parts[] = time.split(" ");
+                                time = parts[0] + " " + parts[1] + " " + parts[2] + " " + parts[3];
+                                read = time;
+                            } else {
+                                read = "";
+                            }
+                            t.setRead(read);
                             lv.display.getController().markRead(t.isRead(), t.getId());
                             lv.tipsList.getItems().clear();
                             Display.refresh();
@@ -103,6 +94,18 @@ public class TipListBox extends VBox {
                             lv.display.getController().removeTags(((Tip) tip).getTags());
                         });
             }
+        });
+
+        // Tässä on tunnistus doubleclick ----------------------------------------------------------------------------------------------------------------- <- doubleclick on row
+        lv.tipsList.setRowFactory(tv -> {
+            TableRow<Tip> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                    Tip tip = row.getItem(); // Tämä on rivillä oleva tip objecti.
+                    System.out.println("Double click on: " + tip.getTitle() + " with id " + tip.getId());
+                }
+            });
+            return row; // tästä ei oikeastaan tarvitse välittää
         });
 
         setSpacing(5);

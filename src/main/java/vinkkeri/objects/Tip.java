@@ -16,7 +16,7 @@ public class Tip {
     private String summary;
     private String isbn;
     private String url;
-    private boolean read;
+    private String read;
 
     private List<String> tags;
     private List<String> relatedCourses;
@@ -33,7 +33,7 @@ public class Tip {
      * @param url     The url of the content if it is in the web
      * @param read    Has the tip content been read or not
      */
-    public Tip(int id, String date, String type, String title, String author, String summary, String isbn, String url, boolean read) {
+    public Tip(int id, String date, String type, String title, String author, String summary, String isbn, String url, String read) {
         this.id = id;
         this.date = date;
         this.type = type;
@@ -59,7 +59,7 @@ public class Tip {
      * @param url
      * @param read
      */
-    public Tip(String type, String title, String author, String summary, String isbn, String url, boolean read) {
+    public Tip(String type, String title, String author, String summary, String isbn, String url, String read) {
         this(-1, "null", type, title, author, summary, isbn, url, read);
     }
 
@@ -91,11 +91,14 @@ public class Tip {
         return isbn;
     }
 
-    public boolean isRead() {
+    public String isRead() {
+        if(read.equals("") || read == null) {
+            return "false";
+        }
         return read;
     }
 
-    public void setRead(boolean read) {
+    public void setRead(String read) {
         this.read = read;
     }
 

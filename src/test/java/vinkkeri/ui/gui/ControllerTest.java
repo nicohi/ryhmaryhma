@@ -67,7 +67,7 @@ public class ControllerTest {
 
     @Test
     public void removeAndAddTipWorks() {
-        Tip tip = new Tip(3, "2018-11-15", "Book", "Introduction to Algorithms - that exists solely for654654654654654SecretHasHasHas", "CLRS", "algos", "9780262033848", "http://mitpress.mit.edu", true);
+        Tip tip = new Tip(3, "2018-11-15", "Book", "Introduction to Algorithms - that exists solely for654654654654654SecretHasHasHas", "CLRS", "algos", "9780262033848", "http://mitpress.mit.edu", "notfalse");
 
         this.controller.insertTip(tip);
         List<Tip> tips = controller.getTips();
@@ -103,7 +103,7 @@ public class ControllerTest {
 
     @Test
     public void markAsReadWorks() {
-        Tip tip = new Tip(3, "2018-11-15", "Book", "Intrasfasfa12124ms - t124hat exists solely125125 for654654654654654SecretHasHasHas", "CLRS", "algos", "9780262033848", "http://mitpress.mit.edu", false);
+        Tip tip = new Tip(3, "2018-11-15", "Book", "Intrasfasfa12124ms - t124hat exists solely125125 for654654654654654SecretHasHasHas", "CLRS", "algos", "9780262033848", "http://mitpress.mit.edu", "");
         this.controller.insertTip(tip);
         List<Tip> tips = controller.getTips();
 
@@ -118,8 +118,8 @@ public class ControllerTest {
         }
 
         assertTrue("Tip was not added correctly, check out controller.insertTip()", exists);
-        assertFalse("Tip should be initialize with read = false, but came as " + tip.isRead(), tip.isRead());
-        controller.markRead(true, tip.getId());
+        assertTrue("Tip should be initialize with read = false, but came as " + tip.isRead(), tip.isRead().equals("false"));
+        controller.markRead("notfalse", tip.getId());
 
         tips = controller.getTips();
 
@@ -131,7 +131,7 @@ public class ControllerTest {
             }
         }
 
-        assertTrue("After calling controller.markRead(false, tip.getId()), tip should have read = true, but was " + tip.isRead(), tip.isRead());
+        assertFalse("After calling controller.markRead(false, tip.getId()), tip should have read = true, but was " + tip.isRead(), tip.isRead().equals("false"));
 
         controller.removeTip(tip);
     }

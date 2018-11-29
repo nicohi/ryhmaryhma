@@ -14,5 +14,5 @@ public interface TipDao {
 
     int getNewestID();
 
-    void markReadValue(int id, boolean read);
+    void markReadValue(int id, String read);
 }

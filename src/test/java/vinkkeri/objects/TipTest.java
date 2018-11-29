@@ -26,7 +26,7 @@ public class TipTest {
 
     @Before
     public void setUp() {
-        this.tip = new Tip(3, "2018-11-15", "Book", "Introduction to Algorithms", "CLRS", "algos", "9780262033848", "http://mitpress.mit.edu", true);
+        this.tip = new Tip(3, "2018-11-15", "Book", "Introduction to Algorithms", "CLRS", "algos", "9780262033848", "http://mitpress.mit.edu", "notfalse");
     }
     
     @Test
@@ -79,7 +79,7 @@ public class TipTest {
 
     @Test
     public void isReadTest1() {
-        assertTrue(this.tip.isRead());
+        assertFalse(tip.isRead().equals("false"));
     }
 
     // Tests below test the methods that involve lists

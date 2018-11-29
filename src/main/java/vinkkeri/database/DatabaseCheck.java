@@ -27,7 +27,7 @@ public class DatabaseCheck {
                     "summary text,\n" +
                     "isbn text,\n" +
                     "url text,\n" +
-                    "read boolean\n" +
+                    "read text\n" +
                     ");";
             String tagTable = "CREATE TABLE IF NOT EXISTS Tag (\n" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +

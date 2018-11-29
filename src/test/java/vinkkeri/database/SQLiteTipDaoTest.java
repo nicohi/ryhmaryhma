@@ -47,7 +47,7 @@ public class SQLiteTipDaoTest {
 
     @Test
     public void tipInsertAndDeleteWorks() {
-        this.SQLiteTipDao.insertTip(new Tip(3, "2018-11-15", "Book", "Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project", "CLRS", "algos", "9780262033848", "http://mitpress.mit.edu", true));
+        this.SQLiteTipDao.insertTip(new Tip(3, "2018-11-15", "Book", "Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project", "CLRS", "algos", "9780262033848", "http://mitpress.mit.edu", ""));
 
         List<String> tipTitles = new ArrayList<>();
         List<Tip> tips = this.SQLiteTipDao.getTips();
@@ -76,25 +76,29 @@ public class SQLiteTipDaoTest {
 
     @Test
     public void markingReadWorks() {
-        this.SQLiteTipDao.insertTip(new Tip(3, "2018-11-15", "Book", "Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project", "CLRS", "algos", "9780262033848", "http://mitpress.mit.edu", false));
+        this.SQLiteTipDao.insertTip(new Tip(3, "2018-11-15", "Book", "Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project", "CLRS", "algos", "9780262033848", "http://mitpress.mit.edu", ""));
 
         List<Tip> tips = this.SQLiteTipDao.getTips();
 
         boolean corRead = false;
 
+        String error = "";
+        
         for (Tip tip : tips) {
             if (tip.getTitle().equals("Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project")) {
                 this.toBeDeletedTestTipsIds.add(tip.getId());
-                if (!tip.isRead()) {
+                if (tip.isRead().equals("false") || tip.isRead().equals("")) {
                     corRead = true;
                     break;
+                } else {
+                    error = error + " - " + tip.isRead() + "; ";
                 }
             }
         }
 
-        assertTrue(corRead);
+        assertTrue(error, corRead);
 
-        this.SQLiteTipDao.markReadValue(this.SQLiteTipDao.getNewestID(), true);
+        this.SQLiteTipDao.markReadValue(this.SQLiteTipDao.getNewestID(), "notfalse");
 
         tips.clear();
         tips = this.SQLiteTipDao.getTips();
@@ -103,7 +107,7 @@ public class SQLiteTipDaoTest {
 
         for (Tip tip : tips) {
             if (tip.getTitle().equals("Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project")
-                    && tip.isRead()) {
+                    && !tip.isRead().equals("false")) {
                 corRead = true;
                 break;
             }
@@ -120,7 +124,7 @@ public class SQLiteTipDaoTest {
         tags.add("keskeinen");
         tags.add("webdevaus");
 
-        Tip readingTip = new Tip("Link", "CS courses -- for testing", "", "kapistely", "", "https://www.cs.helsinki.fi/courses/", false);
+        Tip readingTip = new Tip("Link", "CS courses -- for testing", "", "kapistely", "", "https://www.cs.helsinki.fi/courses/", "");
         readingTip.setTags(tags);
 
         this.tagDao.addTags(tags);
@@ -151,7 +155,7 @@ public class SQLiteTipDaoTest {
         related.add("TIRA");
         related.add("OHTU");
 
-        Tip readingTip = new Tip("Link", "Testing -- CS courses", "", "kapistely", "", "https://www.cs.helsinki.fi/courses/", false);
+        Tip readingTip = new Tip("Link", "Testing -- CS courses", "", "kapistely", "", "https://www.cs.helsinki.fi/courses/", "");
         readingTip.setRelatedCourses(related);
 
         this.courseDao.addCourses(related);
@@ -182,7 +186,7 @@ public class SQLiteTipDaoTest {
         required.add("TiKaPe");
         required.add("OHTU");
 
-        Tip readingTip = new Tip("Link", "Testing more -- CS courses", "", "kapistely", "", "https://www.cs.helsinki.fi/courses/", false);
+        Tip readingTip = new Tip("Link", "Testing more -- CS courses", "", "kapistely", "", "https://www.cs.helsinki.fi/courses/", "");
         readingTip.setRequiredCourses(required);
 
         this.courseDao.addCourses(required);
