@@ -13,5 +13,7 @@ Ohjelma lukuvinkkien tallentamiseen ja järjestämiseen.
 ## Definition of Done
 [Link to file in GH](https://github.com/nicohi/ryhmaryhma/blob/master/DOD.md)
 
-## Sprint 1 Release
-[Link to Realease in GH](https://github.com/nicohi/ryhmaryhma/releases/tag/Sprint_1)
+## Releases
+[Sprint 1](https://github.com/nicohi/ryhmaryhma/releases/tag/Sprint_1)
+
+[Sprint 2](https://github.com/nicohi/ryhmaryhma/releases/tag/Sprint_2)
