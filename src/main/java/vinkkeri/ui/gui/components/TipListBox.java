@@ -1,6 +1,7 @@
 package vinkkeri.ui.gui.components;
 
 import java.util.ArrayList;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -63,7 +64,6 @@ public class TipListBox extends VBox {
         date.setCellValueFactory(new PropertyValueFactory<Tip, String>("date"));
         columns.add(date);
 
-        //initTableColumns(columns, new String[]{"id", "Type", "Title", "Author", "URL", "ISBN", "Tags", "Comments", "Read", "Date", "Related Courses", "Required Courses"});
         lv.tipsList.getColumns().addAll(columns);
 
         Button addTipButton = new Button("Add Tip");
@@ -109,13 +109,6 @@ public class TipListBox extends VBox {
         setPadding(new Insets(10, 10, 10, 10));
         getChildren().addAll(lblHeader, lv.tipsList, addTipButton, flipReadButton, removeTipButton);
 
-        table = lv.tipsList;
+        this.table = lv.tipsList;
     }
-
-    // Initialize all Table columns
-//    private void initTableColumns(ArrayList<TableColumn> columns, String[] names) {
-//        for (String name : names) {
-//            columns.add(new TableColumn(name));
-//        }
-//    }
 }

@@ -1,18 +1,14 @@
 package vinkkeri.ui.gui;
 
+import vinkkeri.database.SQLiteTagDao;
 import vinkkeri.database.SQLiteTipDao;
+import vinkkeri.database.TagDao;
 import vinkkeri.database.TipDao;
 import vinkkeri.objects.Tip;
 
-import java.util.ArrayList;
 import java.util.List;
-import vinkkeri.database.CourseDao;
-import vinkkeri.database.SQLiteCourseDao;
-import vinkkeri.database.SQLiteTagDao;
-import vinkkeri.database.TagDao;
 
-//tämä on copypastattu tui.controller
-//Controller:ista voisi tehdä rajapinnan tai abstraktin luokkan
+//Controller:ista voisi tehdä rajapinnan tai abstraktin luokkan ja ehkä nimetä paremmin
 public class Controller {
 
     //private List<Tip> tips;

@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vinkkeri;
 
 import java.util.concurrent.TimeoutException;
+
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
@@ -18,7 +14,6 @@ import org.testfx.framework.junit.ApplicationTest;
 import vinkkeri.main.Main;
 
 /**
- *
  * @author Olli K. Kärki
  */
 public class AppTest extends ApplicationTest {
@@ -31,7 +26,7 @@ public class AppTest extends ApplicationTest {
         System.setProperty("prism.text", "t2k");
         System.setProperty("java.awt.headless", "true");
     }
-    
+
     @Before
     public void setUp() throws Exception {
         ApplicationTest.launch(Main.class);

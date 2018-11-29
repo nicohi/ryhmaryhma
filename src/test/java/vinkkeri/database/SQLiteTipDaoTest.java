@@ -2,25 +2,27 @@ package vinkkeri.database;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.After;
+
+
 import static org.junit.Assert.assertFalse;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import vinkkeri.objects.Tip;
 
 /**
- *
  * @author jpssilve
  */
 public class SQLiteTipDaoTest {
 
-    SQLiteTipDao SQLiteTipDao;
-    SQLiteTagDao tagDao;
-    SQLiteCourseDao courseDao;
-    ArrayList<Integer> toBeDeletedTestTipsIds;
+    private SQLiteTipDao SQLiteTipDao;
+    private SQLiteTagDao tagDao;
+    private SQLiteCourseDao courseDao;
+    private ArrayList<Integer> toBeDeletedTestTipsIds;
 
     @Before
     public void setUp() {
@@ -91,7 +93,7 @@ public class SQLiteTipDaoTest {
         for (Tip tip : tips) {
             if (tip.getTitle().equals("Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project")) {
                 this.toBeDeletedTestTipsIds.add(tip.getId());
-                if (tip.isRead() == false) {
+                if (!tip.isRead()) {
                     corRead = true;
                     break;
                 }
@@ -108,11 +110,10 @@ public class SQLiteTipDaoTest {
         corRead = false;
 
         for (Tip tip : tips) {
-            if (tip.getTitle().equals("Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project")) {
-                if (tip.isRead() == true) {
-                    corRead = true;
-                    break;
-                }
+            if (tip.getTitle().equals("Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project")
+                    && tip.isRead()) {
+                corRead = true;
+                break;
             }
         }
 

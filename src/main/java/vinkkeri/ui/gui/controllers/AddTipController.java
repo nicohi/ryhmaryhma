@@ -11,6 +11,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
+
 import vinkkeri.ui.gui.Controller;
 
 public class AddTipController implements Initializable {
@@ -34,7 +35,7 @@ public class AddTipController implements Initializable {
     private Label titleLabel;
 
     // input fields, remember to add new ones to the inputs list.
-    ArrayList<TextInputControl> inputs;
+    private ArrayList<TextInputControl> inputs;
 
     @FXML
     private TextField titleField;

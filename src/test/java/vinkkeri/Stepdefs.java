@@ -3,19 +3,11 @@ package vinkkeri;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import java.util.List;
-import java.util.concurrent.TimeoutException;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import org.junit.After;
-import static org.junit.Assert.assertTrue;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.testfx.api.FxAssert.verifyThat;
-import org.testfx.api.FxRobotException;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
@@ -23,6 +15,13 @@ import vinkkeri.database.SQLiteTagDao;
 import vinkkeri.database.SQLiteTipDao;
 import vinkkeri.main.Main;
 import vinkkeri.objects.Tip;
+
+import java.util.List;
+import java.util.concurrent.TimeoutException;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.testfx.api.FxAssert.verifyThat;
 
 public class Stepdefs extends ApplicationTest {
 
@@ -38,7 +37,7 @@ public class Stepdefs extends ApplicationTest {
         try {
             ApplicationTest.launch(Main.class);
         } catch (Exception e) {
-            // oh no
+            System.out.println("Couldn't launch javafx ui\n" + e.getMessage());
         }
     }
 
@@ -61,7 +60,7 @@ public class Stepdefs extends ApplicationTest {
         }
     }
 
-    // Given When and then -----------------------------------------------------
+    // Given -----------------------------------------------------
     @Given("^add tip is clicked$")
     public void givenaddtipisclicked() {
         clickOn("#addTip");
@@ -72,6 +71,7 @@ public class Stepdefs extends ApplicationTest {
 
     }
 
+    //When -----------------------------------------------------
     @When("^add tip button is clicked$")
     public void givenaddtipbuttonisclicked() {
         clickOn("#addTip");
@@ -89,7 +89,7 @@ public class Stepdefs extends ApplicationTest {
 
     @When("tag text area is clicked$")
     public void tagtextareaisclicked() {
-        
+
         clickOn("#tagField");
     }
 
@@ -118,6 +118,7 @@ public class Stepdefs extends ApplicationTest {
         clickOn("#deleteTip");
     }
 
+    // Then -----------------------------------------------------
     @Then("^new tip with title \"([^\"]*)\" and url \"([^\"]*)\" and tags \"([^\"]*)\" is stored in the program$")
     public void newtipwithtitleisstored(String title, String url, String tags) {
         List<Tip> tips = tipDao.getTips();
@@ -147,6 +148,22 @@ public class Stepdefs extends ApplicationTest {
         assertTrue(true);
         clickOn("#backButton");
     }
+
+    @Then("^new tip with title \"([^\"]*)\" and url \"([^\"]*)\" is stored in the program$")
+    public void new_tip_with_title_and_url_is_stored_in_the_program(String title, String url) {
+        // Write code here that turns the phrase above into concrete actions
+        List<Tip> tips = tipDao.getTips();
+        Tip tip = null;
+        for (Tip t : tips) {
+            if (t.getTitle().equals(title) && t.getUrl().equals(url)) {
+                tip = t;
+                break;
+            }
+        }
+        assertNotNull(tip);
+        tipDao.remove(tipDao.getNewestID());
+    }
+
 
     @Then("^a tip with title \"([^\"]*)\" is not stored in the program$")
     public void tipwithtitleisnotstored(String title) {
