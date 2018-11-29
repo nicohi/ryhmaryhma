@@ -11,7 +11,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author Olli K. Kärki
  */
 public class SQLiteTagDao implements TagDao {
@@ -20,13 +19,14 @@ public class SQLiteTagDao implements TagDao {
 
     /**
      * Database Access Object for Tags
-     *
+     * <p>
      * Standard path for this project is 'jdbc:sqlite:database.db';
      *
      * @param path : String path to database in hardrive
      */
     public SQLiteTagDao(String path) {
         this.databaseAddress = path;
+        DatabaseCheck.checkDatabase(databaseAddress);
     }
 
     /**
@@ -39,7 +39,7 @@ public class SQLiteTagDao implements TagDao {
         List<String> tags = new ArrayList<>();
 
         try (Connection conn = DriverManager.getConnection(this.databaseAddress);
-                ResultSet result = conn.createStatement().executeQuery("SELECT * FROM Tag")) {
+             ResultSet result = conn.createStatement().executeQuery("SELECT * FROM Tag")) {
 
             while (result.next()) {
                 String course = result.getString("name");
@@ -70,7 +70,7 @@ public class SQLiteTagDao implements TagDao {
 
     private void addTag(String tag) {
         try (Connection conn = DriverManager.getConnection(this.databaseAddress);
-                PreparedStatement stmt = conn.prepareStatement("INSERT INTO Tag (name) VALUES (?)")) {
+             PreparedStatement stmt = conn.prepareStatement("INSERT INTO Tag (name) VALUES (?)")) {
 
             stmt.setString(1, tag);
             stmt.execute();

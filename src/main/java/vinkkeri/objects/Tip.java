@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author jpssilve
  */
 public class Tip {
@@ -24,16 +23,15 @@ public class Tip {
     private List<String> requiredCourses;
 
     /**
-     *
-     * @param id The id of the database entry for Tip
-     * @param date Tip creation date
-     * @param type What type of tip, i.e. book, course, link etc
-     * @param title The name of the tip type
-     * @param author Who authored the tip content
+     * @param id      The id of the database entry for Tip
+     * @param date    Tip creation date
+     * @param type    What type of tip, i.e. book, course, link etc
+     * @param title   The name of the tip type
+     * @param author  Who authored the tip content
      * @param summary A summary of the tip content
-     * @param isbn If the type has an isbn-code
-     * @param url The url of the content if it is in the web
-     * @param read Has the tip content been read or not
+     * @param isbn    If the type has an isbn-code
+     * @param url     The url of the content if it is in the web
+     * @param read    Has the tip content been read or not
      */
     public Tip(int id, String date, String type, String title, String author, String summary, String isbn, String url, boolean read) {
         this.id = id;
@@ -136,7 +134,7 @@ public class Tip {
      * Allows the setting of computer science courses which are related to the
      * tip.
      *
-     * @param relC A list of related courses
+     * @param relatedCourses A list of related courses
      */
     public void setRelatedCourses(List<String> relatedCourses) {
         this.relatedCourses = relatedCourses;
@@ -157,7 +155,7 @@ public class Tip {
      * Allows the setting of required previous courses, which is useful if the
      * Tip type is a course.
      *
-     * @param reqC A list of required courses
+     * @param requiredCourses A list of required courses
      */
     public void setRequiredCourses(List<String> requiredCourses) {
         this.requiredCourses = requiredCourses;

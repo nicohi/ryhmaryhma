@@ -11,7 +11,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author Olli K. Kärki
  */
 public class SQLiteCourseDao implements CourseDao {
@@ -20,13 +19,14 @@ public class SQLiteCourseDao implements CourseDao {
 
     /**
      * Database Access Object for Courses
-     *
+     * <p>
      * Standard path for this project is 'jdbc:sqlite:database.db';
      *
      * @param path : String path to database in hardrive
      */
     public SQLiteCourseDao(String path) {
         this.databaseAddress = path;
+        DatabaseCheck.checkDatabase(databaseAddress);
     }
 
     /**
@@ -39,7 +39,7 @@ public class SQLiteCourseDao implements CourseDao {
         List<String> courses = new ArrayList<>();
 
         try (Connection conn = DriverManager.getConnection(this.databaseAddress);
-                ResultSet result = conn.createStatement().executeQuery("SELECT * FROM Course")) {
+             ResultSet result = conn.createStatement().executeQuery("SELECT * FROM Course")) {
 
             while (result.next()) {
                 String course = result.getString("name");
@@ -71,7 +71,7 @@ public class SQLiteCourseDao implements CourseDao {
 
     private void addCourse(String course) {
         try (Connection conn = DriverManager.getConnection(this.databaseAddress);
-                PreparedStatement stmt = conn.prepareStatement("INSERT INTO Course (name) VALUES (?)")) {
+             PreparedStatement stmt = conn.prepareStatement("INSERT INTO Course (name) VALUES (?)")) {
 
             stmt.setString(1, course);
             stmt.execute();
