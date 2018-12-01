@@ -32,6 +32,13 @@ public class AppTest extends ApplicationTest {
         ApplicationTest.launch(Main.class);
     }
 
+    @Before
+    public void beforeTest() throws TimeoutException {
+        FxToolkit.hideStage();
+        release(new KeyCode[]{});
+        release(new MouseButton[]{});
+    }
+
     @Override
     public void start(Stage stage) {
         stage.show();
@@ -54,5 +61,4 @@ public class AppTest extends ApplicationTest {
         release(new KeyCode[]{});
         release(new MouseButton[]{});
     }
-
 }
