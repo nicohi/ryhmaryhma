@@ -5,18 +5,18 @@ import java.sql.*;
 
 public class DatabaseCheck {
 
-    public static void checkDatabase(String databaseAddress) {
-        File file = new File("database.db");
+    public static boolean checkDatabase(String databaseAddress) {
+        String filename = databaseAddress.split(":")[2];
+        File file = new File(filename);
         if (file.exists()) {
-            return;
+            return true;
         }
         file.delete();
-        System.out.println("Creating missing database");
         createTables(databaseAddress);
+        return false;
     }
 
     private static void createTables(String databaseAddress) {
-        System.out.println("Creating missing tables");
         try (Connection conn = DriverManager.getConnection(databaseAddress)) {
             String tipTable = "CREATE TABLE IF NOT EXISTS Tip (\n" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
