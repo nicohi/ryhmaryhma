@@ -26,9 +26,9 @@ public class SQLiteTipDaoTest {
 
     @Before
     public void setUp() {
-        this.SQLiteTipDao = new SQLiteTipDao("jdbc:sqlite:database.db");
-        this.tagDao = new SQLiteTagDao("jdbc:sqlite:database.db");
-        this.courseDao = new SQLiteCourseDao("jdbc:sqlite:database.db");
+        this.SQLiteTipDao = new SQLiteTipDao("jdbc:sqlite:test.db");
+        this.tagDao = new SQLiteTagDao("jdbc:sqlite:test.db");
+        this.courseDao = new SQLiteCourseDao("jdbc:sqlite:test.db");
         this.toBeDeletedTestTipsIds = new ArrayList<>();
     }
 

@@ -17,7 +17,7 @@ public class SQLiteCourseDaoTest {
 
     @Before
     public void setUp() {
-        this.SQLiteCourseDao = new SQLiteCourseDao("jdbc:sqlite:database.db");
+        this.SQLiteCourseDao = new SQLiteCourseDao("jdbc:sqlite:test.db");
     }
 
     // FIXME: dependaa populoidusta tietokannasta
@@ -38,7 +38,5 @@ public class SQLiteCourseDaoTest {
         assertTrue(found.contains("TilPe"));
         assertTrue(found.contains("TiTo"));
         assertTrue(found.contains("LaMa"));
-        // Pitäiskö nää poistaa tietokannasta?
-        assertTrue(true); // nyt näkyy codecovissa huonona koodina (:
     }
 }

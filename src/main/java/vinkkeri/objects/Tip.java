@@ -176,7 +176,7 @@ public class Tip {
         if (!compared.getTitle().equals(this.getTitle())) {
             return false;
         }
-        if (compared.isRead() != this.isRead()) {
+        if (!compared.isRead().equals(this.isRead())) {
             return false;
         }
         return true;

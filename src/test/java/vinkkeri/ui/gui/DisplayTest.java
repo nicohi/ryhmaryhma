@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import org.testfx.api.FxRobotException;
@@ -17,11 +18,16 @@ import vinkkeri.AppTest;
 import vinkkeri.database.SQLiteTipDao;
 
 import static org.testfx.api.FxAssert.verifyThat;
+
 import vinkkeri.objects.Tip;
+
+import java.io.File;
 
 /**
  * @author Olli K. Kärki
  */
+
+// tuhoon tän luokan jossain vaiheessa, käytetään pelkästään cucumberia gui testeihin
 public class DisplayTest extends AppTest {
 
     private SQLiteTipDao tipDao;
@@ -46,7 +52,8 @@ public class DisplayTest extends AppTest {
 
     @Before
     public void init() {
-        this.tipDao = new SQLiteTipDao("jdbc:sqlite:database.db");
+        System.setProperty("use.test.db", "true");
+        this.tipDao = new SQLiteTipDao("jdbc:sqlite:test.db");
     }
 
     // After each test the test Tip is removed
@@ -108,6 +115,7 @@ public class DisplayTest extends AppTest {
         clickOn("TESTTITLE".toLowerCase());
         clickOn(DELETE_TIP_BUTTON);
 
+        // tää olettaa että listassa ei ole mitään
         verifyThat("#tipsList", (TableView tableview) -> {
             return tableview.getItems().isEmpty();
         });
@@ -134,6 +142,7 @@ public class DisplayTest extends AppTest {
         find("TESTTITLE".toLowerCase());
         clickOn("TESTTITLE".toLowerCase());
 
+        //asdasdasd
         verifyThat("#tipsList", (TableView tableview) -> {
             Tip tip = (Tip) tableview.getSelectionModel().getSelectedItem();
             return !tip.isRead().equals("false");
@@ -195,5 +204,14 @@ public class DisplayTest extends AppTest {
         });
 
         tipDao.remove(tipDao.getNewestID());
+    }
+
+    @AfterClass
+    public static void cleanUp() {
+        File db = new File("test.db");
+        if (db.exists()) {
+            db.delete();
+        }
+        System.setProperty("use.test.db", "false");
     }
 }
