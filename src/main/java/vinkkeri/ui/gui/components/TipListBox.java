@@ -38,12 +38,12 @@ public class TipListBox extends VBox {
 
         TableColumn tags = new TableColumn("Tags");
         tags.setCellValueFactory(new PropertyValueFactory<Tip, String>("tags"));
-        tags.prefWidthProperty().bind(lv.tipsList.widthProperty().multiply(0.53));
+        tags.prefWidthProperty().bind(lv.tipsList.widthProperty().multiply(0.45));
         columns.add(tags);
 
         TableColumn read = new TableColumn("Read");
         read.setCellValueFactory(new PropertyValueFactory<Tip, String>("read"));
-        read.prefWidthProperty().bind(lv.tipsList.widthProperty().multiply(0.10));
+        read.prefWidthProperty().bind(lv.tipsList.widthProperty().multiply(0.20));
         columns.add(read);
 
         lv.tipsList.getColumns().addAll(columns);

@@ -18,7 +18,7 @@
       <TextField fx:id="isbnField" layoutX="14.0" layoutY="223.0" prefHeight="26.0" prefWidth="214.0" />
       <Label fx:id="commentLabel" layoutX="290.0" layoutY="14.0" text="Comment" />
       <TextArea fx:id="commentArea" layoutX="290.0" layoutY="36.0" prefHeight="210.0" prefWidth="296.0" />
-      <Label fx:id="tagsLabel" layoutX="13.0" layoutY="266.0" text="Tags (separated by spaces)" />
+      <Label fx:id="tagsLabel" layoutX="13.0" layoutY="266.0" text="Tags (separated by ,)" />
       <TextField fx:id="tagField" layoutX="14.0" layoutY="288.0" prefHeight="26.0" prefWidth="214.0" />
       <Button fx:id="addButton" layoutX="290.0" layoutY="288.0" mnemonicParsing="false" text="Add" />
       <Button fx:id="clearButton" layoutX="398.0" layoutY="288.0" mnemonicParsing="false" text="Clear" />

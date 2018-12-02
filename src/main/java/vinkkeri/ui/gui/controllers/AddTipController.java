@@ -131,9 +131,6 @@ public class AddTipController implements Initializable {
         });
     }
 
-    /**
-     * fixme this to the real listview name!
-     */
     private void backButton() {
         this.backButton.setOnAction(event -> {
             this.display.setScene("listview");

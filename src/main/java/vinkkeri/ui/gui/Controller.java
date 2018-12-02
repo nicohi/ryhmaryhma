@@ -11,21 +11,13 @@ import java.util.List;
 //Controller:ista voisi tehdä rajapinnan tai abstraktin luokkan ja ehkä nimetä paremmin
 public class Controller {
 
-    //private List<Tip> tips;
     private TipDao tipDao;
-    //private CourseDao courseDao;
     private TagDao tagDao;
 
     public Controller() {
         this.tipDao = new SQLiteTipDao("jdbc:sqlite:database.db");
-        //this.courseDao = new SQLiteCourseDao("jdbc:sqlite:database.db");
         this.tagDao = new SQLiteTagDao("jdbc:sqlite:database.db");
-        try {
-            //this.tips = tipDao.getTips();
-        } catch (Exception e) {
-            e.printStackTrace();
-            //this.tips = new ArrayList<>();
-        }
+
     }
 
     public void removeTip(Tip tip) {
