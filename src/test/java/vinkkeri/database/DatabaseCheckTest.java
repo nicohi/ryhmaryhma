@@ -46,6 +46,7 @@ public class DatabaseCheckTest {
         checkTables();
     }
 
+    // helper method
     public void checkTables() {
         HashSet<String> tables = new HashSet<>();
         String[] tableNames = {"Course", "RelCourse", "ReqCourse", "Tag", "Tip", "TipTag", "sqlite_sequence"};

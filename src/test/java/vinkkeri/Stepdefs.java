@@ -1,10 +1,10 @@
 package vinkkeri;
 
-import cucumber.api.java.da.Så;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import javafx.scene.Node;
+import javafx.scene.control.TableView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
@@ -13,7 +13,6 @@ import org.junit.AfterClass;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
-import vinkkeri.database.DatabaseCheck;
 import vinkkeri.database.SQLiteTagDao;
 import vinkkeri.database.SQLiteTipDao;
 import vinkkeri.main.Main;
@@ -25,9 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.testfx.api.FxAssert.verifyThat;
 
 public class Stepdefs extends ApplicationTest {
@@ -48,6 +45,9 @@ public class Stepdefs extends ApplicationTest {
         System.setProperty("prism.order", "sw");
         System.setProperty("prism.text", "t2k");
         System.setProperty("java.awt.headless", "true");
+        // vaihda headless = false jos haluat katsella testejä ui:ssa
+        // ja kommentoi headless propertyt pois
+        headless = true;
         // tell Display class to use a test database
         System.setProperty("use.test.db", "true");
 
@@ -60,6 +60,7 @@ public class Stepdefs extends ApplicationTest {
 
     static SQLiteTipDao tipDao;
     static SQLiteTagDao tagDao;
+    static boolean headless;
 
     @Override
     public void start(Stage stage) {
@@ -70,15 +71,42 @@ public class Stepdefs extends ApplicationTest {
         return (T) lookup(query).queryAll().iterator().next();
     }
 
+    /**
+     * The thing that should not be
+     *
+     * @param str
+     */
     public void type(String str) {
         String split[] = str.split("");
         for (String s : split) {
-            // täs hyvää purkkaa koska toi getkeycode() ei toimi kunnolla
             s = s.trim();
+            //killme
             if (s.equals(",")) {
                 super.type(KeyCode.COMMA);
             } else if (s.isEmpty()) {
                 super.type(KeyCode.SPACE);
+            } else if (s.equals("_")) {
+                super.push(KeyCode.SHIFT, KeyCode.MINUS);
+            } else if (s.equals("/")) {
+                if (!headless) {
+                    super.push(KeyCode.SHIFT, KeyCode.DIGIT7);
+                } else {
+                    super.type(KeyCode.SLASH);
+                }
+            } else if (s.equals(":")) {
+                if (!headless) {
+                    super.push(KeyCode.SHIFT, KeyCode.PERIOD);
+                } else {
+                    super.push(KeyCode.SHIFT, KeyCode.SEMICOLON);
+                }
+            } else if (s.equals(".")) {
+                super.type(KeyCode.PERIOD);
+            } else if (s.equals("?")) {
+                if (!headless) {
+                    super.push(KeyCode.SHIFT, KeyCode.PLUS);
+                } else {
+                    super.push(KeyCode.SHIFT, KeyCode.PERIOD);
+                }
             } else {
                 super.type(KeyCode.getKeyCode(s));
             }
@@ -96,6 +124,29 @@ public class Stepdefs extends ApplicationTest {
     public void listingviewvisible() {
         verifyThat("Flip Read", NodeMatchers.isNotNull());
     }
+
+    @Given("^some tips are added$")
+    public void some_tips_are_added() {
+        // luodaan testidataa suoraan tietokantaan
+        Tip tipOne = new Tip("sherlock holmes", "arthur conan doyle");
+        ArrayList<String> tagsOne = new ArrayList<>();
+        tagsOne.add("romaani");
+        tagsOne.add("mysteeri");
+        tipOne.setTags(tagsOne);
+        Tip tipTwo = new Tip("harry potter ja viisasten kivi", "j. k. rowling");
+        ArrayList<String> tagsTwo = new ArrayList<>();
+        tagsTwo.add("fantasia");
+        tagsTwo.add("velhoilu");
+        tipTwo.setTags(tagsTwo);
+        tagDao.addTags(tagsOne);
+        tagDao.addTags(tagsTwo);
+        tipDao.insertTip(tipOne);
+        tipDao.insertTip(tipTwo);
+        //päivitetään näkymä
+        clickOn("#addTip");
+        clickOn("#backButton");
+    }
+
 
     //When -----------------------------------------------------
     @When("^add tip button is clicked$")
@@ -200,6 +251,24 @@ public class Stepdefs extends ApplicationTest {
     @Then("^a tip with title \"([^\"]*)\" is not stored in the program$")
     public void tip_with_title_is_not_stored(String title) {
         verifyThat(title, NodeMatchers.isNull());
+    }
+
+    @Then("^the tips' titles, authors, tags and read states are visible$")
+    public void the_tips_titles_authors_tags_and_read_states_are_visible() throws Throwable {
+        find("sherlock holmes");
+        clickOn("sherlock holmes");
+        verifyThat("#tipsList", (TableView tableview) -> {
+            Tip tip = (Tip) tableview.getSelectionModel().getSelectedItem();
+            return tip.getAuthor().equals("arthur conan doyle") && tip.isRead().equals("false")
+                    && tip.getTags().contains("mysteeri") && tip.getTags().contains("romaani");
+        });
+        find("harry potter ja viisasten kivi");
+        clickOn("harry potter ja viisasten kivi");
+        verifyThat("#tipsList", (TableView tableview) -> {
+            Tip tip = (Tip) tableview.getSelectionModel().getSelectedItem();
+            return tip.getAuthor().equals("j. k. rowling") && tip.isRead().equals("false")
+                    && tip.getTags().contains("fantasia") && tip.getTags().contains("velhoilu");
+        });
     }
 
     // After -------------------------------------------------------------------

@@ -15,19 +15,19 @@ Feature: As a User I can add reading Tips into the program
   Scenario: User adds a new tip with a url into the program
     Given add tip view is clicked from the main view
     When title text area is clicked
-    When text "kp12x" is entered
+    When text "structure and interpretation of computer programs" is entered
     When url text area is clicked
-    When text "45koq" is entered
+    When text "https://mitpress.mit.edu/sites/default/files/sicp/index.html" is entered
     When add button is clicked
     When back button is clicked
-    Then new tip with title "kp12x" and url "45koq" is stored in the program
+    Then new tip with title "structure and interpretation of computer programs" and url "https://mitpress.mit.edu/sites/default/files/sicp/index.html" is stored in the program
 
   Scenario: User adds a new tip with tags into the program
     Given add tip view is clicked from the main view
     When title text area is clicked
     When text "hobitti" is entered
     When tag text area is clicked
-    When text "fantasia,kirja" is entered
+    When text "fantasia,kirja,tolkien" is entered
     When add button is clicked
     When back button is clicked
-    Then new tip with title "hobitti" and tags "fantasia,kirja" is stored in the program
+    Then new tip with title "hobitti" and tags "fantasia,kirja,tolkien" is stored in the program
