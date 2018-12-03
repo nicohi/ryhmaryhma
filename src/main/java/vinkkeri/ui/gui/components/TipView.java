@@ -48,36 +48,44 @@ public class TipView {
         VBox vb = new VBox();
 
         HBox titleLine = new HBox();
+        titleLine.setId("titleLine");
         title = new Label("");
         titleLine.getChildren().addAll(new Label("Title: "), title);
 
         HBox authorLine = new HBox();
+        authorLine.setId("authorLine");
         author = new Label("");
         authorLine.getChildren().addAll(new Label("Author: "), author);
 
         HBox typeLine = new HBox();
+        typeLine.setId("typeLine");
         type = new Label("");
         typeLine.getChildren().addAll(new Label("Type: "), type);
 
         HBox dateLine = new HBox();
+        dateLine.setId("dateLine");
         date = new Label("");
         dateLine.getChildren().addAll(new Label("Date Added: "), date);
 
         HBox isbnLine = new HBox();
+        isbnLine.setId("isbnLine");
         isbn = new Label("");
         isbnLine.getChildren().addAll(new Label("ISBN: "), isbn);
 
         HBox urlLine = new HBox();
+        urlLine.setId("urlLine");
         url = new Label("");
         urlLine.getChildren().addAll(new Label("URL: "), url);
 
         summary = new Label("");
 
         HBox readLine = new HBox();
+        readLine.setId("readLine");
         read = new Label("");
         readLine.getChildren().addAll(new Label("Read: "), read);
         
         HBox tagLine = new HBox();
+        tagLine.setId("tagLine");
         tags = new Label("");
         tagLine.getChildren().addAll(new Label("Tags: "), tags);
 

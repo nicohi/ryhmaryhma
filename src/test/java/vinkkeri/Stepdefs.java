@@ -63,7 +63,7 @@ public class Stepdefs extends ApplicationTest {
 
     static SQLiteTipDao tipDao;
     static SQLiteTagDao tagDao;
-	
+
     static boolean headless;
 
     @Override
@@ -118,7 +118,6 @@ public class Stepdefs extends ApplicationTest {
     }
 
     // Given -----------------------------------------------------
-
     @Given("^add tip view is clicked from the main view$")
     public void add_tip_view_is_clicked() {
         clickOn("#addTip");
@@ -151,20 +150,34 @@ public class Stepdefs extends ApplicationTest {
         clickOn("#backButton");
     }
 
-	@Given("^a tip with title \"([^\"]*)\", author \"([^\"]*)\" and tags \"([^\"]*)\" has been added$")
+    @Given("^a tip with title \"([^\"]*)\", author \"([^\"]*)\" and tags \"([^\"]*)\" has been added$")
     public void a_tip_with_title_author_and_tags_has_been_added(String arg1, String arg2, String arg3) throws Throwable {
-		clickOn("#addTip");
-		clickOn("#titleField");
-		type(arg1.toUpperCase());
-		clickOn("#authorField");
-		type(arg2.toUpperCase());
-		clickOn("#tagField");
-		type(arg3.toUpperCase());
-		clickOn("#addButton");
-		clickOn("#backButton");
+        clickOn("#addTip");
+        clickOn("#titleField");
+        type(arg1.toUpperCase());
+        clickOn("#authorField");
+        type(arg2.toUpperCase());
+        clickOn("#tagField");
+        type(arg3.toUpperCase());
+        clickOn("#addButton");
+        clickOn("#backButton");
     }
 
     //When -----------------------------------------------------
+    @When("^listing view contains Tips$")
+    public void listing_view_contains_tips() {
+        // luodaan testidataa suoraan tietokantaan
+        Tip tipOne = new Tip("sherlock holmes", "arthur conan doyle");
+        ArrayList<String> tagsOne = new ArrayList<>();
+        tagsOne.add("romaani");
+        tagsOne.add("mysteeri");
+        tipOne.setTags(tagsOne);
+        tagDao.addTags(tagsOne);
+        tipDao.insertTip(tipOne);
+        clickOn("#addTip");
+        clickOn("#backButton");
+    }
+
     @When("^add tip button is clicked$")
     public void givenaddtipbuttonisclicked() {
         clickOn("#addTip");
@@ -220,17 +233,46 @@ public class Stepdefs extends ApplicationTest {
         clickOn("#deleteTip");
     }
 
-	@When("^search text area is clicked$")
-	public void search_text_area_is_clicked() throws Throwable {
-		clickOn("#searchField");
-	}
+    @When("^search text area is clicked$")
+    public void search_text_area_is_clicked() throws Throwable {
+        clickOn("#searchField");
+    }
 
-	@When("^clear search is clicked$")
-	public void clear_search_is_clicked() throws Throwable {
-		clickOn("#searchClear");
-	}
+    @When("^clear search is clicked$")
+    public void clear_search_is_clicked() throws Throwable {
+        clickOn("#searchClear");
+    }
+
+    @When("^Tip is double-clicked$")
+    public void tip_is_double_clicked() throws Throwable {
+        find("sherlock holmes");
+        doubleClickOn("sherlock holmes");
+    }
+
+    @When("^delete button is pressed$")
+    public void delete_button_is_pressed() throws Throwable {
+        clickOn("#deleteTip");
+    }
 
     // Then -----------------------------------------------------
+    @Then("^Tip view becomes visible$")
+    public void tip_view_becomes_visible() throws Throwable {
+        verifyThat("#titleLine", NodeMatchers.isNotNull());
+        verifyThat("#authorLine", NodeMatchers.isNotNull());
+        verifyThat("#typeLine", NodeMatchers.isNotNull());
+        verifyThat("#dateLine", NodeMatchers.isNotNull());
+        verifyThat("#isbnLine", NodeMatchers.isNotNull());
+        verifyThat("#urlLine", NodeMatchers.isNotNull());
+        verifyThat("#readLine", NodeMatchers.isNotNull());
+        verifyThat("#tagLine", NodeMatchers.isNotNull());
+        clickOn("#back");
+        tipDao.getTips().stream().forEach(tip -> tipDao.remove(tip.getId()));
+    }
+
+    @Then("^the Tip is not listed anymore in the listing view$")
+    public void the_tip_is_not_listed_anymore_in_the_listing_view() throws Throwable {
+        verifyThat("sherlock holmes", NodeMatchers.isNull());
+    }
 
     @Then("^new tip with title \"([^\"]*)\" and tags \"([^\"]*)\" is stored in the program$")
     public void new_tip_with_title_and_tags_is_stored_in_the_program(String title, String tags) throws Throwable {
@@ -278,25 +320,25 @@ public class Stepdefs extends ApplicationTest {
         verifyThat(title, NodeMatchers.isNull());
     }
 
-	@Then("^all tips are displayed$")
-	public void all_tips_are_displayed() throws Throwable {
-		verifyThat("title1", NodeMatchers.isNotNull());
-		verifyThat("title2", NodeMatchers.isNotNull());
-		tipDao.getTips().stream().forEach(tip -> tipDao.remove(tip.getId()));
-	}
+    @Then("^all tips are displayed$")
+    public void all_tips_are_displayed() throws Throwable {
+        verifyThat("title1", NodeMatchers.isNotNull());
+        verifyThat("title2", NodeMatchers.isNotNull());
+        tipDao.getTips().stream().forEach(tip -> tipDao.remove(tip.getId()));
+    }
 
-	@Then("^tip containing \"([^\"]*)\" is displayed$")
+    @Then("^tip containing \"([^\"]*)\" is displayed$")
     public void tip_containing_is_displayed(String arg1) throws Throwable {
         verifyThat(arg1, NodeMatchers.isNotNull());
-		tipDao.getTips().stream().forEach(tip -> tipDao.remove(tip.getId()));
+        tipDao.getTips().stream().forEach(tip -> tipDao.remove(tip.getId()));
     }
 
     @Then("^tip containing \"([^\"]*)\" is not displayed$")
     public void tip_containing_is_not_displayed(String arg1) throws Throwable {
         verifyThat(arg1, NodeMatchers.isNull());
-		tipDao.getTips().stream().forEach(tip -> tipDao.remove(tip.getId()));
+        tipDao.getTips().stream().forEach(tip -> tipDao.remove(tip.getId()));
     }
-	
+
     @Then("^the tips' titles, authors, tags and read states are visible$")
     public void the_tips_titles_authors_tags_and_read_states_are_visible() throws Throwable {
         find("sherlock holmes");
