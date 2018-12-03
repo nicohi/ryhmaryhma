@@ -1,0 +1,150 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package vinkkeri.ui.gui.components;
+
+import java.awt.Font;
+import java.util.Calendar;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.FontWeight;
+import vinkkeri.objects.Tip;
+import vinkkeri.ui.gui.Controller;
+import vinkkeri.ui.gui.Display;
+
+/**
+ *
+ * @author Olli K. Kärki
+ */
+public class TipView {
+
+    private Controller controller;
+
+    private Tip tip;
+
+    private Label date;
+    private Label type;
+    private Label title;
+    private Label author;
+    private Label summary;
+    private Label isbn;
+    private Label url;
+    private Label read;
+    private Label tags;
+
+    public TipView(Controller controller) {
+        this.controller = controller;
+    }
+
+    public Parent create() {
+        VBox vb = new VBox();
+
+        HBox titleLine = new HBox();
+        title = new Label("");
+        titleLine.getChildren().addAll(new Label("Title: "), title);
+
+        HBox authorLine = new HBox();
+        author = new Label("");
+        authorLine.getChildren().addAll(new Label("Author: "), author);
+
+        HBox typeLine = new HBox();
+        type = new Label("");
+        typeLine.getChildren().addAll(new Label("Type: "), type);
+
+        HBox dateLine = new HBox();
+        date = new Label("");
+        dateLine.getChildren().addAll(new Label("Date Added: "), date);
+
+        HBox isbnLine = new HBox();
+        isbn = new Label("");
+        isbnLine.getChildren().addAll(new Label("ISBN: "), isbn);
+
+        HBox urlLine = new HBox();
+        url = new Label("");
+        urlLine.getChildren().addAll(new Label("URL: "), url);
+
+        summary = new Label("");
+
+        HBox readLine = new HBox();
+        read = new Label("");
+        readLine.getChildren().addAll(new Label("Read: "), read);
+        
+        HBox tagLine = new HBox();
+        tags = new Label("");
+        tagLine.getChildren().addAll(new Label("Tags: "), tags);
+
+        Button back = new Button("Back");
+        back.setId("back");
+        back.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Display.setScene("listview");
+            }
+        });
+
+        Button flipread = new Button("Flip Read");
+        flipread.setId("flipRead");
+        flipread.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                String read = tip.isRead();
+                if (read.equals("false") || read.equals("") || read == null) {
+                    String time = Calendar.getInstance().getTime().toString();
+                    String parts[] = time.split(" ");
+                    time = parts[0] + " " + parts[1] + " " + parts[2] + " " + parts[3];
+                    read = time;
+                } else {
+                    read = "";
+                }
+                tip.setRead(read);
+                controller.markRead(read, tip.getId());
+                setRead(tip.isRead());
+                Display.refresh();
+            }
+        });
+        
+        Button delete = new Button("Delete");
+        delete.setId("deleteTip");
+        delete.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                controller.removeTip(tip);
+                controller.removeTags(tip.getTags());
+                Display.refresh();
+                Display.setScene("listview");
+            }
+        });
+
+        vb.getChildren().addAll(titleLine, authorLine, typeLine, dateLine, isbnLine, urlLine, new Label(""), new Label("Summary"), summary, new Label(""), readLine, tagLine, new Label(""), flipread, new Label(""), back, new Label(""), delete);
+
+        vb.setPadding(new Insets(10, 10, 10, 10));
+
+        return vb;
+    }
+
+    public void setInfo(Tip tip) {
+        this.tip = tip;
+        this.title.setText(tip.getTitle());
+        this.author.setText(tip.getAuthor());
+        this.type.setText(tip.getType());
+        this.date.setText(tip.getDate());
+        this.isbn.setText(tip.getIsbn());
+        this.url.setText(tip.getUrl());
+        this.summary.setText(tip.getSummary());
+        this.read.setText(tip.isRead());
+        this.tags.setText(tip.getTags().toString());
+    }
+    
+    private void setRead(String read) {
+        this.read.setText(read);
+    }
+
+}

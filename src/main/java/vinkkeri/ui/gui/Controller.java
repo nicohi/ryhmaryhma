@@ -15,8 +15,12 @@ public class Controller {
     private TagDao tagDao;
 
     public Controller() {
-        this.tipDao = new SQLiteTipDao("jdbc:sqlite:database.db");
-        this.tagDao = new SQLiteTagDao("jdbc:sqlite:database.db");
+        String databaseAddress = "jdbc:sqlite:database.db";
+        if (System.getProperty("use.test.db") != null && System.getProperty("use.test.db").equals("true")) {
+            databaseAddress = "jdbc:sqlite:test.db";
+        }
+        this.tipDao = new SQLiteTipDao(databaseAddress);
+        this.tagDao = new SQLiteTagDao(databaseAddress);
 
     }
 

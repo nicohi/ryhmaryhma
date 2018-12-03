@@ -68,8 +68,8 @@ public class ListView {
         //layout.setTop(toolbar);
         layout.setCenter(tipslistArea);
 
-		//add searchbar
-		layout.setTop(new SearchBar(this));
+        //add searchbar
+        layout.setTop(new SearchBar(this));
 
         return layout;
     }
@@ -88,9 +88,8 @@ public class ListView {
         tipsList.setItems(FXCollections.observableArrayList(tips));
     }
 
-	public void refreshTipList() {
-		tipsList.setItems(FXCollections.observableArrayList(display.getController().getTips()));
+    public void refreshTipList() {
+        tipsList.setItems(FXCollections.observableArrayList(display.getController().getTips()));
     }
-
 
 }

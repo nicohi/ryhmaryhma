@@ -1,10 +1,6 @@
 package vinkkeri.database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -19,7 +15,6 @@ public class SQLiteCourseDao implements CourseDao {
 
     /**
      * Database Access Object for Courses
-     * <p>
      * Standard path for this project is 'jdbc:sqlite:database.db';
      *
      * @param path : String path to database in hardrive

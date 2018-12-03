@@ -63,6 +63,10 @@ public class Tip {
         this(-1, "null", type, title, author, summary, isbn, url, read);
     }
 
+    public Tip(String title, String author) {
+        this(-1, "", "book", title, author, "", "", "", "false");
+    }
+
     public int getId() {
         return id;
     }
@@ -92,7 +96,7 @@ public class Tip {
     }
 
     public String isRead() {
-        if(read.equals("") || read == null) {
+        if (read.equals("") || read == null) {
             return "false";
         }
         return read;
@@ -176,7 +180,7 @@ public class Tip {
         if (!compared.getTitle().equals(this.getTitle())) {
             return false;
         }
-        if (compared.isRead() != this.isRead()) {
+        if (!compared.isRead().equals(this.isRead())) {
             return false;
         }
         return true;

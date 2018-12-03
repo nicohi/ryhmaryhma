@@ -6,4 +6,5 @@ gradle.properties
 .nb-gradle-properties
 .idea/
 database.db
+test.db
 out/

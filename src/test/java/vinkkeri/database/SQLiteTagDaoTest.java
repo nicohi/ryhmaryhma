@@ -19,7 +19,7 @@ public class SQLiteTagDaoTest {
 
     @Before
     public void setUp() {
-        this.SQLiteTagDao = new SQLiteTagDao("jdbc:sqlite:database.db");
+        this.SQLiteTagDao = new SQLiteTagDao("jdbc:sqlite:test.db");
     }
 
     // Make sure test tags are removed by trying again
