@@ -9,7 +9,9 @@ import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import vinkkeri.objects.Tip;
 import vinkkeri.ui.gui.components.ListView;
+import vinkkeri.ui.gui.components.TipView;
 import vinkkeri.ui.gui.controllers.AddTipController;
 
 /**
@@ -23,6 +25,7 @@ public class Display {
     private static HashMap<String, Scene> scenes;
     private static HashMap<String, FXMLLoader> loaders;
     private static ListView listview;
+    private static TipView tipview;
     private static Controller controller;
 
     public Display(Stage stage) {
@@ -39,6 +42,8 @@ public class Display {
         initializeScene("fxml/AddTipView.fxml", "add");
         listview = new ListView(this);
         addSceneNonFXML(new Scene(listview.create(), WIDTH, HEIGHT), "listview");
+        tipview = new TipView(controller);
+        addSceneNonFXML(new Scene(tipview.create(), WIDTH, HEIGHT), "tipview");
         setAddViewDependencies();
 
         stage.setTitle("Vinkkeri");
@@ -78,6 +83,11 @@ public class Display {
         if (scene.equals("listview")) {
             listview.populateTipList(controller.getTips());
         }
+    }
+
+    public static void showTip(Tip tip) {
+        tipview.setInfo(tip);
+        stage.setScene(scenes.get("tipview"));
     }
 
     public static void refresh() {

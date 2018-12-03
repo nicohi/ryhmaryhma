@@ -1,6 +1,5 @@
 package vinkkeri;
 
-import cucumber.api.java.da.Så;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -13,7 +12,6 @@ import org.junit.AfterClass;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
-import vinkkeri.database.DatabaseCheck;
 import vinkkeri.database.SQLiteTagDao;
 import vinkkeri.database.SQLiteTipDao;
 import vinkkeri.main.Main;
