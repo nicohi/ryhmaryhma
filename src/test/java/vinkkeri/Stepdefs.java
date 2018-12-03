@@ -3,6 +3,7 @@ package vinkkeri;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import java.util.ArrayList;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
@@ -18,10 +19,12 @@ import vinkkeri.objects.Tip;
 
 import java.util.List;
 import java.util.concurrent.TimeoutException;
+import javafx.scene.control.TableView;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.testfx.api.FxAssert.verifyThat;
+import static org.testfx.matcher.base.NodeMatchers.*;
 
 public class Stepdefs extends ApplicationTest {
 
@@ -43,7 +46,7 @@ public class Stepdefs extends ApplicationTest {
 
     static SQLiteTipDao tipDao;
     static SQLiteTagDao tagDao;
-
+	
     @Override
     public void start(Stage stage) {
         stage.show();
@@ -69,6 +72,19 @@ public class Stepdefs extends ApplicationTest {
     @Given("^listing view is visible$")
     public void listingviewvisible() {
 
+    }
+
+	@Given("^a tip with title \"([^\"]*)\", author \"([^\"]*)\" and tags \"([^\"]*)\" has been added$")
+    public void a_tip_with_title_author_and_tags_has_been_added(String arg1, String arg2, String arg3) throws Throwable {
+		clickOn("#addTip");
+		clickOn("#titleField");
+		type(arg1.toUpperCase());
+		clickOn("#authorField");
+		type(arg2.toUpperCase());
+		clickOn("#tagField");
+		type(arg3.toUpperCase());
+		clickOn("#addButton");
+		clickOn("#backButton");
     }
 
     //When -----------------------------------------------------
@@ -118,6 +134,16 @@ public class Stepdefs extends ApplicationTest {
         clickOn("#deleteTip");
     }
 
+	@When("^search text area is clicked$")
+	public void search_text_area_is_clicked() throws Throwable {
+		clickOn("#searchField");
+	}
+
+	@When("^clear search is clicked$")
+	public void clear_search_is_clicked() throws Throwable {
+		clickOn("#searchClear");
+	}
+
     // Then -----------------------------------------------------
     @Then("^new tip with title \"([^\"]*)\" and url \"([^\"]*)\" and tags \"([^\"]*)\" is stored in the program$")
     public void newtipwithtitleisstored(String title, String url, String tags) {
@@ -164,12 +190,30 @@ public class Stepdefs extends ApplicationTest {
         tipDao.remove(tipDao.getNewestID());
     }
 
-
     @Then("^a tip with title \"([^\"]*)\" is not stored in the program$")
     public void tipwithtitleisnotstored(String title) {
         verifyThat(title, NodeMatchers.isNull());
     }
 
+	@Then("^all tips are displayed$")
+	public void all_tips_are_displayed() throws Throwable {
+		verifyThat("title1", NodeMatchers.isNotNull());
+		verifyThat("title2", NodeMatchers.isNotNull());
+		tipDao.getTips().stream().forEach(tip -> tipDao.remove(tip.getId()));
+	}
+
+	@Then("^tip containing \"([^\"]*)\" is displayed$")
+    public void tip_containing_is_displayed(String arg1) throws Throwable {
+        verifyThat(arg1, NodeMatchers.isNotNull());
+		tipDao.getTips().stream().forEach(tip -> tipDao.remove(tip.getId()));
+    }
+
+    @Then("^tip containing \"([^\"]*)\" is not displayed$")
+    public void tip_containing_is_not_displayed(String arg1) throws Throwable {
+        verifyThat(arg1, NodeMatchers.isNull());
+		tipDao.getTips().stream().forEach(tip -> tipDao.remove(tip.getId()));
+    }
+	
     // After -------------------------------------------------------------------
     @After
     public void afterTest() throws TimeoutException {
