@@ -255,6 +255,19 @@ public class Stepdefs extends ApplicationTest {
     }
 
     // Then -----------------------------------------------------
+    @Then("^only title, author, tags and read information shown$")
+    public void only_title_author_tags_and_read_information_is_shown() throws Throwable {
+        verifyThat("#title", NodeMatchers.isNotNull());
+        verifyThat("#author", NodeMatchers.isNotNull());
+        verifyThat("#tags", NodeMatchers.isNotNull());
+        verifyThat("#read", NodeMatchers.isNotNull());
+
+        verifyThat("#tipsList", (TableView tableview) -> {
+            return tableview.getColumns().size() == 4;
+        });
+
+    }
+
     @Then("^Tip view becomes visible$")
     public void tip_view_becomes_visible() throws Throwable {
         verifyThat("#titleLine", NodeMatchers.isNotNull());

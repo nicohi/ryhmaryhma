@@ -17,37 +17,41 @@ import vinkkeri.objects.Tip;
 import vinkkeri.ui.gui.Display;
 
 public class TipListBox extends VBox {
-
+    
     private TableView table;
-
+    
     public TipListBox(ListView lv) {
         //Keskelle sijoittuva listausnäkymä
         lv.tipsList.setEditable(true);
         Label lblHeader = new Label("Tip list");
         ArrayList<TableColumn> columns = new ArrayList<>();
-
+        
         TableColumn title = new TableColumn("Title");
+        title.setId("title");
         title.setCellValueFactory(new PropertyValueFactory<Tip, String>("title"));
         title.prefWidthProperty().bind(lv.tipsList.widthProperty().multiply(0.22));
         columns.add(title);
-
+        
         TableColumn author = new TableColumn("Author");
+        author.setId("author");
         author.setCellValueFactory(new PropertyValueFactory<Tip, String>("author"));
         author.prefWidthProperty().bind(lv.tipsList.widthProperty().multiply(0.15));
         columns.add(author);
-
+        
         TableColumn tags = new TableColumn("Tags");
+        tags.setId("tags");
         tags.setCellValueFactory(new PropertyValueFactory<Tip, String>("tags"));
         tags.prefWidthProperty().bind(lv.tipsList.widthProperty().multiply(0.45));
         columns.add(tags);
-
+        
         TableColumn read = new TableColumn("Read");
+        read.setId("read");
         read.setCellValueFactory(new PropertyValueFactory<Tip, String>("read"));
         read.prefWidthProperty().bind(lv.tipsList.widthProperty().multiply(0.20));
         columns.add(read);
-
+        
         lv.tipsList.getColumns().addAll(columns);
-
+        
         Button addTipButton = new Button("Add Tip");
         addTipButton.setId("addTip");
         addTipButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -56,7 +60,7 @@ public class TipListBox extends VBox {
                 Display.setScene("add");
             }
         });
-
+        
         Button flipReadButton = new Button("Flip Read");
         flipReadButton.setId("flipRead");
         flipReadButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -81,7 +85,7 @@ public class TipListBox extends VBox {
                         });
             }
         });
-
+        
         Button removeTipButton = new Button("Delete Tip");
         removeTipButton.setId("deleteTip");
         removeTipButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -107,11 +111,11 @@ public class TipListBox extends VBox {
             });
             return row; // tästä ei oikeastaan tarvitse välittää
         });
-
+        
         setSpacing(5);
         setPadding(new Insets(10, 10, 10, 10));
         getChildren().addAll(lblHeader, lv.tipsList, addTipButton, flipReadButton, removeTipButton);
-
+        
         this.table = lv.tipsList;
     }
 }
