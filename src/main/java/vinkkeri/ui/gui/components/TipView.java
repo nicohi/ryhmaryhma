@@ -83,7 +83,7 @@ public class TipView {
         readLine.setId("readLine");
         read = new Label("");
         readLine.getChildren().addAll(new Label("Read: "), read);
-        
+
         HBox tagLine = new HBox();
         tagLine.setId("tagLine");
         tags = new Label("");
@@ -115,10 +115,10 @@ public class TipView {
                 tip.setRead(read);
                 controller.markRead(read, tip.getId());
                 setRead(tip.isRead());
-                Display.refresh();
+                Display.clearrefresh();
             }
         });
-        
+
         Button delete = new Button("Delete");
         delete.setId("deleteTip");
         delete.setOnAction(new EventHandler<ActionEvent>() {
@@ -150,7 +150,7 @@ public class TipView {
         this.read.setText(tip.isRead());
         this.tags.setText(tip.getTags().toString());
     }
-    
+
     private void setRead(String read) {
         this.read.setText(read);
     }
