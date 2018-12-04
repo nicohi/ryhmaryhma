@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
+import javafx.scene.control.Label;
 
 import static org.junit.Assert.*;
 import static org.testfx.api.FxAssert.verifyThat;
@@ -261,6 +262,12 @@ public class Stepdefs extends ApplicationTest {
         clickOn("#flipRead");
     }
 
+    // HUOM Tip View näkymän Flip read
+    @When("^flip read button is pressed$")
+    public void flip_read_button_is_pressed() throws Throwable {
+        clickOn("#flipRead");
+    }
+
     // Then -----------------------------------------------------
     @Then("^a correct timestamp is shown$")
     public void a_correct_timestamp_is_shown() throws Throwable {
@@ -279,6 +286,15 @@ public class Stepdefs extends ApplicationTest {
         verifyThat("#tipsList", (TableView tableview) -> {
             Tip tip = (Tip) tableview.getSelectionModel().getSelectedItem();
             return tip.isRead().equals("false");
+        });
+    }
+
+    @Then("^the timestamp will show the correct time$")
+    public void the_timestamp_will_show_the_correct_time() throws Throwable {
+        verifyThat("#readInfo", (Label label) -> {
+            List<Tip> tips = tipDao.getTips();
+            Tip daoTip = tips.stream().filter(t -> t.getTitle().equals("sherlock holmes")).findFirst().get();
+            return label.getText().equals(daoTip.isRead());
         });
     }
 

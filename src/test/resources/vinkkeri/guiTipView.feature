@@ -12,3 +12,10 @@ Feature: As a user I can see the details of a Tip in its own view
     And Tip is double-clicked
     And delete button is pressed
     Then the Tip is not listed anymore in the listing view
+
+  Scenario: User can set read status in Tip view
+    Given listing view is visible
+    When listing view contains Tips
+    And Tip is double-clicked
+    And flip read button is pressed
+    Then the timestamp will show the correct time
