@@ -11,6 +11,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import vinkkeri.objects.Tip;
@@ -34,7 +35,7 @@ public class TipView {
     private Label author;
     private Label summary;
     private Label isbn;
-    private Label url;
+    private TextField url;
     private Label read;
     private Label tags;
 
@@ -72,7 +73,9 @@ public class TipView {
 
         HBox urlLine = new HBox();
         urlLine.setId("urlLine");
-        url = new Label("");
+        url = new TextField("");
+        url.setPrefWidth(1000);
+        url.setEditable(false);
         urlLine.getChildren().addAll(new Label("URL: "), url);
 
         summary = new Label("");
