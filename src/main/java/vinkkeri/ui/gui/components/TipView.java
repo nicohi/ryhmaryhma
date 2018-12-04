@@ -5,8 +5,6 @@
  */
 package vinkkeri.ui.gui.components;
 
-import java.awt.Font;
-import java.util.Calendar;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -15,13 +13,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.FontWeight;
 import vinkkeri.objects.Tip;
 import vinkkeri.ui.gui.Controller;
 import vinkkeri.ui.gui.Display;
 
+import java.util.Calendar;
+
 /**
- *
  * @author Olli K. Kärki
  */
 public class TipView {
@@ -104,7 +102,7 @@ public class TipView {
             @Override
             public void handle(ActionEvent event) {
                 String read = tip.isRead();
-                if (read.equals("false") || read.equals("") || read == null) {
+                if (read == null || read.equals("false") || read.equals("")) {
                     String time = Calendar.getInstance().getTime().toString();
                     String parts[] = time.split(" ");
                     time = parts[0] + " " + parts[1] + " " + parts[2] + " " + parts[3];

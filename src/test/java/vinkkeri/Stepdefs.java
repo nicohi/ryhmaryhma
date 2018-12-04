@@ -3,7 +3,6 @@ package vinkkeri;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import java.util.ArrayList;
 import javafx.scene.Node;
 import javafx.scene.control.TableView;
 import javafx.scene.input.KeyCode;
@@ -24,11 +23,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
-import javafx.scene.control.TableView;
 
 import static org.junit.Assert.*;
 import static org.testfx.api.FxAssert.verifyThat;
-import static org.testfx.matcher.base.NodeMatchers.*;
 
 public class Stepdefs extends ApplicationTest {
 

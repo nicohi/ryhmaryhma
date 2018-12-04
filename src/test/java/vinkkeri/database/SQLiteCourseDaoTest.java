@@ -1,8 +1,10 @@
 package vinkkeri.database;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,14 +22,9 @@ public class SQLiteCourseDaoTest {
         this.SQLiteCourseDao = new SQLiteCourseDao("jdbc:sqlite:test.db");
     }
 
-    // FIXME: dependaa populoidusta tietokannasta
-    @Test
-    public void gettingCoursesWorks1() {
-        //FIXME
-    }
 
     @Test
-    public void addingCoursesWorks1() {
+    public void addingAndGettingCoursesWorks() {
         List<String> courses = new ArrayList<>();
         courses.add("LaMa");
         courses.add("TiTo");
@@ -39,4 +36,13 @@ public class SQLiteCourseDaoTest {
         assertTrue(found.contains("TiTo"));
         assertTrue(found.contains("LaMa"));
     }
+
+    @AfterClass
+    public static void deleteDatabase() {
+        File db = new File("test.db");
+        if (db.exists()) {
+            db.delete();
+        }
+    }
+
 }

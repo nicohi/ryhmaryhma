@@ -5,10 +5,12 @@
  */
 package vinkkeri.ui.gui;
 
+import org.junit.BeforeClass;
 import vinkkeri.database.SQLiteTagDao;
 import vinkkeri.database.SQLiteTipDao;
 import vinkkeri.objects.Tip;
 
+import java.io.File;
 import java.util.List;
 
 import static org.junit.Assert.assertFalse;
@@ -27,43 +29,42 @@ public class ControllerTest {
     private SQLiteTagDao tagDao;
     private String dataAdress;
 
+    @BeforeClass
+    public static void setTestProperty() {
+        System.setProperty("use.test.db", "true");
+    }
+
     @Before
     public void setUp() {
+        File db = new File("test.db");
+        if (db.exists()) {
+            db.delete();
+        }
         this.controller = new Controller();
-        this.dataAdress = "jdbc:sqlite:database.db";
+        this.dataAdress = "jdbc:sqlite:test.db";
         this.tipDao = new SQLiteTipDao(dataAdress);
         this.tagDao = new SQLiteTagDao(dataAdress);
     }
 
-    // FIXME: dependaa populoidusta tietokannasta
-    /*@Test
+    @Test
     public void getTipsWorks() {
-        List<Tip> tipsController = controller.getTips();
-        assertFalse("Controller returns empty list, can't complete test", tipsController.isEmpty());
+        tipDao.insertTip(new Tip("title", "author"));
+        tipDao.insertTip(new Tip("toka", "autööri"));
 
         List<Tip> tipsDao = tipDao.getTips();
         assertFalse("TipDao returns empty list, can't complete test", tipsDao.isEmpty());
 
-        boolean missMatch = true;
+        List<Tip> tipsController = controller.getTips();
+        assertFalse("Controller returns empty list, can't complete test", tipsController.isEmpty());
 
         for (Tip tip : tipsController) {
-            if (!tipsDao.contains(tip)) {
-                missMatch = false;
-                break;
-            }
+            assertTrue("Controller returns a tip which dao doesn't.", tipsDao.contains(tip));
         }
-
-        assertTrue("Controller returns a tip which dao doesn't.", missMatch);
 
         for (Tip tip : tipsDao) {
-            if (!tipsController.contains(tip)) {
-                missMatch = false;
-                break;
-            }
+            assertTrue("Dao returns a tip which controller doesn't.", tipsController.contains(tip));
         }
-
-        assertTrue("Dao returns a tip which controller doesn't.", missMatch);
-    }*/
+    }
 
     @Test
     public void removeAndAddTipWorks() {
