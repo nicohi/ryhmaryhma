@@ -2,9 +2,11 @@ package vinkkeri.objects;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,9 +17,7 @@ import org.junit.Test;
  */
 
 
-
 /**
- *
  * @author jpssilve
  */
 public class TipTest {
@@ -28,7 +28,7 @@ public class TipTest {
     public void setUp() {
         this.tip = new Tip(3, "2018-11-15", "Book", "Introduction to Algorithms", "CLRS", "algos", "9780262033848", "http://mitpress.mit.edu", "notfalse");
     }
-    
+
     @Test
     public void toStringTest() {
         String tostring = tip.toString();
@@ -95,7 +95,7 @@ public class TipTest {
         assertTrue(this.tip.getTags().contains("blaablaa"));
         assertTrue(this.tip.getTags().contains("keycourse"));
     }
-    
+
     @Test
     public void settingRelatedCoursesWorks1() {
         List<String> relCourses = new ArrayList<>();
@@ -121,5 +121,21 @@ public class TipTest {
         assertTrue(this.tip.getRequiredCourses().contains("Introduction to Artificial Intelligence"));
         assertTrue(this.tip.getRequiredCourses().contains("Introduction to Machine Learning"));
         assertFalse(this.tip.getRequiredCourses().contains("Randomized Algorithms"));
+    }
+
+    @Test
+    public void equalsWorks() {
+        assertFalse(tip.equals("one helluva object"));
+        assertFalse(tip.equals(new Tip("title", "author")));
+        Tip similarTip = new Tip(3, "2018-11-15", "Book", "Introduction to Algorithms part two", "CLRS", "algos", "9780262033848", "http://mitpress.mit.edu", "notfalse");
+        assertFalse(tip.equals(similarTip));
+        similarTip = new Tip(3, "2018-11-15", "Book", "Introduction to Algorithms", "CLRS", "algos", "9780262033848", "http://mitpress.mit.edu", "a value");
+        assertFalse(tip.equals(similarTip));
+    }
+
+    @Test
+    public void hashCodeWorks() {
+        final int hash = -1967391274;
+        assertEquals(tip.hashCode(), hash);
     }
 }

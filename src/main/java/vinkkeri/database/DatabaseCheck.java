@@ -63,7 +63,6 @@ public class DatabaseCheck {
                 statement.close();
             }
 
-
         } catch (SQLException e) {
             System.out.println("Failed to create sqlite database. Make sure sqlite is installed");
         }

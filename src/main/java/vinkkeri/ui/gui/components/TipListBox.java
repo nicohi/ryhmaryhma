@@ -70,7 +70,7 @@ public class TipListBox extends VBox {
                         .forEach(tip -> {
                             Tip t = (Tip) tip;
                             String read = t.isRead();
-                            if (read.equals("false") || read.equals("") || read == null) {
+                            if (read == null || read.equals("false") || read.equals("")) {
                                 String time = Calendar.getInstance().getTime().toString();
                                 String parts[] = time.split(" ");
                                 time = parts[0] + " " + parts[1] + " " + parts[2] + " " + parts[3];
