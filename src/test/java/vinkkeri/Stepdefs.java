@@ -251,7 +251,37 @@ public class Stepdefs extends ApplicationTest {
         clickOn("#deleteTip");
     }
 
+    @When("^tip is selected$")
+    public void tip_is_selected() throws Throwable {
+        clickOn("sherlock holmes");
+    }
+
+    @When("^flip read button is clicked$")
+    public void flip_read_button_is_clicked() throws Throwable {
+        clickOn("#flipRead");
+    }
+
     // Then -----------------------------------------------------
+    @Then("^a correct timestamp is shown$")
+    public void a_correct_timestamp_is_shown() throws Throwable {
+        clickOn("sherlock holmes");
+        verifyThat("#tipsList", (TableView tableview) -> {
+            Tip tip = (Tip) tableview.getSelectionModel().getSelectedItem();
+            List<Tip> tips = tipDao.getTips();
+            Tip daoTip = tips.stream().filter(t -> t.getTitle().equals("sherlock holmes")).findFirst().get();
+            return tip.isRead().equals(daoTip.isRead());
+        });
+    }
+
+    @Then("^read attribute will be false$")
+    public void read_attribute_will_be_false() throws Throwable {
+        clickOn("sherlock holmes");
+        verifyThat("#tipsList", (TableView tableview) -> {
+            Tip tip = (Tip) tableview.getSelectionModel().getSelectedItem();
+            return tip.isRead().equals("false");
+        });
+    }
+
     @Then("^only title, author, tags and read information shown$")
     public void only_title_author_tags_and_read_information_is_shown() throws Throwable {
         verifyThat("#title", NodeMatchers.isNotNull());
