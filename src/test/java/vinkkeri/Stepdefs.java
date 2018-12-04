@@ -3,7 +3,6 @@ package vinkkeri;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import java.util.ArrayList;
 import javafx.scene.Node;
 import javafx.scene.control.TableView;
 import javafx.scene.input.KeyCode;
@@ -24,11 +23,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
-import javafx.scene.control.TableView;
 
 import static org.junit.Assert.*;
 import static org.testfx.api.FxAssert.verifyThat;
-import static org.testfx.matcher.base.NodeMatchers.*;
 
 public class Stepdefs extends ApplicationTest {
 
@@ -255,6 +252,19 @@ public class Stepdefs extends ApplicationTest {
     }
 
     // Then -----------------------------------------------------
+    @Then("^only title, author, tags and read information shown$")
+    public void only_title_author_tags_and_read_information_is_shown() throws Throwable {
+        verifyThat("#title", NodeMatchers.isNotNull());
+        verifyThat("#author", NodeMatchers.isNotNull());
+        verifyThat("#tags", NodeMatchers.isNotNull());
+        verifyThat("#read", NodeMatchers.isNotNull());
+
+        verifyThat("#tipsList", (TableView tableview) -> {
+            return tableview.getColumns().size() == 4;
+        });
+
+    }
+
     @Then("^Tip view becomes visible$")
     public void tip_view_becomes_visible() throws Throwable {
         verifyThat("#titleLine", NodeMatchers.isNotNull());

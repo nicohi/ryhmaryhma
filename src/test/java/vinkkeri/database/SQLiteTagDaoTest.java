@@ -1,10 +1,12 @@
 package vinkkeri.database;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,14 +34,8 @@ public class SQLiteTagDaoTest {
         this.SQLiteTagDao.removeTags(tags);
     }
 
-    // FIXME: dependaa populoidusta tietokannasta
     @Test
-    public void gettingTagsWorks1() {
-        //FIXME
-    }
-
-    @Test
-    public void addingTagsWorks1() {
+    public void addingAndGettingTagsWorks1() {
         List<String> tags = new ArrayList<>();
         tags.add("Theoretical computer science");
         this.SQLiteTagDao.addTags(tags);
@@ -48,7 +44,7 @@ public class SQLiteTagDaoTest {
     }
 
     @Test
-    public void addingTagsWorks2() {
+    public void addingAndGettingTagsWorks2() {
         List<String> tags = new ArrayList<>();
         tags.add("blog");
         tags.add("video");
@@ -101,6 +97,14 @@ public class SQLiteTagDaoTest {
             }
         } else {
             fail("Lists differ in length");
+        }
+    }
+
+    @AfterClass
+    public static void deleteDatabase() {
+        File db = new File("test.db");
+        if (db.exists()) {
+            db.delete();
         }
     }
 }

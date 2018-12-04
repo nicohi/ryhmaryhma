@@ -83,7 +83,7 @@ public class SQLiteTipDaoTest {
         boolean corRead = false;
 
         String error = "";
-        
+
         for (Tip tip : tips) {
             if (tip.getTitle().equals("Introduction to Algorithms - that exists solely for the purpose of testing ryhmaryhma project")) {
                 this.toBeDeletedTestTipsIds.add(tip.getId());
