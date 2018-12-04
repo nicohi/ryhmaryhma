@@ -132,4 +132,10 @@ public class TipTest {
         similarTip = new Tip(3, "2018-11-15", "Book", "Introduction to Algorithms", "CLRS", "algos", "9780262033848", "http://mitpress.mit.edu", "a value");
         assertFalse(tip.equals(similarTip));
     }
+
+    @Test
+    public void hashCodeWorks() {
+        final int hash = -1967391274;
+        assertEquals(tip.hashCode(), hash);
+    }
 }
