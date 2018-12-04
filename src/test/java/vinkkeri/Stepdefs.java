@@ -280,14 +280,14 @@ public class Stepdefs extends ApplicationTest {
         });
     }
 
-    @Then("^read attribute will be false$")
-    public void read_attribute_will_be_false() throws Throwable {
-        clickOn("sherlock holmes");
-        verifyThat("#tipsList", (TableView tableview) -> {
-            Tip tip = (Tip) tableview.getSelectionModel().getSelectedItem();
-            return tip.isRead().equals("false");
-        });
-    }
+//    @Then("^read attribute will be false$")
+//    public void read_attribute_will_be_false() throws Throwable {
+//        clickOn("sherlock holmes");
+//        verifyThat("#tipsList", (TableView tableview) -> {
+//            Tip tip = (Tip) tableview.getSelectionModel().getSelectedItem();
+//            return tip.isRead().equals("false");
+//        });
+//    }
 
     @Then("^the timestamp will show the correct time$")
     public void the_timestamp_will_show_the_correct_time() throws Throwable {
