@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import vinkkeri.objects.Tip;
@@ -76,7 +77,9 @@ public class TipView {
         url = new TextField("");
         url.setPrefWidth(1000);
         url.setEditable(false);
+        url.setBackground(Background.EMPTY);
         urlLine.getChildren().addAll(new Label("URL: "), url);
+        url.setFocusTraversable(false);
 
         summary = new Label("");
 
