@@ -1,5 +1,5 @@
 plugins {
-  id 'com.github.johnrengelman.shadow' version '2.0.1'
+    id 'com.github.johnrengelman.shadow' version '2.0.1'
 }
 
 apply plugin: 'java'
@@ -25,10 +25,10 @@ dependencies {
     compile 'com.google.guava:guava:20.0'
     testCompile 'info.cukes:cucumber-java:' + cucumberVersion
     testCompile 'info.cukes:cucumber-junit:' + cucumberVersion
-	testCompile(group: "org.testfx", name: "testfx-core", version: "4.0.13-alpha")
-	testCompile(group: "org.testfx", name: "testfx-junit", version: "4.0.13-alpha")
+    testCompile(group: "org.testfx", name: "testfx-core", version: "4.0.13-alpha")
+    testCompile(group: "org.testfx", name: "testfx-junit", version: "4.0.13-alpha")
     testCompile 'junit:junit:4.12'
-	testCompile group: 'org.testfx', name: 'openjfx-monocle', version: '1.8.0_20'
+    testCompile group: 'org.testfx', name: 'openjfx-monocle', version: '1.8.0_20'
     compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.8.11'
 
 }
@@ -57,11 +57,11 @@ jacocoTestReport {
 
 sourceSets {
     main {
-		resources {
-			srcDirs = ["src/main/java"]
-			includes = ["**/*.fxml"]
-		}
-	}
+        resources {
+            srcDirs = ["src/main/java"]
+            includes = ["**/*.fxml"]
+        }
+    }
 }
 
 mainClassName = 'vinkkeri.main.Main'
