@@ -1,27 +1,19 @@
 package vinkkeri.ui.gui;
 
-import vinkkeri.database.SQLiteTagDao;
-import vinkkeri.database.SQLiteTipDao;
 import vinkkeri.database.TagDao;
 import vinkkeri.database.TipDao;
 import vinkkeri.objects.Tip;
 
 import java.util.List;
 
-//Controller:ista voisi tehdä rajapinnan tai abstraktin luokkan ja ehkä nimetä paremmin
-public class Controller {
+public class DaoController {
 
     private TipDao tipDao;
     private TagDao tagDao;
 
-    public Controller() {
-        String databaseAddress = "jdbc:sqlite:database.db";
-        if (System.getProperty("use.test.db") != null && System.getProperty("use.test.db").equals("true")) {
-            databaseAddress = "jdbc:sqlite:test.db";
-        }
-        this.tipDao = new SQLiteTipDao(databaseAddress);
-        this.tagDao = new SQLiteTagDao(databaseAddress);
-
+    public DaoController(TipDao tipDao, TagDao tagDao) {
+        this.tipDao = tipDao;
+        this.tagDao = tagDao;
     }
 
     public void removeTip(Tip tip) {

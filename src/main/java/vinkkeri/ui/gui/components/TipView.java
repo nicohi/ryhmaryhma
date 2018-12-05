@@ -16,7 +16,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import vinkkeri.objects.Tip;
-import vinkkeri.ui.gui.Controller;
+import vinkkeri.ui.gui.DaoController;
 import vinkkeri.ui.gui.Display;
 
 import java.util.Calendar;
@@ -26,7 +26,7 @@ import java.util.Calendar;
  */
 public class TipView {
 
-    private Controller controller;
+    private DaoController controller;
 
     private Tip tip;
 
@@ -40,7 +40,7 @@ public class TipView {
     private Label read;
     private Label tags;
 
-    public TipView(Controller controller) {
+    public TipView(DaoController controller) {
         this.controller = controller;
     }
 
@@ -110,7 +110,7 @@ public class TipView {
                 String read = tip.isRead();
                 if (read == null || read.equals("false") || read.equals("")) {
                     String time = Calendar.getInstance().getTime().toString();
-                    String parts[] = time.split(" ");
+                    String[] parts = time.split(" ");
                     time = parts[0] + " " + parts[1] + " " + parts[2] + " " + parts[3];
                     read = time;
                 } else {

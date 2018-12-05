@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import vinkkeri.objects.Tip;
+import vinkkeri.ui.gui.DaoController;
 import vinkkeri.ui.gui.Display;
 
 import java.net.URL;
@@ -12,15 +13,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
-import vinkkeri.ui.gui.Controller;
-
 public class AddTipController implements Initializable {
 
     // for changing scenes
     private Display display;
 
     // database dependencies
-    private Controller controller;
+    private DaoController controller;
 
     // buttons
     @FXML
@@ -70,7 +69,7 @@ public class AddTipController implements Initializable {
         this.display = display;
     }
 
-    public void setController(Controller c) {
+    public void setController(DaoController c) {
         this.controller = c;
     }
 
@@ -133,7 +132,7 @@ public class AddTipController implements Initializable {
 
     private void backButton() {
         this.backButton.setOnAction(event -> {
-            this.display.setScene("listview");
+            Display.setScene("listview");
         });
     }
 

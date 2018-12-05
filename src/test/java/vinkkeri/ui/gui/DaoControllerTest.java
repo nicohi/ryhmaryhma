@@ -5,7 +5,8 @@
  */
 package vinkkeri.ui.gui;
 
-import org.junit.BeforeClass;
+import org.junit.Before;
+import org.junit.Test;
 import vinkkeri.database.SQLiteTagDao;
 import vinkkeri.database.SQLiteTipDao;
 import vinkkeri.objects.Tip;
@@ -16,23 +17,14 @@ import java.util.List;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Before;
-import org.junit.Test;
-
 /**
  * @author Olli K. Kärki
  */
-public class ControllerTest {
+public class DaoControllerTest {
 
-    private Controller controller;
+    private DaoController controller;
     private SQLiteTipDao tipDao;
     private SQLiteTagDao tagDao;
-    private String dataAdress;
-
-    @BeforeClass
-    public static void setTestProperty() {
-        System.setProperty("use.test.db", "true");
-    }
 
     @Before
     public void setUp() {
@@ -40,10 +32,10 @@ public class ControllerTest {
         if (db.exists()) {
             db.delete();
         }
-        this.controller = new Controller();
-        this.dataAdress = "jdbc:sqlite:test.db";
+        String dataAdress = "jdbc:sqlite:test.db";
         this.tipDao = new SQLiteTipDao(dataAdress);
         this.tagDao = new SQLiteTagDao(dataAdress);
+        this.controller = new DaoController(tipDao, tagDao);
     }
 
     @Test
@@ -55,10 +47,10 @@ public class ControllerTest {
         assertFalse("TipDao returns empty list, can't complete test", tipsDao.isEmpty());
 
         List<Tip> tipsController = controller.getTips();
-        assertFalse("Controller returns empty list, can't complete test", tipsController.isEmpty());
+        assertFalse("DaoController returns empty list, can't complete test", tipsController.isEmpty());
 
         for (Tip tip : tipsController) {
-            assertTrue("Controller returns a tip which dao doesn't.", tipsDao.contains(tip));
+            assertTrue("DaoController returns a tip which dao doesn't.", tipsDao.contains(tip));
         }
 
         for (Tip tip : tipsDao) {
