@@ -53,11 +53,9 @@ public class SQLiteTipDao implements TipDao {
                 // Use these to create tip object
                 int id = result.getInt("id");
                 String date = result.getString("date");
-                String type = result.getString("type");
                 String title = result.getString("title");
                 String author = result.getString("author");
                 String summary = result.getString("summary");
-                String isbn = result.getString("isbn");
                 String url = result.getString("url");
                 String read = result.getString("read");
 
@@ -65,7 +63,7 @@ public class SQLiteTipDao implements TipDao {
                 List<String> reqC = this.getRequiredCourses(conn, id); // required courses for the object.
                 List<String> relC = this.getRelatedCourses(conn, id); //  related courses for the object.
 
-                Tip tip = new Tip(id, date, type, title, author, summary, isbn, url, read);
+                Tip tip = new Tip(id, date, title, author, summary, url, read);
                 tip.setTags(tags);
                 tip.setRelatedCourses(relC);
                 tip.setRequiredCourses(reqC);
@@ -187,15 +185,13 @@ public class SQLiteTipDao implements TipDao {
         List<String> required = tip.getRequiredCourses();
 
         try (Connection conn = DriverManager.getConnection(this.databaseAddress)) {
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO Tip (date, type, title, author, summary, isbn, url, read) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO Tip (date, title, author, summary, url, read) VALUES (?, ?, ?, ?, ?, ?)");
             stmt.setString(1, date);
-            stmt.setString(2, tip.getType());
-            stmt.setString(3, tip.getTitle());
-            stmt.setString(4, tip.getAuthor());
-            stmt.setString(5, tip.getSummary());
-            stmt.setString(6, tip.getIsbn());
-            stmt.setString(7, tip.getUrl());
-            stmt.setString(8, tip.isRead());
+            stmt.setString(2, tip.getTitle());
+            stmt.setString(3, tip.getAuthor());
+            stmt.setString(4, tip.getSummary());
+            stmt.setString(5, tip.getUrl());
+            stmt.setString(6, tip.isRead());
 
             stmt.execute();
 
@@ -353,5 +349,40 @@ public class SQLiteTipDao implements TipDao {
         }
 
         return idTable;
+    }
+    
+    // --- Update method ---------------------------------------------------------------------
+    
+    /**
+     * Call TagDao addTags for Tip's new tag list before this method.
+     * And removeTags for Tips old tagList after this method.
+     * 
+     * @param tip 
+     */
+    @Override
+    public void updateTip(Tip tip) {
+        try(Connection conn = DriverManager.getConnection(this.databaseAddress);
+                PreparedStatement stmt = conn.prepareStatement("UPDATE Tip SET date = ?, title = ?, author = ?, summary = ?, url = ?, read = ? WHERE id = ?")){
+                stmt.setString(1, tip.getDate());
+                stmt.setString(2, tip.getTitle());
+                stmt.setString(3, tip.getAuthor());
+                stmt.setString(4, tip.getSummary());
+                stmt.setString(5, tip.getUrl());
+                String read = tip.isRead();
+                if(read.equals("false")) {
+                    read = "";
+                }
+                stmt.setString(6, read);
+                stmt.setInt(7, tip.getId());
+            
+                removeTagConnections(conn, tip.getId());
+                
+                stmt.execute();
+                
+                this.addTagConnections(conn, tip.getTags(), tip.getId());
+                
+        } catch (SQLException ex) {
+            Logger.getLogger(SQLiteTipDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

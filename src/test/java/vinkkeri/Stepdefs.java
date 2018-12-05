@@ -315,9 +315,7 @@ public class Stepdefs extends ApplicationTest {
     public void tip_view_becomes_visible() throws Throwable {
         verifyThat("#titleLine", NodeMatchers.isNotNull());
         verifyThat("#authorLine", NodeMatchers.isNotNull());
-        verifyThat("#typeLine", NodeMatchers.isNotNull());
         verifyThat("#dateLine", NodeMatchers.isNotNull());
-        verifyThat("#isbnLine", NodeMatchers.isNotNull());
         verifyThat("#urlLine", NodeMatchers.isNotNull());
         verifyThat("#readLine", NodeMatchers.isNotNull());
         verifyThat("#tagLine", NodeMatchers.isNotNull());
@@ -332,7 +330,7 @@ public class Stepdefs extends ApplicationTest {
 
     @Then("^new tip with title \"([^\"]*)\" and tags \"([^\"]*)\" is stored in the program$")
     public void new_tip_with_title_and_tags_is_stored_in_the_program(String title, String tags) throws Throwable {
-        Tip expectedTip = new Tip("book", title, "", "", "", "", "");
+        Tip expectedTip = new Tip(title, "", "", "", "");
         List<String> tagList = parseTagsFromString(tags);
         expectedTip.setTags(tagList);
 

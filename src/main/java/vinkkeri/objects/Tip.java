@@ -10,11 +10,9 @@ public class Tip {
 
     private int id;
     private String date;
-    private String type;
     private String title;
     private String author;
     private String summary;
-    private String isbn;
     private String url;
     private String read;
 
@@ -23,24 +21,22 @@ public class Tip {
     private List<String> requiredCourses;
 
     /**
-     * @param id      The id of the database entry for Tip
-     * @param date    Tip creation date
-     * @param type    What type of tip, i.e. book, course, link etc
-     * @param title   The name of the tip type
-     * @param author  Who authored the tip content
+     * @param id The id of the database entry for Tip
+     * @param date Tip creation date
+     * @param type What type of tip, i.e. book, course, link etc
+     * @param title The name of the tip type
+     * @param author Who authored the tip content
      * @param summary A summary of the tip content
-     * @param isbn    If the type has an isbn-code
-     * @param url     The url of the content if it is in the web
-     * @param read    Has the tip content been read or not
+     * @param isbn If the type has an isbn-code
+     * @param url The url of the content if it is in the web
+     * @param read Has the tip content been read or not
      */
-    public Tip(int id, String date, String type, String title, String author, String summary, String isbn, String url, String read) {
+    public Tip(int id, String date, String title, String author, String summary, String url, String read) {
         this.id = id;
         this.date = date;
-        this.type = type;
         this.title = title;
         this.author = author;
         this.summary = summary;
-        this.isbn = isbn;
         this.url = url;
         this.read = read;
         this.tags = new ArrayList<>();
@@ -59,12 +55,12 @@ public class Tip {
      * @param url
      * @param read
      */
-    public Tip(String type, String title, String author, String summary, String isbn, String url, String read) {
-        this(-1, "null", type, title, author, summary, isbn, url, read);
+    public Tip(String title, String author, String summary, String url, String read) {
+        this(-1, "null", title, author, summary, url, read);
     }
 
     public Tip(String title, String author) {
-        this(-1, "", "book", title, author, "", "", "", "false");
+        this(-1, "", title, author, "", "", "false");
     }
 
     public int getId() {
@@ -73,10 +69,6 @@ public class Tip {
 
     public String getDate() {
         return date;
-    }
-
-    public String getType() {
-        return type;
     }
 
     public String getTitle() {
@@ -89,10 +81,6 @@ public class Tip {
 
     public String getSummary() {
         return summary;
-    }
-
-    public String getIsbn() {
-        return isbn;
     }
 
     public String isRead() {
@@ -194,5 +182,15 @@ public class Tip {
     @Override
     public int hashCode() {
         return (this.getId() + "" + this.getTitle()).hashCode();
+    }
+    
+    public void recreate(String date, String title, String author, String summary, String url, String read, List<String> tags) {
+        this.date = date;
+        this.title = title;
+        this.author = author;
+        this.summary = summary;
+        this.url = url;
+        this.read = read;
+        this.tags = tags;
     }
 }

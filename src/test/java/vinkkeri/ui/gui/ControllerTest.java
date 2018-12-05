@@ -68,7 +68,7 @@ public class ControllerTest {
 
     @Test
     public void removeAndAddTipWorks() {
-        Tip tip = new Tip(3, "2018-11-15", "Book", "Introduction to Algorithms - that exists solely for654654654654654SecretHasHasHas", "CLRS", "algos", "9780262033848", "http://mitpress.mit.edu", "notfalse");
+        Tip tip = new Tip(3, "2018-11-15", "Introduction to Algorithms - that exists solely for654654654654654SecretHasHasHas", "CLRS", "algos", "http://mitpress.mit.edu", "notfalse");
 
         this.controller.insertTip(tip);
         List<Tip> tips = controller.getTips();
@@ -104,7 +104,7 @@ public class ControllerTest {
 
     @Test
     public void markAsReadWorks() {
-        Tip tip = new Tip(3, "2018-11-15", "Book", "Intrasfasfa12124ms - t124hat exists solely125125 for654654654654654SecretHasHasHas", "CLRS", "algos", "9780262033848", "http://mitpress.mit.edu", "");
+        Tip tip = new Tip(3, "2018-11-15", "Intrasfasfa12124ms - t124hat exists solely125125 for654654654654654SecretHasHasHas", "CLRS", "algos", "http://mitpress.mit.edu", "");
         this.controller.insertTip(tip);
         List<Tip> tips = controller.getTips();
 

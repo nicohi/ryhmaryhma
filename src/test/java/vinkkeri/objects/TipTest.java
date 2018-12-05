@@ -26,7 +26,7 @@ public class TipTest {
 
     @Before
     public void setUp() {
-        this.tip = new Tip(3, "2018-11-15", "Book", "Introduction to Algorithms", "CLRS", "algos", "9780262033848", "http://mitpress.mit.edu", "notfalse");
+        this.tip = new Tip(3, "2018-11-15", "Introduction to Algorithms", "CLRS", "algos", "http://mitpress.mit.edu", "notfalse");
     }
 
     @Test
@@ -48,11 +48,6 @@ public class TipTest {
     }
 
     @Test
-    public void getTypeTest1() {
-        assertEquals("Book", this.tip.getType());
-    }
-
-    @Test
     public void getTitleTest1() {
         assertEquals("Introduction to Algorithms", this.tip.getTitle());
     }
@@ -65,11 +60,6 @@ public class TipTest {
     @Test
     public void getSummaryTest1() {
         assertEquals("algos", this.tip.getSummary());
-    }
-
-    @Test
-    public void getIsbnTest1() {
-        assertEquals("9780262033848", this.tip.getIsbn());
     }
 
     @Test
@@ -127,9 +117,9 @@ public class TipTest {
     public void equalsWorks() {
         assertFalse(tip.equals("one helluva object"));
         assertFalse(tip.equals(new Tip("title", "author")));
-        Tip similarTip = new Tip(3, "2018-11-15", "Book", "Introduction to Algorithms part two", "CLRS", "algos", "9780262033848", "http://mitpress.mit.edu", "notfalse");
+        Tip similarTip = new Tip(3, "2018-11-15", "Introduction to Algorithms part two", "CLRS", "algos", "http://mitpress.mit.edu", "notfalse");
         assertFalse(tip.equals(similarTip));
-        similarTip = new Tip(3, "2018-11-15", "Book", "Introduction to Algorithms", "CLRS", "algos", "9780262033848", "http://mitpress.mit.edu", "a value");
+        similarTip = new Tip(3, "2018-11-15", "Introduction to Algorithms", "CLRS", "algos", "http://mitpress.mit.edu", "a value");
         assertFalse(tip.equals(similarTip));
     }
 

@@ -31,11 +31,9 @@ public class TipView {
     private Tip tip;
 
     private Label date;
-    private Label type;
     private Label title;
     private Label author;
     private Label summary;
-    private Label isbn;
     private TextField url;
     private Label read;
     private Label tags;
@@ -57,20 +55,10 @@ public class TipView {
         author = new Label("");
         authorLine.getChildren().addAll(new Label("Author: "), author);
 
-        HBox typeLine = new HBox();
-        typeLine.setId("typeLine");
-        type = new Label("");
-        typeLine.getChildren().addAll(new Label("Type: "), type);
-
         HBox dateLine = new HBox();
         dateLine.setId("dateLine");
         date = new Label("");
         dateLine.getChildren().addAll(new Label("Date Added: "), date);
-
-        HBox isbnLine = new HBox();
-        isbnLine.setId("isbnLine");
-        isbn = new Label("");
-        isbnLine.getChildren().addAll(new Label("ISBN: "), isbn);
 
         HBox urlLine = new HBox();
         urlLine.setId("urlLine");
@@ -135,7 +123,7 @@ public class TipView {
             }
         });
 
-        vb.getChildren().addAll(titleLine, authorLine, typeLine, dateLine, isbnLine, urlLine, new Label(""), new Label("Summary"), summary, new Label(""), readLine, tagLine, new Label(""), flipread, new Label(""), back, new Label(""), delete);
+        vb.getChildren().addAll(titleLine, authorLine, dateLine, urlLine, new Label(""), new Label("Summary"), summary, new Label(""), readLine, tagLine, new Label(""), flipread, new Label(""), back, new Label(""), delete);
 
         vb.setPadding(new Insets(10, 10, 10, 10));
 
@@ -146,9 +134,7 @@ public class TipView {
         this.tip = tip;
         this.title.setText(tip.getTitle());
         this.author.setText(tip.getAuthor());
-        this.type.setText(tip.getType());
         this.date.setText(tip.getDate());
-        this.isbn.setText(tip.getIsbn());
         this.url.setText(tip.getUrl());
         this.summary.setText(tip.getSummary());
         this.read.setText(tip.isRead());

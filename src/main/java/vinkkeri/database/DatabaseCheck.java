@@ -21,11 +21,9 @@ public class DatabaseCheck {
             String tipTable = "CREATE TABLE IF NOT EXISTS Tip (\n" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                     "date date NOT NULL,\n" +
-                    "type text,\n" +
                     "title text,\n" +
                     "author text,\n" +
                     "summary text,\n" +
-                    "isbn text,\n" +
                     "url text,\n" +
                     "read text\n" +
                     ");";

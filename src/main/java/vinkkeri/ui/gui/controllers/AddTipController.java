@@ -145,10 +145,9 @@ public class AddTipController implements Initializable {
     private Tip createTip() {
         String title = titleField.getText();
         String author = authorField.getText();
-        String isbn = isbnField.getText();
         String comment = commentArea.getText();
         String url = urlField.getText();
-        Tip tip = new Tip("book", title, author, comment, isbn, url, "");
+        Tip tip = new Tip(title, author, comment, url, "");
         if (!tagField.getText().isEmpty()) {
             ArrayList<String> tags = new ArrayList<>();
             tags.addAll(Arrays.asList(tagField.getText().split(",")));
