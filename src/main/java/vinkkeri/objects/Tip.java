@@ -107,6 +107,19 @@ public class Tip {
         return tags;
     }
 
+    public String getTagsToString() {
+        if (tags.isEmpty()) {
+            return "";
+        }
+
+        String tagsString = tags.get(0) + ",";
+        for (int i = 1; i < tags.size(); i++) {
+            tagsString += tags.get(i) + ",";
+        }
+
+        return tagsString.substring(0, tagsString.length() - 1);
+    }
+
     /**
      * Allows the setting of tags, which are related to the tip.
      *
@@ -174,6 +187,22 @@ public class Tip {
         return true;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     @Override
     public String toString() {
         return "Title: " + this.getTitle();
@@ -183,7 +212,7 @@ public class Tip {
     public int hashCode() {
         return (this.getId() + "" + this.getTitle()).hashCode();
     }
-    
+
     public void recreate(String date, String title, String author, String summary, String url, String read, List<String> tags) {
         this.date = date;
         this.title = title;

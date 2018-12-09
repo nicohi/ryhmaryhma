@@ -15,8 +15,6 @@ import org.junit.Test;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
 /**
  * @author jpssilve
  */
@@ -127,5 +125,61 @@ public class TipTest {
     public void hashCodeWorks() {
         final int hash = -1967391274;
         assertEquals(tip.hashCode(), hash);
+    }
+
+    @Test
+    public void tagsToStringWorks1() {
+        List<String> tags = new ArrayList<>();
+        tags.add("keycourse");
+        tags.add("nicetoknow");
+        tags.add("blaablaa");
+        tip.setTags(tags);
+
+        assertEquals("keycourse,nicetoknow,blaablaa", tip.getTagsToString());
+    }
+
+    @Test
+    public void tagsToStringWorks2() {
+        List<String> tags = new ArrayList<>();
+        tags.add("obligatory");
+        tip.setTags(tags);
+
+        assertEquals("obligatory", tip.getTagsToString());
+    }
+
+    @Test
+    public void tagsToStringWorks3() {
+        List<String> tags = new ArrayList<>();
+        tip.setTags(tags);
+
+        assertEquals("", tip.getTagsToString());
+    }
+
+    @Test
+    public void setTitleWorks1() {
+        assertEquals("Introduction to Algorithms", tip.getTitle());
+        tip.setTitle("Introduction to Machine Learning");
+        assertEquals("Introduction to Machine Learning", tip.getTitle());
+    }
+
+    @Test
+    public void setAuthoWorks1() {
+        assertEquals("CLRS", tip.getAuthor());
+        tip.setAuthor("Peter Denning");
+        assertEquals("Peter Denning", tip.getAuthor());
+    }
+
+    @Test
+    public void setSummaryWorks1() {
+        assertEquals("algos", tip.getSummary());
+        tip.setSummary("computational complexity");
+        assertEquals("computational complexity", tip.getSummary());
+    }
+
+    @Test
+    public void setURLWorks1() {
+        assertEquals("http://mitpress.mit.edu", tip.getUrl());
+        tip.setUrl("https://www.cs.helsinki.fi/courses/");
+        assertEquals("https://www.cs.helsinki.fi/courses/", tip.getUrl());
     }
 }

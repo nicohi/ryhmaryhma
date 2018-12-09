@@ -81,11 +81,21 @@ public class TipView {
         tags = new Label("");
         tagLine.getChildren().addAll(new Label("Tags: "), tags);
 
+        Button modify = new Button("Modify tip");
+        modify.setId("modify");
+        modify.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Display.setSceneAndTip("modify", tip);
+            }
+        });
+
         Button back = new Button("Back");
         back.setId("back");
         back.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                Display.clearrefresh();
                 Display.setScene("listview");
             }
         });
@@ -123,7 +133,7 @@ public class TipView {
             }
         });
 
-        vb.getChildren().addAll(titleLine, authorLine, dateLine, urlLine, new Label(""), new Label("Summary"), summary, new Label(""), readLine, tagLine, new Label(""), flipread, new Label(""), back, new Label(""), delete);
+        vb.getChildren().addAll(titleLine, authorLine, dateLine, urlLine, new Label(""), new Label("Summary"), summary, new Label(""), readLine, tagLine, new Label(""), modify, new Label(""), flipread, new Label(""), back, new Label(""), delete);
 
         vb.setPadding(new Insets(10, 10, 10, 10));
 

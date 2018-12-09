@@ -44,6 +44,10 @@ public class Controller {
         tipDao.insertTip(tip);
     }
 
+    public void updateTip(Tip tip) {
+        tipDao.updateTip(tip);
+    }
+
     public void removeTags(List<String> tags) {
         tagDao.removeTags(tags);
     }
