@@ -1,14 +1,14 @@
 package vinkkeri.ui.gui.components;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToolBar;
 import vinkkeri.objects.Tip;
 
 import java.util.Arrays;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.control.CheckBox;
 
 /**
  *
@@ -18,10 +18,9 @@ public class SearchBar extends ToolBar {
     private ListView listView;
     private TextField searchField;
     private Button clear;
-	private CheckBox hideRead;
+    private CheckBox hideRead;
 
     /**
-     *
      * @param lv
      */
     public SearchBar(ListView lv) {
@@ -70,21 +69,26 @@ public class SearchBar extends ToolBar {
         return b;
     }
 
-	private CheckBox makeHideRead() {
-		CheckBox c = new CheckBox("hide read");
+    private CheckBox makeHideRead() {
+        CheckBox c = new CheckBox("hide read");
         c.setId("hideRead");
 
-		c.selectedProperty().addListener(new ChangeListener<Boolean>() {
-        public void changed(ObservableValue<? extends Boolean> ov,
-							Boolean old_val, Boolean new_val) {
-				listView.refreshTipList();
-                if (new_val) {
-					listView.populateTipList(listView.tipsList.getItems().filtered(tip -> ((Tip) tip).isRead().equals("false")));
-				}
-        }
-		});
-		
-		return c;
-	}
+        c.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            public void changed(ObservableValue<? extends Boolean> ov,
+                                Boolean old_val, Boolean new_val) {
+                if (!c.isSelected()) {
+                    listView.refreshTipList();
+                    listView.populateTipList(listView.tipsList.getItems().filtered(tip -> {
+                        return search((Tip) tip, searchField.getText());
+                    }));
+                } else if (new_val) {
+                    listView.populateTipList(listView.tipsList.getItems().filtered(tip -> ((Tip) tip).isRead().equals("false")));
+
+                }
+            }
+        });
+
+        return c;
+    }
 
 }
