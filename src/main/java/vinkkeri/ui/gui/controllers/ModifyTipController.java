@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import vinkkeri.objects.Tip;
+import vinkkeri.ui.gui.Controller;
 import vinkkeri.ui.gui.Display;
 
 import java.net.URL;
@@ -12,10 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
-import vinkkeri.ui.gui.Controller;
-
 /**
- *
  * @author jpssilve
  */
 public class ModifyTipController implements Initializable {
@@ -155,7 +153,6 @@ public class ModifyTipController implements Initializable {
 
     /**
      * Updates the attributes of the Tip object according to user input
-     *
      */
     private void saveTip() {
         this.toBeModifiedTip.setTitle(titleField.getText());
@@ -167,7 +164,6 @@ public class ModifyTipController implements Initializable {
         if (!tagField.getText().isEmpty()) {
             tags.addAll(Arrays.asList(tagField.getText().split(",")));
         }
-
         this.toBeModifiedTip.setTags(tags);
     }
 }

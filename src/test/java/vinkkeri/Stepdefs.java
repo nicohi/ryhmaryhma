@@ -4,6 +4,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
@@ -23,7 +24,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
-import javafx.scene.control.Label;
 
 import static org.junit.Assert.*;
 import static org.testfx.api.FxAssert.verifyThat;
@@ -89,6 +89,8 @@ public class Stepdefs extends ApplicationTest {
                 super.type(KeyCode.SPACE);
             } else if (s.equals("_")) {
                 super.push(KeyCode.SHIFT, KeyCode.MINUS);
+            } else if (s.equals("=")) {
+                super.type(KeyCode.EQUALS);
             } else if (s.equals("/")) {
                 if (!headless) {
                     super.push(KeyCode.SHIFT, KeyCode.DIGIT7);
@@ -107,7 +109,7 @@ public class Stepdefs extends ApplicationTest {
                 if (!headless) {
                     super.push(KeyCode.SHIFT, KeyCode.PLUS);
                 } else {
-                    super.push(KeyCode.SHIFT, KeyCode.PERIOD);
+                    super.push(KeyCode.SHIFT, KeyCode.SLASH);
                 }
             } else {
                 super.type(KeyCode.getKeyCode(s));

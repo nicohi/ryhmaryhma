@@ -4,15 +4,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
+import vinkkeri.objects.TagMap;
 import vinkkeri.objects.Tip;
+import vinkkeri.ui.gui.Controller;
 import vinkkeri.ui.gui.Display;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
-
-import vinkkeri.ui.gui.Controller;
 
 public class AddTipController implements Initializable {
 
@@ -21,6 +22,10 @@ public class AddTipController implements Initializable {
 
     // database dependencies
     private Controller controller;
+
+    // for parsing tags from url
+    private TagMap tagMap;
+
 
     // buttons
     @FXML
@@ -60,6 +65,7 @@ public class AddTipController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.inputs = new ArrayList<>();
+        this.tagMap = new TagMap();
         fillInputList();
         clearButton();
         addButton();
@@ -148,11 +154,17 @@ public class AddTipController implements Initializable {
         String comment = commentArea.getText();
         String url = urlField.getText();
         Tip tip = new Tip(title, author, comment, url, "");
+        ArrayList<String> tags = new ArrayList<>();
         if (!tagField.getText().isEmpty()) {
-            ArrayList<String> tags = new ArrayList<>();
             tags.addAll(Arrays.asList(tagField.getText().split(",")));
-            tip.setTags(tags);
         }
+        List<String> foundTags = tagMap.find(url);
+        for (String tag : foundTags) {
+            if (!tags.contains(tag)) {
+                tags.add(tag);
+            }
+        }
+        tip.setTags(tags);
         return tip;
     }
 }
