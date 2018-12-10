@@ -65,6 +65,7 @@ public class SearchBar extends ToolBar {
         b.setId("searchClear");
         b.setOnAction(event -> {
             searchField.clear();
+            hideRead.setSelected(false);
         });
         return b;
     }

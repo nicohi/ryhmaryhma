@@ -19,3 +19,5 @@ Ohjelma lukuvinkkien tallentamiseen ja järjestämiseen.
 [Sprint 2](https://github.com/nicohi/ryhmaryhma/releases/tag/Sprint_2)
 
 [Sprint 3](https://github.com/nicohi/ryhmaryhma/releases/tag/Sprint_3)
+
+[Demo](https://github.com/nicohi/ryhmaryhma/releases/tag/Demo)
