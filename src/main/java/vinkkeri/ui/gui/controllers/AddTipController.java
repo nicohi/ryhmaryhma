@@ -44,8 +44,6 @@ public class AddTipController implements Initializable {
     @FXML
     private TextField urlField;
     @FXML
-    private TextField isbnField;
-    @FXML
     private TextField tagField;
     @FXML
     private TextArea commentArea;
@@ -80,7 +78,6 @@ public class AddTipController implements Initializable {
     private void fillInputList() {
         this.inputs.add(titleField);
         this.inputs.add(authorField);
-        this.inputs.add(isbnField);
         this.inputs.add(tagField);
         this.inputs.add(commentArea);
         this.inputs.add(urlField);
