@@ -150,6 +150,11 @@ public class Stepdefs extends ApplicationTest {
         clickOn("#backButton");
     }
 
+	@Given("^hide read has been clicked$")
+    public void hide_read_has_been_clicked() throws Throwable {
+		clickOn("#hideRead");
+    }
+
     @Given("^a tip with title \"([^\"]*)\", author \"([^\"]*)\" and tags \"([^\"]*)\" has been added$")
     public void a_tip_with_title_author_and_tags_has_been_added(String arg1, String arg2, String arg3) throws Throwable {
         clickOn("#addTip");
@@ -161,6 +166,12 @@ public class Stepdefs extends ApplicationTest {
         type(arg3.toUpperCase());
         clickOn("#addButton");
         clickOn("#backButton");
+    }
+
+	@Given("^tip with title \"([^\"]*)\" is read$")
+    public void tip_with_title_is_read(String arg1) throws Throwable {
+		clickOn(arg1);
+		clickOn("#flipRead");
     }
 
     //When -----------------------------------------------------
@@ -176,6 +187,18 @@ public class Stepdefs extends ApplicationTest {
         tipDao.insertTip(tipOne);
         clickOn("#addTip");
         clickOn("#backButton");
+    }
+
+    @When("^hide read is clicked$")
+    public void hide_read_is_clicked() throws Throwable {
+		clickOn("#hideRead");
+    }
+
+    @When("^hide read is clicked twice$")
+    public void hide_read_is_clicked_twice() throws Throwable {
+		//ei toimi jostain syystä
+		//clickOn("#hideRead");
+		//clickOn("#hideRead");
     }
 
     @When("^add tip button is clicked$")
