@@ -13,6 +13,9 @@ Ohjelma lukuvinkkien tallentamiseen ja järjestämiseen.
 ## Definition of Done
 [Link to file in GH](https://github.com/nicohi/ryhmaryhma/blob/master/DOD.md)
 
+## Installation and User manual
+[Google Docs Link](https://docs.google.com/document/d/1cuBPcLQ9Msf1Ls8MFOFPtbdDIFzx-mSLNxMI2_telfA/edit?usp=sharing)
+
 ## Releases
 [Sprint 1](https://github.com/nicohi/ryhmaryhma/releases/tag/Sprint_1)
 
