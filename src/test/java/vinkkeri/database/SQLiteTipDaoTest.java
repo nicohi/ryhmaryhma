@@ -38,11 +38,6 @@ public class SQLiteTipDaoTest {
         }
     }
 
-    // FIXME: dependaa populoidusta tietokannasta
-    @Test
-    public void gettingTipsWorks1() {
-    }
-
     @Test
     public void tipInsertAndDeleteWorks() {
         this.SQLiteTipDao.insertTip(new Tip(3, "2018-11-15", "Introduction to Algorithms - that exists solely", "CLRS", "algos", "http://mitpress.mit.edu", ""));
@@ -266,8 +261,6 @@ public class SQLiteTipDaoTest {
         this.toBeDeletedTestTipsIds.add(tip.getId());
 
         assertTrue(tip.getUrl().equals("https://www.cs./courses/"));
-        System.out.println("expected tags: " + tags.toString());
-        System.out.println("tip tags:" + tip.getTags());
         for (String tag : tip.getTags()) {
             assertFalse(tags.contains(tag));
         }

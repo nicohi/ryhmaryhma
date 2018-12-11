@@ -1,18 +1,14 @@
 package vinkkeri.database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import vinkkeri.objects.Tip;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import vinkkeri.objects.Tip;
 
 /**
  * @author Olli K. Kärki
@@ -350,37 +346,37 @@ public class SQLiteTipDao implements TipDao {
 
         return idTable;
     }
-    
+
     // --- Update method ---------------------------------------------------------------------
-    
+
     /**
      * Call TagDao addTags for Tip's new tag list before this method.
      * And removeTags for Tips old tagList after this method.
-     * 
-     * @param tip 
+     *
+     * @param tip tip to be updated
      */
     @Override
     public void updateTip(Tip tip) {
-        try(Connection conn = DriverManager.getConnection(this.databaseAddress);
-                PreparedStatement stmt = conn.prepareStatement("UPDATE Tip SET date = ?, title = ?, author = ?, summary = ?, url = ?, read = ? WHERE id = ?")){
-                stmt.setString(1, tip.getDate());
-                stmt.setString(2, tip.getTitle());
-                stmt.setString(3, tip.getAuthor());
-                stmt.setString(4, tip.getSummary());
-                stmt.setString(5, tip.getUrl());
-                String read = tip.isRead();
-                if(read.equals("false")) {
-                    read = "";
-                }
-                stmt.setString(6, read);
-                stmt.setInt(7, tip.getId());
-            
-                removeTagConnections(conn, tip.getId());
-                
-                stmt.execute();
-                
-                this.addTagConnections(conn, tip.getTags(), tip.getId());
-                
+        try (Connection conn = DriverManager.getConnection(this.databaseAddress);
+             PreparedStatement stmt = conn.prepareStatement("UPDATE Tip SET date = ?, title = ?, author = ?, summary = ?, url = ?, read = ? WHERE id = ?")) {
+            stmt.setString(1, tip.getDate());
+            stmt.setString(2, tip.getTitle());
+            stmt.setString(3, tip.getAuthor());
+            stmt.setString(4, tip.getSummary());
+            stmt.setString(5, tip.getUrl());
+            String read = tip.isRead();
+            if (read.equals("false")) {
+                read = "";
+            }
+            stmt.setString(6, read);
+            stmt.setInt(7, tip.getId());
+
+            removeTagConnections(conn, tip.getId());
+
+            stmt.execute();
+
+            this.addTagConnections(conn, tip.getTags(), tip.getId());
+
         } catch (SQLException ex) {
             Logger.getLogger(SQLiteTipDao.class.getName()).log(Level.SEVERE, null, ex);
         }

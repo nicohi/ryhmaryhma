@@ -5,8 +5,9 @@
  */
 package vinkkeri.ui.gui;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
-import vinkkeri.database.SQLiteTagDao;
+import org.junit.Test;
 import vinkkeri.database.SQLiteTipDao;
 import vinkkeri.objects.Tip;
 
@@ -16,9 +17,6 @@ import java.util.List;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Before;
-import org.junit.Test;
-
 /**
  * @author Olli K. Kärki
  */
@@ -26,8 +24,6 @@ public class ControllerTest {
 
     private Controller controller;
     private SQLiteTipDao tipDao;
-    private SQLiteTagDao tagDao;
-    private String dataAdress;
 
     @BeforeClass
     public static void setTestProperty() {
@@ -41,9 +37,8 @@ public class ControllerTest {
             db.delete();
         }
         this.controller = new Controller();
-        this.dataAdress = "jdbc:sqlite:test.db";
+        final String dataAdress = "jdbc:sqlite:test.db";
         this.tipDao = new SQLiteTipDao(dataAdress);
-        this.tagDao = new SQLiteTagDao(dataAdress);
     }
 
     @Test

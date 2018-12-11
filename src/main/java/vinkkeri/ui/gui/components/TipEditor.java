@@ -1,13 +1,14 @@
 package vinkkeri.ui.gui.components;
 
-import java.util.ArrayList;
-import java.util.List;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.layout.VBox;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TipEditor extends VBox {
 
@@ -26,7 +27,6 @@ public class TipEditor extends VBox {
         nodes.add(lv.textItems.get(0).getLabel());
         nodes.add(lv.textItems.get(0).getField());
 
-        nodes.addAll(lv.rButtons);
         nodes.add(lv.separator);
 
         Label lblReadOrNot = new Label("Read or Not");
@@ -41,7 +41,6 @@ public class TipEditor extends VBox {
 
         //lisätään lukutiedot
         getChildren().add(lblReadOrNot);
-        getChildren().addAll(lv.rButtons2);
         getChildren().add(lv.datePicker);
 
     }

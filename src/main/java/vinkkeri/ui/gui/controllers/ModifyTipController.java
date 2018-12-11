@@ -20,9 +20,6 @@ public class ModifyTipController implements Initializable {
 
     private Tip toBeModifiedTip;
 
-    // for changing scenes
-    private Display display;
-
     // database dependencies
     private Controller controller;
 
@@ -81,10 +78,6 @@ public class ModifyTipController implements Initializable {
         tagField.setText(this.toBeModifiedTip.getTagsToString());
         commentArea.setText(this.toBeModifiedTip.getSummary());
         urlField.setText(this.toBeModifiedTip.getUrl());
-    }
-
-    public void setDisplay(Display display) {
-        this.display = display;
     }
 
     public void setController(Controller c) {

@@ -1,11 +1,5 @@
 package vinkkeri.ui.gui;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -14,6 +8,12 @@ import vinkkeri.ui.gui.components.ListView;
 import vinkkeri.ui.gui.components.TipView;
 import vinkkeri.ui.gui.controllers.AddTipController;
 import vinkkeri.ui.gui.controllers.ModifyTipController;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Olli K. Kärki
@@ -31,7 +31,7 @@ public class Display {
 
     public Display(Stage stage) {
         Display.stage = stage;
-        this.controller = new Controller();
+        controller = new Controller();
         initialize();
     }
 
@@ -68,7 +68,6 @@ public class Display {
     private void setModifyViewDependencies() {
         ModifyTipController m = loaders.get("modify").getController();
         m.setController(controller);
-        m.setDisplay(this);
     }
 
     public static Controller getController() {

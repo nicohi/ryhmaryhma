@@ -1,10 +1,6 @@
 package vinkkeri.database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -32,7 +28,7 @@ public class SQLiteTagDao implements TagDao {
     /**
      * Retrieves all tags from database given in the constructor.
      *
-     * @return
+     * @return list of tags
      */
     @Override
     public List<String> getTags() {
@@ -56,7 +52,7 @@ public class SQLiteTagDao implements TagDao {
     /**
      * Inserts tags from the list into the database, doesn't insert duplicates.
      *
-     * @param tags
+     * @param tags tags to be added
      */
     @Override
     public void addTags(List<String> tags) {

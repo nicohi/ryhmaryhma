@@ -82,7 +82,7 @@ public class Tip {
     }
 
     public String isRead() {
-        if (read.equals("") || read == null) {
+        if (read == null || read.equals("")) {
             return "false";
         }
         return read;
@@ -102,8 +102,7 @@ public class Tip {
      * @return A list of tags
      */
     public List<String> getTags() {
-        ArrayList<String> retTags = new ArrayList<>();
-        retTags.addAll(tags);
+        ArrayList<String> retTags = new ArrayList<>(tags);
         Collections.sort(retTags);
         return retTags;
     }
@@ -113,9 +112,9 @@ public class Tip {
             return "";
         }
         List<String> tags = this.getTags();
-        String tagsString = tags.get(0) + ",";
+        StringBuilder tagsString = new StringBuilder(tags.get(0) + ",");
         for (int i = 1; i < tags.size(); i++) {
-            tagsString += tags.get(i) + ",";
+            tagsString.append(tags.get(i)).append(",");
         }
 
         return tagsString.substring(0, tagsString.length() - 1);

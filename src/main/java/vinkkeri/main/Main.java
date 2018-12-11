@@ -6,12 +6,12 @@ import vinkkeri.ui.gui.Display;
 
 public class Main extends Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         launch();
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         new Display(primaryStage);
     }
 }

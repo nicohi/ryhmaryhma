@@ -5,8 +5,6 @@
  */
 package vinkkeri.ui.gui.components;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -83,54 +81,40 @@ public class TipView {
 
         Button modify = new Button("Modify tip");
         modify.setId("modify");
-        modify.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Display.setSceneAndTip("modify", tip);
-            }
-        });
+        modify.setOnAction(event -> Display.setSceneAndTip("modify", tip));
 
         Button back = new Button("Back");
         back.setId("back");
-        back.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Display.clearrefresh();
-                Display.setScene("listview");
-            }
+        back.setOnAction(event -> {
+            Display.clearrefresh();
+            Display.setScene("listview");
         });
 
         Button flipread = new Button("Flip Read");
         flipread.setId("flipRead");
-        flipread.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                String read = tip.isRead();
-                if (read == null || read.equals("false") || read.equals("")) {
-                    String time = Calendar.getInstance().getTime().toString();
-                    String parts[] = time.split(" ");
-                    time = parts[0] + " " + parts[1] + " " + parts[2] + " " + parts[3];
-                    read = time;
-                } else {
-                    read = "";
-                }
-                tip.setRead(read);
-                controller.markRead(read, tip.getId());
-                setRead(tip.isRead());
-                Display.clearrefresh();
+        flipread.setOnAction(event -> {
+            String read = tip.isRead();
+            if (read == null || read.equals("false") || read.equals("")) {
+                String time = Calendar.getInstance().getTime().toString();
+                String parts[] = time.split(" ");
+                time = parts[0] + " " + parts[1] + " " + parts[2] + " " + parts[3];
+                read = time;
+            } else {
+                read = "";
             }
+            tip.setRead(read);
+            controller.markRead(read, tip.getId());
+            setRead(tip.isRead());
+            Display.clearrefresh();
         });
 
         Button delete = new Button("Delete");
         delete.setId("deleteTip");
-        delete.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                controller.removeTip(tip);
-                controller.removeTags(tip.getTags());
-                Display.refresh();
-                Display.setScene("listview");
-            }
+        delete.setOnAction(event -> {
+            controller.removeTip(tip);
+            controller.removeTags(tip.getTags());
+            Display.refresh();
+            Display.setScene("listview");
         });
 
         vb.getChildren().addAll(titleLine, authorLine, dateLine, urlLine, new Label(""), new Label("Summary"), summary, new Label(""), readLine, tagLine, new Label(""), modify, new Label(""), flipread, new Label(""), back, new Label(""), delete);
