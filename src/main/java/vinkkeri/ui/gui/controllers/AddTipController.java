@@ -64,6 +64,7 @@ public class AddTipController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.inputs = new ArrayList<>();
         this.tagMap = new TagMap();
+        this.commentArea.setWrapText(true);
         fillInputList();
         clearButton();
         addButton();
@@ -148,7 +149,7 @@ public class AddTipController implements Initializable {
     private Tip createTip() {
         String title = titleField.getText();
         String author = authorField.getText();
-        String comment = commentArea.getText();
+        String comment = commentArea.getText().trim();
         String url = urlField.getText();
         Tip tip = new Tip(title, author, comment, url, "");
         ArrayList<String> tags = new ArrayList<>();

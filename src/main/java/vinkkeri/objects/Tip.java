@@ -1,6 +1,8 @@
 package vinkkeri.objects;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -16,20 +18,18 @@ public class Tip {
     private String url;
     private String read;
 
-    private List<String> tags;
+    private HashSet<String> tags;
     private List<String> relatedCourses;
     private List<String> requiredCourses;
 
     /**
-     * @param id The id of the database entry for Tip
-     * @param date Tip creation date
-     * @param type What type of tip, i.e. book, course, link etc
-     * @param title The name of the tip type
-     * @param author Who authored the tip content
+     * @param id      The id of the database entry for Tip
+     * @param date    Tip creation date
+     * @param title   The name of the tip type
+     * @param author  Who authored the tip content
      * @param summary A summary of the tip content
-     * @param isbn If the type has an isbn-code
-     * @param url The url of the content if it is in the web
-     * @param read Has the tip content been read or not
+     * @param url     The url of the content if it is in the web
+     * @param read    Has the tip content been read or not
      */
     public Tip(int id, String date, String title, String author, String summary, String url, String read) {
         this.id = id;
@@ -39,7 +39,7 @@ public class Tip {
         this.summary = summary;
         this.url = url;
         this.read = read;
-        this.tags = new ArrayList<>();
+        this.tags = new HashSet<>();
         this.relatedCourses = new ArrayList<>();
         this.requiredCourses = new ArrayList<>();
     }
@@ -47,11 +47,9 @@ public class Tip {
     /**
      * Constructor for Tips not from the database
      *
-     * @param type
      * @param title
      * @param author
      * @param summary
-     * @param isbn
      * @param url
      * @param read
      */
@@ -104,14 +102,17 @@ public class Tip {
      * @return A list of tags
      */
     public List<String> getTags() {
-        return tags;
+        ArrayList<String> retTags = new ArrayList<>();
+        retTags.addAll(tags);
+        Collections.sort(retTags);
+        return retTags;
     }
 
     public String getTagsToString() {
         if (tags.isEmpty()) {
             return "";
         }
-
+        List<String> tags = this.getTags();
         String tagsString = tags.get(0) + ",";
         for (int i = 1; i < tags.size(); i++) {
             tagsString += tags.get(i) + ",";
@@ -126,7 +127,8 @@ public class Tip {
      * @param tags A list of related tags
      */
     public void setTags(List<String> tags) {
-        this.tags = tags;
+        this.tags.clear();
+        this.tags.addAll(tags);
     }
 
     /**
@@ -220,6 +222,7 @@ public class Tip {
         this.summary = summary;
         this.url = url;
         this.read = read;
-        this.tags = tags;
+        this.tags.clear();
+        this.tags.addAll(tags);
     }
 }

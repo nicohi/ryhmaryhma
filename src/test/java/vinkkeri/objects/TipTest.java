@@ -1,20 +1,19 @@
 package vinkkeri.objects;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 /**
  * @author jpssilve
  */
@@ -134,8 +133,9 @@ public class TipTest {
         tags.add("nicetoknow");
         tags.add("blaablaa");
         tip.setTags(tags);
-
-        assertEquals("keycourse,nicetoknow,blaablaa", tip.getTagsToString());
+        assertTrue(tip.getTagsToString().contains("keycourse"));
+        assertTrue(tip.getTagsToString().contains("nicetoknow"));
+        assertTrue(tip.getTagsToString().contains("blaablaa"));
     }
 
     @Test

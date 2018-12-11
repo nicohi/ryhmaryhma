@@ -75,6 +75,7 @@ public class ModifyTipController implements Initializable {
      */
     public void setTipToBeModified(Tip tip) {
         this.toBeModifiedTip = tip;
+        commentArea.setWrapText(true);
         titleField.setText(this.toBeModifiedTip.getTitle());
         authorField.setText(this.toBeModifiedTip.getAuthor());
         tagField.setText(this.toBeModifiedTip.getTagsToString());
@@ -154,7 +155,7 @@ public class ModifyTipController implements Initializable {
     private void saveTip() {
         this.toBeModifiedTip.setTitle(titleField.getText());
         this.toBeModifiedTip.setAuthor(authorField.getText());
-        this.toBeModifiedTip.setSummary(commentArea.getText());
+        this.toBeModifiedTip.setSummary(commentArea.getText().trim());
         this.toBeModifiedTip.setUrl(urlField.getText());
 
         ArrayList<String> tags = new ArrayList<>();

@@ -1,20 +1,16 @@
 package vinkkeri.database;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-
-import static org.junit.Assert.assertFalse;
-
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import vinkkeri.objects.Tip;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.*;
 
 /**
  * @author jpssilve
@@ -212,11 +208,11 @@ public class SQLiteTipDaoTest {
             fail("Not added");
         }
     }
-    
-    
+
+
     @Test
     public void updateTipWorks() {
-        
+
         Tip readingTip = new Tip("Testing more CS cour", "", "kapiely", "https://www.cs./courses/", "");
         List<String> tags = new ArrayList<>();
         tags.add("tag1");
@@ -225,24 +221,24 @@ public class SQLiteTipDaoTest {
 
         this.tagDao.addTags(tags);
         this.SQLiteTipDao.insertTip(readingTip);
-        
+
         Tip tip = this.SQLiteTipDao.getTips().get(0);
         this.toBeDeletedTestTipsIds.add(tip.getId());
-        
+
         assertTrue(tip.getTitle().equals("Testing more CS cour"));
         assertTrue(tip.getUrl().equals("https://www.cs./courses/"));
-        
-        
-        for(String tag : tip.getTags()) {
+
+
+        for (String tag : tip.getTags()) {
             assertTrue(tags.contains(tag));
         }
-        
+
         assertTrue(tip.getTags().size() == 2);
-        
+
         List<String> tags2 = new ArrayList<>();
         tags2.add("tag3");
         tags2.add("tag4");
-        
+
         Tip readingTip2 = new Tip("Testing more CSa cour", "a", "kapiealy", "https://www.cs./couarses/", "a");
         List<String> tags3 = new ArrayList<>();
         tags3.add("tag2");
@@ -252,36 +248,36 @@ public class SQLiteTipDaoTest {
         this.tagDao.addTags(tags3);
         this.SQLiteTipDao.insertTip(readingTip2);
         this.toBeDeletedTestTipsIds.add(this.SQLiteTipDao.getNewestID());
-        
+
         tip.recreate(tip.getDate(), "new title test", tip.getAuthor(), "hahaha", tip.getUrl(), tip.isRead(), tags2);
-        
+
         assertTrue(tip.getTitle().equals("new title test"));
-        
+
         this.tagDao.addTags(tags2);
         this.SQLiteTipDao.updateTip(tip);
         this.tagDao.removeTags(tags);
-        
-        tip = null;
+
         List<Tip> tips = this.SQLiteTipDao.getTips();
-        
+
         assertTrue(tips.size() == 2);
-        
+
         tip = tips.get(0);
+        assertNotNull("tip from db was null", tip);
         this.toBeDeletedTestTipsIds.add(tip.getId());
-        
+
         assertTrue(tip.getUrl().equals("https://www.cs./courses/"));
-        
-        
-        for(String tag : tip.getTags()) {
+        System.out.println("expected tags: " + tags.toString());
+        System.out.println("tip tags:" + tip.getTags());
+        for (String tag : tip.getTags()) {
             assertFalse(tags.contains(tag));
         }
-        
+
         assertTrue(tip.getTags().contains("tag3"));
         assertTrue(tip.getTags().contains("tag4"));
         assertTrue(tip.getTags().size() == 2);
-        
+
         assertTrue(tip.getTitle().equals("new title test"));
-        
+
         List<String> tagsList = this.tagDao.getTags();
         assertFalse(tagsList.contains("tag1"));
         assertTrue(tagsList.contains("tag2"));
@@ -298,5 +294,5 @@ public class SQLiteTipDaoTest {
         }
         System.setProperty("use.test.db", "false");
     }
-    
+
 }
