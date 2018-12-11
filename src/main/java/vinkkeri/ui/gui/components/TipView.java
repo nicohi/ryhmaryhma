@@ -86,7 +86,7 @@ public class TipView {
         Button back = new Button("Back");
         back.setId("back");
         back.setOnAction(event -> {
-            Display.clearrefresh();
+            Display.clearAndRefresh();
             Display.setScene("listview");
         });
 
@@ -105,7 +105,7 @@ public class TipView {
             tip.setRead(read);
             controller.markRead(read, tip.getId());
             setRead(tip.isRead());
-            Display.clearrefresh();
+            Display.clearAndRefresh();
         });
 
         Button delete = new Button("Delete");
