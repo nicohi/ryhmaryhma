@@ -24,6 +24,7 @@ public class ListView {
     public ListView(Display d) {
         this.display = d;
         this.tipsList.setId("tipsList");
+        this.tipsList.setPrefSize(99999, 99999); // Megapurkka
     }
 
     public Parent create() {

@@ -32,7 +32,7 @@ public class SearchBar extends ToolBar {
 
     private TextField makeSearchField() {
         TextField text = new TextField();
-        text.prefWidthProperty().bind(listView.tipsList.widthProperty().multiply(0.85));
+        text.prefWidthProperty().bind(listView.tipsList.widthProperty().multiply(0.849));
         text.setId("searchField");
         text.textProperty().addListener((observable, oldValue, newValue) -> {
             //if the text in the searchfield changes
@@ -58,7 +58,7 @@ public class SearchBar extends ToolBar {
 
     private Button makeClearButton() {
         Button b = new Button("clear");
-        b.prefWidthProperty().bind(listView.tipsList.widthProperty().multiply(0.05));
+        b.prefWidthProperty().bind(listView.tipsList.widthProperty().multiply(0.048));
         b.setId("searchClear");
         b.setOnAction(event -> {
             searchField.clear();
@@ -70,7 +70,7 @@ public class SearchBar extends ToolBar {
     private CheckBox makeHideRead() {
         CheckBox c = new CheckBox("hide read");
         c.setId("hideRead");
-
+        c.prefWidthProperty().bind(listView.tipsList.widthProperty().multiply(0.098));
         c.selectedProperty().addListener((ov, old_val, new_val) -> {
             if (!c.isSelected()) {
                 listView.refreshTipList();

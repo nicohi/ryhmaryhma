@@ -14,13 +14,13 @@ import vinkkeri.ui.gui.Display;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import javafx.scene.layout.HBox;
 
 public class TipListBox extends VBox {
 
     public TipListBox(ListView lv) {
         //Keskelle sijoittuva listausnäkymä
         lv.tipsList.setEditable(true);
-        Label lblHeader = new Label("Tip list");
         ArrayList<TableColumn> columns = new ArrayList<>();
 
         TableColumn title = new TableColumn("Title");
@@ -101,6 +101,8 @@ public class TipListBox extends VBox {
 
         setSpacing(5);
         setPadding(new Insets(10, 10, 10, 10));
-        getChildren().addAll(lblHeader, lv.tipsList, addTipButton, flipReadButton, removeTipButton);
+        HBox hbox = new HBox();
+        hbox.getChildren().addAll(addTipButton, flipReadButton, removeTipButton);
+        getChildren().addAll(lv.tipsList, hbox);
     }
 }
