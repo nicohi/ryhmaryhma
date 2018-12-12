@@ -1,6 +1,8 @@
 ﻿# Vinkkeri
 Ohjelma lukuvinkkien tallentamiseen ja järjestämiseen.
 
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://github.com/nicohi/ryhmaryhma/blob/master/LICENSE)
+
 [![Build Status](https://travis-ci.com/nicohi/ryhmaryhma.svg?branch=master)](https://travis-ci.com/nicohi/ryhmaryhma)
 
 [![codecov](https://codecov.io/gh/nicohi/ryhmaryhma/branch/master/graph/badge.svg)](https://codecov.io/gh/nicohi/ryhmaryhma)
