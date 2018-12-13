@@ -110,6 +110,6 @@ public class Display {
 
     public static void clearAndRefresh() {
         listview.tipsList.getItems().clear();
-        listview.populateTipList(controller.getTips());
+        refresh();
     }
 }

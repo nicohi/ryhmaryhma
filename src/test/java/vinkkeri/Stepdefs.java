@@ -24,9 +24,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.concurrent.TimeoutException;
-import javafx.scene.control.TextField;
 
 import static org.junit.Assert.*;
 import static org.testfx.api.FxAssert.verifyThat;
@@ -156,7 +154,7 @@ public class Stepdefs extends ApplicationTest {
     }
 
     @Given("^hide read has been clicked$")
-    public void hide_read_has_been_clicked() throws Throwable {
+    public void hide_read_has_been_clicked() {
         clickOn("#hideRead");
     }
 
@@ -342,12 +340,12 @@ public class Stepdefs extends ApplicationTest {
             Tip tip = (Tip) tableview.getSelectionModel().getSelectedItem();
             List<Tip> tips = tipDao.getTips();
             Tip daoTip = tips.stream().filter(t -> t.getTitle().equals("sherlock holmes")).findFirst().get();
-            return tip.getSummary().equals("the best");
+            return tip.getSummary().equals("the best") && daoTip.getSummary().equals("the best");
         });
     }
 
     @Then("^a correct timestamp is shown$")
-    public void a_correct_timestamp_is_shown() throws Throwable {
+    public void a_correct_timestamp_is_shown() {
         clickOn("sherlock holmes");
         verifyThat("#tipsList", (TableView tableview) -> {
             Tip tip = (Tip) tableview.getSelectionModel().getSelectedItem();
@@ -357,16 +355,8 @@ public class Stepdefs extends ApplicationTest {
         });
     }
 
-//    @Then("^read attribute will be false$")
-//    public void read_attribute_will_be_false() throws Throwable {
-//        clickOn("sherlock holmes");
-//        verifyThat("#tipsList", (TableView tableview) -> {
-//            Tip tip = (Tip) tableview.getSelectionModel().getSelectedItem();
-//            return tip.isRead().equals("false");
-//        });
-//    }
     @Then("^the timestamp will show the correct time$")
-    public void the_timestamp_will_show_the_correct_time() throws Throwable {
+    public void the_timestamp_will_show_the_correct_time() {
         verifyThat("#readInfo", (Label label) -> {
             List<Tip> tips = tipDao.getTips();
             Tip daoTip = tips.stream().filter(t -> t.getTitle().equals("sherlock holmes")).findFirst().get();
