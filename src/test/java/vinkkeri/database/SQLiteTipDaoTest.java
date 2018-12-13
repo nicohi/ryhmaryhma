@@ -6,7 +6,10 @@ import org.junit.Before;
 import org.junit.Test;
 import vinkkeri.objects.Tip;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -277,6 +280,23 @@ public class SQLiteTipDaoTest {
         assertTrue(tagsList.contains("tag3"));
         assertTrue(tagsList.contains("tag4"));
         assertTrue(tagsList.size() == 3);
+    }
+
+    @Test
+    public void nullChecks() throws IOException {
+        final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        final PrintStream originalOut = System.out;
+
+        System.setOut(new PrintStream(outContent));
+
+        SQLiteTipDao.insertTip(null);
+        assertTrue(outContent.toString().contains("Tried to insert a null tip"));
+        //clear the stream
+        outContent.flush();
+        SQLiteTipDao.updateTip(null);
+        assertTrue(outContent.toString().contains("Tried to update a null tip"));
+        // restore normal system.out
+        System.setOut(originalOut);
     }
 
 

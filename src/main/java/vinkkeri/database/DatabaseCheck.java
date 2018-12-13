@@ -14,9 +14,8 @@ public class DatabaseCheck {
     public static boolean checkDatabase(String databaseAddress) {
         final String[] splits = databaseAddress.split(":");
         if (splits.length != 3 || !splits[0].equals("jdbc") || !splits[1].equals("sqlite")) {
-            Logger.getGlobal().log(new LogRecord(Level.SEVERE,
-                    "Invalid path for database. Was: " +
-                            databaseAddress + ". Expected: jdbc:sqlite:filename.db"));
+            System.out.println("Invalid path for database. Was: " +
+                    databaseAddress + ". Expected: jdbc:sqlite:filename.db");
             return false;
         }
         final String filename = splits[2];

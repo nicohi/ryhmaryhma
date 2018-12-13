@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.util.Arrays;
 import java.util.HashSet;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -44,6 +45,16 @@ public class DatabaseCheckTest {
         file = new File("test.db");
         assertTrue(file.exists());
         checkTables();
+    }
+
+    @Test
+    public void invalidPathsReturnFalse() {
+        final String invalid = "ASD";
+        assertFalse(DatabaseCheck.checkDatabase(invalid));
+        final String typo = "jbdc:sqlite:database.db"; //from experience
+        assertFalse(DatabaseCheck.checkDatabase(typo));
+        final String heresy = "jdbc:mysql:database.db";
+        assertFalse(DatabaseCheck.checkDatabase(heresy));
     }
 
     // helper method
