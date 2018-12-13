@@ -43,12 +43,12 @@ public class Stepdefs extends ApplicationTest {
         tipDao = new SQLiteTipDao(testDatabaseAddress);
         // properties for testfx
         System.setProperty("testfx.robot", "glass");
-        System.setProperty("testfx.headless", "true");
         System.setProperty("prism.order", "sw");
         System.setProperty("prism.text", "t2k");
-        System.setProperty("java.awt.headless", "true");
         // vaihda headless = false jos haluat katsella testejä ui:ssa
         // ja kommentoi headless propertyt pois
+        System.setProperty("testfx.headless", "true");
+        System.setProperty("java.awt.headless", "true");
         headless = true;
         // tell Display class to use a test database
         System.setProperty("use.test.db", "true");
@@ -169,8 +169,13 @@ public class Stepdefs extends ApplicationTest {
     @When("^hide read is clicked twice$")
     public void hide_read_is_clicked_twice() {
         //ei toimi jostain syystä
-        //clickOn("#hideRead");
-        //clickOn("#hideRead");
+        clickOn("#hideRead");
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        clickOn("#hideRead");
     }
 
     @When("^add tip button is clicked$")
@@ -415,6 +420,7 @@ public class Stepdefs extends ApplicationTest {
     public void tip_containing_is_not_displayed(String arg1) {
         verifyThat(arg1, NodeMatchers.isNull());
         tipDao.getTips().stream().forEach(tip -> tipDao.remove(tip.getId()));
+        clickOn("#hideRead"); //reset state for next test
     }
 
     @Then("^the tips' titles, authors, tags and read states are visible$")
