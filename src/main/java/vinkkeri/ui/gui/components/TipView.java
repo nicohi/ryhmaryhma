@@ -80,7 +80,7 @@ public class TipView {
         tagLine.getChildren().addAll(new Label("Tags: "), tags);
 
         Button modify = new Button("Modify tip");
-        modify.setId("modify");
+        modify.setId("modifyTip");
         modify.setOnAction(event -> Display.setSceneAndTip("modify", tip));
 
         Button back = new Button("Back");

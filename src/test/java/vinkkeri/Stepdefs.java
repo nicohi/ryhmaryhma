@@ -24,7 +24,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.concurrent.TimeoutException;
+import javafx.scene.control.TextField;
 
 import static org.junit.Assert.*;
 import static org.testfx.api.FxAssert.verifyThat;
@@ -128,7 +130,7 @@ public class Stepdefs extends ApplicationTest {
 
     @Given("^listing view is visible$")
     public void listingviewvisible() {
-        verifyThat("Flip Read", NodeMatchers.isNotNull());
+        verifyThat("Add Tip", NodeMatchers.isNotNull());
     }
 
     @Given("^some tips are added$")
@@ -178,6 +180,18 @@ public class Stepdefs extends ApplicationTest {
     }
 
     //When -----------------------------------------------------
+    @When("^user clicks on Modify tip button$")
+    public void user_clicks_on_Modify_tip_button() throws Throwable {
+        clickOn("#modifyTip");
+    }
+
+    @When("^user makes changes to tip attributes and saves them$")
+    public void user_makes_changes_to_tip_attributes_and_saves_them() throws Throwable {
+        clickOn("#commentArea");
+        type("the best".toUpperCase());
+        clickOn("#saveButton");
+    }
+
     @When("^listing view contains Tips$")
     public void listing_view_contains_tips() {
         // luodaan testidataa suoraan tietokantaan
@@ -297,6 +311,41 @@ public class Stepdefs extends ApplicationTest {
     }
 
     // Then -----------------------------------------------------
+    @Then("^modify tip view becomes visible$")
+    public void modify_tip_view_becomes_visible() throws Throwable {
+        Node foundNode1 = find("#titleLabel");
+        verifyThat(foundNode1, NodeMatchers.isNotNull());
+        Node foundNode2 = find("#authorLabel");
+        verifyThat(foundNode2, NodeMatchers.isNotNull());
+        Node foundNode3 = find("#urlLabel");
+        verifyThat(foundNode3, NodeMatchers.isNotNull());
+        Node foundNode4 = find("#commentLabel");
+        verifyThat(foundNode4, NodeMatchers.isNotNull());
+        Node foundNode5 = find("#tagsLabel");
+        verifyThat(foundNode5, NodeMatchers.isNotNull());
+        Node foundNode6 = find("#saveButton");
+        verifyThat(foundNode6, NodeMatchers.isNotNull());
+        Node foundNode7 = find("#clearFieldsButton");
+        verifyThat(foundNode7, NodeMatchers.isNotNull());
+        Node foundNode8 = find("#cancelButton");
+        verifyThat(foundNode8, NodeMatchers.isNotNull());
+        clickOn("#cancelButton");
+        clickOn("#back");
+        tipDao.getTips().stream().forEach(tip -> tipDao.remove(tip.getId()));
+    }
+
+    @Then("^the changes are saved and shown$")
+    public void the_changes_are_saved_and_shown() throws Throwable {
+        clickOn("#back");
+        clickOn("sherlock holmes");
+        verifyThat("#tipsList", (TableView tableview) -> {
+            Tip tip = (Tip) tableview.getSelectionModel().getSelectedItem();
+            List<Tip> tips = tipDao.getTips();
+            Tip daoTip = tips.stream().filter(t -> t.getTitle().equals("sherlock holmes")).findFirst().get();
+            return tip.getSummary().equals("the best");
+        });
+    }
+
     @Then("^a correct timestamp is shown$")
     public void a_correct_timestamp_is_shown() throws Throwable {
         clickOn("sherlock holmes");
@@ -316,7 +365,6 @@ public class Stepdefs extends ApplicationTest {
 //            return tip.isRead().equals("false");
 //        });
 //    }
-
     @Then("^the timestamp will show the correct time$")
     public void the_timestamp_will_show_the_correct_time() throws Throwable {
         verifyThat("#readInfo", (Label label) -> {
@@ -324,6 +372,7 @@ public class Stepdefs extends ApplicationTest {
             Tip daoTip = tips.stream().filter(t -> t.getTitle().equals("sherlock holmes")).findFirst().get();
             return label.getText().equals(daoTip.isRead());
         });
+        clickOn("#back");
     }
 
     @Then("^only title, author, tags and read information shown$")
@@ -476,5 +525,4 @@ public class Stepdefs extends ApplicationTest {
         }
         System.setProperty("use.test.db", "false");
     }
-
 }
