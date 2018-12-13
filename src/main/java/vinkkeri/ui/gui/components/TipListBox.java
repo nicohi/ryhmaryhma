@@ -4,13 +4,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import vinkkeri.objects.Tip;
 import vinkkeri.ui.gui.Display;
+import vinkkeri.ui.gui.controllers.TipListUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,8 +18,10 @@ import java.util.Calendar;
 import javafx.scene.layout.HBox;
 
 public class TipListBox extends VBox {
+	ListView lv;
 
     public TipListBox(ListView lv) {
+		this.lv = lv;
         //Keskelle sijoittuva listausnäkymä
         lv.tipsList.setEditable(true);
         ArrayList<TableColumn> columns = new ArrayList<>();
@@ -75,7 +77,9 @@ public class TipListBox extends VBox {
                     }
                     t.setRead(read1);
                     Display.getController().markRead(t.isRead(), t.getId());
-                    Display.clearAndRefresh();
+
+					Display.clearAndRefresh();
+					Display.refreshWithSearchAndHide();
                 }));
 
         Button removeTipButton = new Button("Delete Tip");

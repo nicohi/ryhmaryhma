@@ -18,6 +18,7 @@ public class ListView {
 
     public final Separator separator = new Separator();
     public TableView tipsList = new TableView();
+	public SearchBar searchBar;
 
     public Display display;
 
@@ -40,17 +41,10 @@ public class ListView {
         layout.setCenter(tipslistArea);
 
         //add searchbar
-        layout.setTop(new SearchBar(this));
+		this.searchBar = new SearchBar(this);
+        layout.setTop(this.searchBar);
 
         return layout;
-    }
-
-    public void populateTipList(List<Tip> tips) {
-        tipsList.setItems(FXCollections.observableArrayList(tips));
-    }
-
-    public void refreshTipList() {
-        tipsList.setItems(FXCollections.observableArrayList(display.getController().getTips()));
     }
 
 }
