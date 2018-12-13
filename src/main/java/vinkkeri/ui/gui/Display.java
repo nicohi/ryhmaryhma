@@ -110,7 +110,11 @@ public class Display {
     }
 
     public static void clearAndRefresh() {
-        listview.tipsList.getItems().clear();
-        refresh();
+		listview.tipsList.getItems().clear();
+		refresh();
+    }
+
+    public static void refreshWithSearchAndHide() {
+		TipListUtils.refreshTips(listview, listview.searchBar.getSearchTerms(), listview.searchBar.getReadStatus());
     }
 }

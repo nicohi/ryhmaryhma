@@ -14,6 +14,7 @@ import vinkkeri.ui.gui.controllers.TipListUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+
 import javafx.scene.layout.HBox;
 
 public class TipListBox extends VBox {
@@ -76,9 +77,9 @@ public class TipListBox extends VBox {
                     }
                     t.setRead(read1);
                     Display.getController().markRead(t.isRead(), t.getId());
-                    lv.tipsList.getItems().clear();
-                    Display.refresh();
-					TipListUtils.refreshTips(lv, lv.searchBar.getSearchTerms(), lv.searchBar.getReadStatus());
+
+					Display.clearAndRefresh();
+					Display.refreshWithSearchAndHide();
                 }));
 
         Button removeTipButton = new Button("Delete Tip");

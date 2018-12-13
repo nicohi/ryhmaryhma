@@ -15,13 +15,13 @@ public class SearchBar extends ToolBar {
     private ListView listView;
     private TextField searchField;
     private CheckBox hideRead;
-	private String readStatus;
+    private String readStatus;
 
     /**
      * @param lv
      */
     public SearchBar(ListView lv) {
-		this.readStatus = "";
+        this.readStatus = "";
         this.listView = lv;
         this.searchField = makeSearchField();
         Button clear = makeClearButton();
@@ -61,9 +61,9 @@ public class SearchBar extends ToolBar {
         c.prefWidthProperty().bind(listView.tipsList.widthProperty().multiply(0.098));
         c.selectedProperty().addListener((ov, old_val, new_val) -> {
             if (!c.isSelected()) {
-				readStatus = "";
+                readStatus = "";
             } else if (new_val) {
-				readStatus = "false";
+                readStatus = "false";
             }
 			TipListUtils.refreshTips(listView, searchField.getText(), readStatus);
         });

@@ -16,7 +16,8 @@ public class Controller {
 
     public Controller() {
         String databaseAddress = "jdbc:sqlite:database.db";
-        if (System.getProperty("use.test.db") != null && System.getProperty("use.test.db").equals("true")) {
+        final String testProperty = System.getProperty("use.test.db");
+        if (testProperty != null && testProperty.equals("true")) {
             databaseAddress = "jdbc:sqlite:test.db";
         }
         this.tipDao = new SQLiteTipDao(databaseAddress);

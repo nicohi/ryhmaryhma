@@ -43,12 +43,12 @@ public class Stepdefs extends ApplicationTest {
         tipDao = new SQLiteTipDao(testDatabaseAddress);
         // properties for testfx
         System.setProperty("testfx.robot", "glass");
-        System.setProperty("testfx.headless", "true");
         System.setProperty("prism.order", "sw");
         System.setProperty("prism.text", "t2k");
-        System.setProperty("java.awt.headless", "true");
         // vaihda headless = false jos haluat katsella testejä ui:ssa
         // ja kommentoi headless propertyt pois
+        System.setProperty("testfx.headless", "true");
+        System.setProperty("java.awt.headless", "true");
         headless = true;
         // tell Display class to use a test database
         System.setProperty("use.test.db", "true");
@@ -61,11 +61,11 @@ public class Stepdefs extends ApplicationTest {
     }
 
     @VisibleForTesting
-    static SQLiteTipDao tipDao;
+    private static final SQLiteTipDao tipDao;
     @VisibleForTesting
-    static SQLiteTagDao tagDao;
+    private static final SQLiteTagDao tagDao;
 
-    static boolean headless;
+    private static boolean headless;
 
     @Override
     public void start(Stage stage) {
@@ -76,49 +76,6 @@ public class Stepdefs extends ApplicationTest {
         return (T) lookup(query).queryAll().iterator().next();
     }
 
-    /**
-     * The thing that should not be
-     *
-     * @param str
-     */
-    public void type(String str) {
-        String split[] = str.split("");
-        for (String s : split) {
-            s = s.trim();
-            //killme
-            if (s.equals(",")) {
-                super.type(KeyCode.COMMA);
-            } else if (s.isEmpty()) {
-                super.type(KeyCode.SPACE);
-            } else if (s.equals("_")) {
-                super.push(KeyCode.SHIFT, KeyCode.MINUS);
-            } else if (s.equals("=")) {
-                super.type(KeyCode.EQUALS);
-            } else if (s.equals("/")) {
-                if (!headless) {
-                    super.push(KeyCode.SHIFT, KeyCode.DIGIT7);
-                } else {
-                    super.type(KeyCode.SLASH);
-                }
-            } else if (s.equals(":")) {
-                if (!headless) {
-                    super.push(KeyCode.SHIFT, KeyCode.PERIOD);
-                } else {
-                    super.push(KeyCode.SHIFT, KeyCode.SEMICOLON);
-                }
-            } else if (s.equals(".")) {
-                super.type(KeyCode.PERIOD);
-            } else if (s.equals("?")) {
-                if (!headless) {
-                    super.push(KeyCode.SHIFT, KeyCode.PLUS);
-                } else {
-                    super.push(KeyCode.SHIFT, KeyCode.SLASH);
-                }
-            } else {
-                super.type(KeyCode.getKeyCode(s));
-            }
-        }
-    }
 
     // Given -----------------------------------------------------
     @Given("^add tip view is clicked from the main view$")
@@ -159,7 +116,7 @@ public class Stepdefs extends ApplicationTest {
     }
 
     @Given("^a tip with title \"([^\"]*)\", author \"([^\"]*)\" and tags \"([^\"]*)\" has been added$")
-    public void a_tip_with_title_author_and_tags_has_been_added(String arg1, String arg2, String arg3) throws Throwable {
+    public void a_tip_with_title_author_and_tags_has_been_added(String arg1, String arg2, String arg3) {
         clickOn("#addTip");
         clickOn("#titleField");
         type(arg1.toUpperCase());
@@ -172,19 +129,19 @@ public class Stepdefs extends ApplicationTest {
     }
 
     @Given("^tip with title \"([^\"]*)\" is read$")
-    public void tip_with_title_is_read(String arg1) throws Throwable {
+    public void tip_with_title_is_read(String arg1) {
         clickOn(arg1);
         clickOn("#flipRead");
     }
 
     //When -----------------------------------------------------
     @When("^user clicks on Modify tip button$")
-    public void user_clicks_on_Modify_tip_button() throws Throwable {
+    public void user_clicks_on_Modify_tip_button() {
         clickOn("#modifyTip");
     }
 
     @When("^user makes changes to tip attributes and saves them$")
-    public void user_makes_changes_to_tip_attributes_and_saves_them() throws Throwable {
+    public void user_makes_changes_to_tip_attributes_and_saves_them() {
         clickOn("#commentArea");
         type("the best".toUpperCase());
         clickOn("#saveButton");
@@ -205,15 +162,20 @@ public class Stepdefs extends ApplicationTest {
     }
 
     @When("^hide read is clicked$")
-    public void hide_read_is_clicked() throws Throwable {
+    public void hide_read_is_clicked() {
         clickOn("#hideRead");
     }
 
     @When("^hide read is clicked twice$")
-    public void hide_read_is_clicked_twice() throws Throwable {
+    public void hide_read_is_clicked_twice() {
         //ei toimi jostain syystä
-        //clickOn("#hideRead");
-        //clickOn("#hideRead");
+        clickOn("#hideRead");
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        clickOn("#hideRead");
     }
 
     @When("^add tip button is clicked$")
@@ -272,45 +234,45 @@ public class Stepdefs extends ApplicationTest {
     }
 
     @When("^search text area is clicked$")
-    public void search_text_area_is_clicked() throws Throwable {
+    public void search_text_area_is_clicked() {
         clickOn("#searchField");
     }
 
     @When("^clear search is clicked$")
-    public void clear_search_is_clicked() throws Throwable {
+    public void clear_search_is_clicked() {
         clickOn("#searchClear");
     }
 
     @When("^Tip is double-clicked$")
-    public void tip_is_double_clicked() throws Throwable {
+    public void tip_is_double_clicked() {
         find("sherlock holmes");
         doubleClickOn("sherlock holmes");
     }
 
     @When("^delete button is pressed$")
-    public void delete_button_is_pressed() throws Throwable {
+    public void delete_button_is_pressed() {
         clickOn("#deleteTip");
     }
 
     @When("^tip is selected$")
-    public void tip_is_selected() throws Throwable {
+    public void tip_is_selected() {
         clickOn("sherlock holmes");
     }
 
     @When("^flip read button is clicked$")
-    public void flip_read_button_is_clicked() throws Throwable {
+    public void flip_read_button_is_clicked() {
         clickOn("#flipRead");
     }
 
     // HUOM Tip View näkymän Flip read
     @When("^flip read button is pressed$")
-    public void flip_read_button_is_pressed() throws Throwable {
+    public void flip_read_button_is_pressed() {
         clickOn("#flipRead");
     }
 
     // Then -----------------------------------------------------
     @Then("^modify tip view becomes visible$")
-    public void modify_tip_view_becomes_visible() throws Throwable {
+    public void modify_tip_view_becomes_visible() {
         Node foundNode1 = find("#titleLabel");
         verifyThat(foundNode1, NodeMatchers.isNotNull());
         Node foundNode2 = find("#authorLabel");
@@ -333,7 +295,7 @@ public class Stepdefs extends ApplicationTest {
     }
 
     @Then("^the changes are saved and shown$")
-    public void the_changes_are_saved_and_shown() throws Throwable {
+    public void the_changes_are_saved_and_shown() {
         clickOn("#back");
         clickOn("sherlock holmes");
         verifyThat("#tipsList", (TableView tableview) -> {
@@ -366,7 +328,7 @@ public class Stepdefs extends ApplicationTest {
     }
 
     @Then("^only title, author, tags and read information shown$")
-    public void only_title_author_tags_and_read_information_is_shown() throws Throwable {
+    public void only_title_author_tags_and_read_information_is_shown() {
         verifyThat("#title", NodeMatchers.isNotNull());
         verifyThat("#author", NodeMatchers.isNotNull());
         verifyThat("#tags", NodeMatchers.isNotNull());
@@ -379,7 +341,7 @@ public class Stepdefs extends ApplicationTest {
     }
 
     @Then("^Tip view becomes visible$")
-    public void tip_view_becomes_visible() throws Throwable {
+    public void tip_view_becomes_visible() {
         verifyThat("#titleLine", NodeMatchers.isNotNull());
         verifyThat("#authorLine", NodeMatchers.isNotNull());
         verifyThat("#dateLine", NodeMatchers.isNotNull());
@@ -391,12 +353,12 @@ public class Stepdefs extends ApplicationTest {
     }
 
     @Then("^the Tip is not listed anymore in the listing view$")
-    public void the_tip_is_not_listed_anymore_in_the_listing_view() throws Throwable {
+    public void the_tip_is_not_listed_anymore_in_the_listing_view() {
         verifyThat("sherlock holmes", NodeMatchers.isNull());
     }
 
     @Then("^new tip with title \"([^\"]*)\" and tags \"([^\"]*)\" is stored in the program$")
-    public void new_tip_with_title_and_tags_is_stored_in_the_program(String title, String tags) throws Throwable {
+    public void new_tip_with_title_and_tags_is_stored_in_the_program(String title, String tags) {
         Tip expectedTip = new Tip(title, "", "", "", "");
         List<String> tagList = parseTagsFromString(tags);
         expectedTip.setTags(tagList);
@@ -442,26 +404,27 @@ public class Stepdefs extends ApplicationTest {
     }
 
     @Then("^all tips are displayed$")
-    public void all_tips_are_displayed() throws Throwable {
+    public void all_tips_are_displayed() {
         verifyThat("title1", NodeMatchers.isNotNull());
         verifyThat("title2", NodeMatchers.isNotNull());
         tipDao.getTips().stream().forEach(tip -> tipDao.remove(tip.getId()));
     }
 
     @Then("^tip containing \"([^\"]*)\" is displayed$")
-    public void tip_containing_is_displayed(String arg1) throws Throwable {
+    public void tip_containing_is_displayed(String arg1) {
         verifyThat(arg1, NodeMatchers.isNotNull());
         tipDao.getTips().stream().forEach(tip -> tipDao.remove(tip.getId()));
     }
 
     @Then("^tip containing \"([^\"]*)\" is not displayed$")
-    public void tip_containing_is_not_displayed(String arg1) throws Throwable {
+    public void tip_containing_is_not_displayed(String arg1) {
         verifyThat(arg1, NodeMatchers.isNull());
         tipDao.getTips().stream().forEach(tip -> tipDao.remove(tip.getId()));
+        clickOn("#hideRead"); //reset state for next test
     }
 
     @Then("^the tips' titles, authors, tags and read states are visible$")
-    public void the_tips_titles_authors_tags_and_read_states_are_visible() throws Throwable {
+    public void the_tips_titles_authors_tags_and_read_states_are_visible() {
         find("sherlock holmes");
         clickOn("sherlock holmes");
         verifyThat("#tipsList", (TableView tableview) -> {
@@ -487,13 +450,13 @@ public class Stepdefs extends ApplicationTest {
     }
 
     // help methods
-    public List<String> parseTagsFromString(String tags) {
+    private List<String> parseTagsFromString(String tags) {
         ArrayList<String> tiptags = new ArrayList<>();
         tiptags.addAll(Arrays.asList(tags.split(",")));
         return tiptags;
     }
 
-    public Tip searchFromDatabaseWithTitle(String title) {
+    private Tip searchFromDatabaseWithTitle(String title) {
         List<Tip> tips = tipDao.getTips();
         for (Tip tip : tips) {
             if (title.equals(tip.getTitle())) {
@@ -501,6 +464,50 @@ public class Stepdefs extends ApplicationTest {
             }
         }
         return null;
+    }
+
+    /**
+     * Ugly wrapper to accommodate for
+     * the less than ideal typerobot implementation
+     *
+     * @param str
+     */
+    private void type(String str) {
+        String split[] = str.split("");
+        for (String s : split) {
+            s = s.trim();
+            if (s.equals(",")) {
+                super.type(KeyCode.COMMA);
+            } else if (s.isEmpty()) {
+                super.type(KeyCode.SPACE);
+            } else if (s.equals("_")) {
+                super.push(KeyCode.SHIFT, KeyCode.MINUS);
+            } else if (s.equals("=")) {
+                super.type(KeyCode.EQUALS);
+            } else if (s.equals("/")) {
+                if (!headless) {
+                    super.push(KeyCode.SHIFT, KeyCode.DIGIT7);
+                } else {
+                    super.type(KeyCode.SLASH);
+                }
+            } else if (s.equals(":")) {
+                if (!headless) {
+                    super.push(KeyCode.SHIFT, KeyCode.PERIOD);
+                } else {
+                    super.push(KeyCode.SHIFT, KeyCode.SEMICOLON);
+                }
+            } else if (s.equals(".")) {
+                super.type(KeyCode.PERIOD);
+            } else if (s.equals("?")) {
+                if (!headless) {
+                    super.push(KeyCode.SHIFT, KeyCode.PLUS);
+                } else {
+                    super.push(KeyCode.SHIFT, KeyCode.SLASH);
+                }
+            } else {
+                super.type(KeyCode.getKeyCode(s));
+            }
+        }
     }
 
     private void removeNewestFromDatabase() {
