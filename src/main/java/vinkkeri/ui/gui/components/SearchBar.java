@@ -39,11 +39,7 @@ public class SearchBar extends ToolBar {
         text.textProperty().addListener((observable, oldValue, newValue) -> {
             //if the text in the searchfield changes
             if (!oldValue.equals(newValue)) {
-                listView.refreshTipList();
-                //places all tips into tipList that return true from search
-                listView.populateTipList(listView.tipsList.getItems().filtered(tip -> {
-                    return search((Tip) tip, newValue, readStatus);
-                }));
+                refreshTips();
             }
         });
         return text;
@@ -70,15 +66,30 @@ public class SearchBar extends ToolBar {
             } else if (new_val) {
                 readStatus = "false";
             }
-            listView.refreshTipList();
-            listView.populateTipList(listView.tipsList.getItems().filtered(tip -> {
-                return search((Tip) tip, searchField.getText(), readStatus);
-            }));
+            refreshTips();
         });
 
         return c;
     }
 
+    /**
+     * Gets tips from db and filters with search().
+     */
+    private void refreshTips() {
+        listView.refreshTipList();
+        listView.populateTipList(listView.tipsList.getItems().filtered(tip -> {
+            return search((Tip) tip, searchField.getText(), readStatus);
+        }));
+    }
+
+    /**
+     * Searches for list of searchterms in tip.
+     *
+     * @param t
+     * @param s    searchterms separated by commas
+     * @param read The read status being searched for. "false" if you want unread tips.
+     * @return true if tip matches search
+     */
     private boolean search(Tip t, String s, String read) {
         String[] searchTerms = s.toLowerCase().split(",");
 
