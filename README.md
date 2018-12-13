@@ -18,8 +18,8 @@ Ohjelma lukuvinkkien tallentamiseen ja järjestämiseen.
 ## Installation and User manual
 [Google Docs Link](https://docs.google.com/document/d/1cuBPcLQ9Msf1Ls8MFOFPtbdDIFzx-mSLNxMI2_telfA/edit?usp=sharing)
 
-## Raportti
-[Raportin linkki](https://docs.google.com/document/d/1FD9qaEEAe33172ooWjNe3b2Nvas8zFSNo2hzMi0dbGU/edit?usp=sharing)
+## Report
+[Google Docs Link](https://docs.google.com/document/d/1FD9qaEEAe33172ooWjNe3b2Nvas8zFSNo2hzMi0dbGU/edit?usp=sharing)
 
 ## Releases
 [Sprint 1](https://github.com/nicohi/ryhmaryhma/releases/tag/Sprint_1)
@@ -28,4 +28,4 @@ Ohjelma lukuvinkkien tallentamiseen ja järjestämiseen.
 
 [Sprint 3](https://github.com/nicohi/ryhmaryhma/releases/tag/Sprint_3)
 
-[Demo](https://github.com/nicohi/ryhmaryhma/releases/tag/Demo)
+[Sprint 4](https://github.com/nicohi/ryhmaryhma/releases/tag/Sprint_4)
