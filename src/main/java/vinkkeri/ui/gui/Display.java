@@ -14,6 +14,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import vinkkeri.ui.gui.controllers.TipListUtils;
 
 /**
  * @author Olli K. Kärki
@@ -51,7 +52,7 @@ public class Display {
 
         stage.setTitle("Vinkkeri");
         stage.setScene(Display.scenes.get("listview"));
-        listview.populateTipList(controller.getTips());
+		TipListUtils.populateTipList(listview, controller.getTips());
         stage.show();
     }
 
@@ -89,7 +90,7 @@ public class Display {
     public static void setScene(String scene) {
         stage.setScene(scenes.get(scene));
         if (scene.equals("listview")) {
-            listview.populateTipList(controller.getTips());
+			TipListUtils.populateTipList(listview, controller.getTips());
         }
     }
 
@@ -105,7 +106,7 @@ public class Display {
     }
 
     public static void refresh() {
-        listview.populateTipList(controller.getTips());
+		TipListUtils.populateTipList(listview, controller.getTips());
     }
 
     public static void clearAndRefresh() {
