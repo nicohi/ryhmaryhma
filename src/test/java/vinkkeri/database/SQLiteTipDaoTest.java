@@ -279,6 +279,7 @@ public class SQLiteTipDaoTest {
         assertTrue(tagsList.size() == 3);
     }
 
+
     @AfterClass
     public static void deleteTestDatabase() {
         File db = new File("test.db");

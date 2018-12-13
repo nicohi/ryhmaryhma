@@ -5,11 +5,21 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 public class DatabaseCheck {
 
     public static boolean checkDatabase(String databaseAddress) {
-        String filename = databaseAddress.split(":")[2];
+        final String[] splits = databaseAddress.split(":");
+        if (splits.length != 3 || !splits[0].equals("jdbc") || !splits[1].equals("sqlite")) {
+            Logger.getGlobal().log(new LogRecord(Level.SEVERE,
+                    "Invalid path for database. Was: " +
+                            databaseAddress + ". Expected: jdbc:sqlite:filename.db"));
+            return false;
+        }
+        final String filename = splits[2];
         File file = new File(filename);
         if (file.exists()) {
             return true;
@@ -21,7 +31,7 @@ public class DatabaseCheck {
 
     private static void createTables(String databaseAddress) {
         try (Connection conn = DriverManager.getConnection(databaseAddress)) {
-            String tipTable = "CREATE TABLE IF NOT EXISTS Tip (\n" +
+            final String tipTable = "CREATE TABLE IF NOT EXISTS Tip (\n" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                     "date date NOT NULL,\n" +
                     "title text,\n" +
@@ -30,33 +40,33 @@ public class DatabaseCheck {
                     "url text,\n" +
                     "read text\n" +
                     ");";
-            String tagTable = "CREATE TABLE IF NOT EXISTS Tag (\n" +
+            final String tagTable = "CREATE TABLE IF NOT EXISTS Tag (\n" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                     "name text NOT NULL UNIQUE\n" +
                     ");";
-            String courseTable = "CREATE TABLE IF NOT EXISTS Course (\n" +
+            final String courseTable = "CREATE TABLE IF NOT EXISTS Course (\n" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                     "name text NOT NULL UNIQUE\n" +
                     ");";
-            String tiptagTable = "CREATE TABLE IF NOT EXISTS TipTag (\n" +
+            final String tiptagTable = "CREATE TABLE IF NOT EXISTS TipTag (\n" +
                     "tip int NOT NULL,\n" +
                     "tag int NOT NULL,\n" +
                     "FOREIGN KEY (tip) REFERENCES Tip(id),\n" +
                     "FOREIGN KEY (tag) REFERENCES Tag(id)\n" +
                     ");";
-            String relcourseTable = "CREATE TABLE IF NOT EXISTS RelCourse (\n" +
+            final String relcourseTable = "CREATE TABLE IF NOT EXISTS RelCourse (\n" +
                     "tip int NOT NULL,\n" +
                     "course int NOT NULL,\n" +
                     "FOREIGN KEY (tip) REFERENCES Tip(id),\n" +
                     "FOREIGN KEY (course) REFERENCES Course(id)\n" +
                     ");";
-            String reqcourseTable = "CREATE TABLE IF NOT EXISTS ReqCourse (\n" +
+            final String reqcourseTable = "CREATE TABLE IF NOT EXISTS ReqCourse (\n" +
                     "tip int NOT NULL,\n" +
                     "course int NOT NULL,\n" +
                     "FOREIGN KEY (tip) REFERENCES Tip(id),\n" +
                     "FOREIGN KEY (course) REFERENCES Course(id)\n" +
                     ");";
-            String[] queries = {tipTable, tagTable, courseTable, tiptagTable, relcourseTable, reqcourseTable};
+            final String[] queries = {tipTable, tagTable, courseTable, tiptagTable, relcourseTable, reqcourseTable};
 
             for (String query : queries) {
                 Statement statement = conn.createStatement();
@@ -65,7 +75,7 @@ public class DatabaseCheck {
             }
 
         } catch (SQLException e) {
-            System.out.println("Failed to create sqlite database. Make sure sqlite is installed");
+            System.out.println("Failed to create sqlite database. Make sure you have write access on disk");
         }
     }
 }

@@ -172,6 +172,11 @@ public class SQLiteTipDao implements TipDao {
     @Override
     public void insertTip(Tip tip) {
 
+        if (tip == null) {
+            System.out.println("Tried to insert a null tip");
+            return;
+        }
+
         java.util.Date uDate = new java.util.Date();
         java.sql.Date sDate = new java.sql.Date(uDate.getTime());
         String date = sDate.toString();
@@ -357,6 +362,10 @@ public class SQLiteTipDao implements TipDao {
      */
     @Override
     public void updateTip(Tip tip) {
+        if (tip == null) {
+            System.out.println("Tried to update a null tip");
+            return;
+        }
         try (Connection conn = DriverManager.getConnection(this.databaseAddress);
              PreparedStatement stmt = conn.prepareStatement("UPDATE Tip SET date = ?, title = ?, author = ?, summary = ?, url = ?, read = ? WHERE id = ?")) {
             stmt.setString(1, tip.getDate());
