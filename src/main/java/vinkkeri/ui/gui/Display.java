@@ -101,8 +101,8 @@ public class Display {
     }
 
     public static void setSceneAndTip(String scene, Tip tip) {
-        ModifyTipController m = loaders.get("modify").getController();
-        m.setTipToBeModified(tip);
+        ModifyTipController mc = loaders.get("modify").getController();
+        mc.setTipToBeModified(tip);
         stage.setScene(scenes.get(scene));
     }
 
