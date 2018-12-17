@@ -14,7 +14,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import vinkkeri.objects.Tip;
-import vinkkeri.ui.gui.Controller;
+import vinkkeri.ui.gui.DaoController;
 import vinkkeri.ui.gui.Display;
 
 import java.util.Calendar;
@@ -24,7 +24,7 @@ import java.util.Calendar;
  */
 public class TipView {
 
-    private Controller controller;
+    private DaoController controller;
 
     private Tip tip;
 
@@ -36,7 +36,7 @@ public class TipView {
     private Label read;
     private Label tags;
 
-    public TipView(Controller controller) {
+    public TipView(DaoController controller) {
         this.controller = controller;
     }
 
@@ -101,6 +101,10 @@ public class TipView {
                 read = time;
             } else {
                 read = "";
+                tip.setRead(read);
+                controller.markRead(read, tip.getId());
+                setRead(tip.isRead());
+                Display.clearAndRefresh();
             }
             tip.setRead(read);
             controller.markRead(read, tip.getId());

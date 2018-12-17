@@ -6,7 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import vinkkeri.objects.TagMap;
 import vinkkeri.objects.Tip;
-import vinkkeri.ui.gui.Controller;
+import vinkkeri.ui.gui.DaoController;
 import vinkkeri.ui.gui.Display;
 
 import java.net.URL;
@@ -21,7 +21,7 @@ public class AddTipController implements Initializable {
     private Display display;
 
     // database dependencies
-    private Controller controller;
+    private DaoController controller;
 
     // for parsing tags from url
     private TagMap tagMap;
@@ -75,7 +75,7 @@ public class AddTipController implements Initializable {
         this.display = display;
     }
 
-    public void setController(Controller c) {
+    public void setController(DaoController c) {
         this.controller = c;
     }
 
@@ -137,7 +137,7 @@ public class AddTipController implements Initializable {
 
     private void backButton() {
         this.backButton.setOnAction(event -> {
-            this.display.setScene("listview");
+            Display.setScene("listview");
         });
     }
 

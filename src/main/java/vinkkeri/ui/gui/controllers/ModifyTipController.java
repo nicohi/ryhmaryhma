@@ -5,7 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import vinkkeri.objects.Tip;
-import vinkkeri.ui.gui.Controller;
+import vinkkeri.ui.gui.DaoController;
 import vinkkeri.ui.gui.Display;
 
 import java.net.URL;
@@ -21,7 +21,7 @@ public class ModifyTipController implements Initializable {
     private Tip toBeModifiedTip;
 
     // database dependencies
-    private Controller controller;
+    private DaoController controller;
 
     // buttons
     @FXML
@@ -80,7 +80,7 @@ public class ModifyTipController implements Initializable {
         urlField.setText(this.toBeModifiedTip.getUrl());
     }
 
-    public void setController(Controller c) {
+    public void setController(DaoController c) {
         this.controller = c;
     }
 

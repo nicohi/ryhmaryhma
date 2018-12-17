@@ -16,6 +16,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import vinkkeri.ui.gui.controllers.TipListUtils;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * @author Olli K. Kärki
  */
@@ -28,12 +34,26 @@ public class Display {
     private static HashMap<String, FXMLLoader> loaders;
     private static ListView listview;
     private static TipView tipview;
-    private static Controller controller;
+    private static DaoController controller;
 
-    public Display(Stage stage) {
+    public Display(Stage stage, DaoController controller) {
         Display.stage = stage;
-        controller = new Controller();
+        Display.controller = controller;
         initialize();
+    }
+
+    public static DaoController getController() {
+        return controller;
+    }
+
+    private void addSceneNonFXML(Scene s, String name) {
+        scenes.put(name, s);
+    }
+
+    private void setAddViewDependencies() {
+        AddTipController c = loaders.get("add").getController();
+        c.setController(controller);
+        c.setDisplay(this);
     }
 
     private void initialize() {
@@ -56,23 +76,9 @@ public class Display {
         stage.show();
     }
 
-    private void addSceneNonFXML(Scene s, String name) {
-        scenes.put(name, s);
-    }
-
-    private void setAddViewDependencies() {
-        AddTipController c = loaders.get("add").getController();
-        c.setController(controller);
-        c.setDisplay(this);
-    }
-
     private void setModifyViewDependencies() {
         ModifyTipController m = loaders.get("modify").getController();
         m.setController(controller);
-    }
-
-    public static Controller getController() {
-        return controller;
     }
 
     private void initializeScene(String path, String name) {
