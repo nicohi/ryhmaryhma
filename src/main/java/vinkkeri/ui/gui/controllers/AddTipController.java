@@ -150,13 +150,13 @@ public class AddTipController implements Initializable {
         String title = titleField.getText();
         String author = authorField.getText();
         String comment = commentArea.getText().trim();
-        String url = urlField.getText();
-        Tip tip = new Tip(title, author, comment, url, "");
+        String linkUrl = urlField.getText();
+        Tip tip = new Tip(title, author, comment, linkUrl, "");
         ArrayList<String> tags = new ArrayList<>();
         if (!tagField.getText().isEmpty()) {
             tags.addAll(Arrays.asList(tagField.getText().split(",")));
         }
-        List<String> foundTags = tagMap.find(url);
+        List<String> foundTags = tagMap.find(linkUrl);
         for (String tag : foundTags) {
             if (!tags.contains(tag)) {
                 tags.add(tag);
