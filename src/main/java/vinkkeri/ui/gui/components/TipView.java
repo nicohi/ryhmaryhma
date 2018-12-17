@@ -90,9 +90,9 @@ public class TipView {
             Display.setScene("listview");
         });
 
-        Button flipread = new Button("Flip Read");
-        flipread.setId("flipRead");
-        flipread.setOnAction(event -> {
+        Button flipRead = new Button("Flip Read");
+        flipRead.setId("flipRead");
+        flipRead.setOnAction(event -> {
             String read = tip.isRead();
             if (read == null || read.equals("false") || read.equals("")) {
                 String time = Calendar.getInstance().getTime().toString();
@@ -121,7 +121,7 @@ public class TipView {
             Display.setScene("listview");
         });
 
-        vb.getChildren().addAll(titleLine, authorLine, dateLine, urlLine, new Label(""), new Label("Summary"), summary, new Label(""), readLine, tagLine, new Label(""), modify, new Label(""), flipread, new Label(""), back, new Label(""), delete);
+        vb.getChildren().addAll(titleLine, authorLine, dateLine, urlLine, new Label(""), new Label("Summary"), summary, new Label(""), readLine, tagLine, new Label(""), modify, new Label(""), flipRead, new Label(""), back, new Label(""), delete);
 
         vb.setPadding(new Insets(10, 10, 10, 10));
 
